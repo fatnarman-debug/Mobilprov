@@ -1,0 +1,200 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Enum definitions removed for SQLite compatibility
+
+// User & Authentication Models
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash       String
+  role               String    @default("USER")
+  isPaid             Boolean   @default(false)
+  subscriptionEndsAt DateTime? // Üyelik bitiş tarihi (Pazarlama ve Kontrol için)
+  lastLoginAt        DateTime? // Son giriş tarihi (Re-engagement için)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  // Relations
+  progress      UserProgress[]
+  testResults   TestResult[]
+}
+
+// Education Content Models
+model Topic {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  category    String   // e.g., Matematik, Kimya
+  order       Int      @default(0)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  materials   Material[]
+  questions   Question[]
+  flashcards  Flashcard[]
+  progress    UserProgress[]
+  topicRules  ExamTopicRule[]
+}
+
+// Read - Listen - Watch (Oku - Dinle - İzle)
+model Material {
+  id          String       @id @default(cuid())
+  topicId     String
+  type        String
+  title       String
+  url         String       // S3, Supabase storage or external URL
+  duration    Int?         // in seconds, useful for audio/video
+  order       Int          @default(0)
+  createdAt   DateTime     @default(now())
+
+  topic       Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
+}
+
+// Practice & Test Questions
+model Question {
+  id            String     @id @default(cuid())
+  topicId       String
+  text          String
+  optionA       String
+  optionB       String
+  optionC       String
+  optionD       String
+  correctAnswer String     // 'A', 'B', 'C', or 'D'
+  explanation   String?
+  difficulty    String     @default("MEDIUM")
+  isTest        Boolean    @default(false) // If false, it's a practice question
+  createdAt     DateTime   @default(now())
+
+  topic         Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  mockExams     MockExamQuestion[]
+}
+
+// Flashcards
+model Flashcard {
+  id          String   @id @default(cuid())
+  topicId     String
+  frontText   String
+  backText    String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  topic       Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+}
+
+// User Tracking Models
+model UserProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  topicId         String
+  isCompleted     Boolean  @default(false)
+  progressPercent Int      @default(0)
+  lastAccessed    DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic           Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, topicId])
+}
+
+model TestResult {
+  id              String   @id @default(cuid())
+  userId          String
+  topicId         String?  // Can be null for a general test
+  score           Float    // Percentage
+  correctAnswers  Int
+  wrongAnswers    Int
+  completedAt     DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Sınav Şablonu (Örn: Standart Deneme, Kısa Deneme)
+model ExamTemplate {
+  id          String   @id @default(cuid())
+  title       String   // Örn: "Vatandaşlık Gerçek Sınav Simülasyonu"
+  durationMin Int      // Süre (Dakika cinsi, örn: 45)
+  isActive    Boolean  @default(true)
+  
+  rules       ExamTopicRule[]
+  mockExams   MockExam[] // Bu şablondan üretilen sınavlar
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Hangi Sınav Şablonunda, Hangi Konudan Kaç Soru Sorulacak?
+model ExamTopicRule {
+  id             String       @id @default(cuid())
+  
+  examTemplateId String
+  examTemplate   ExamTemplate @relation(fields: [examTemplateId], references: [id], onDelete: Cascade)
+  
+  topicId        String
+  topic          Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  
+  questionCount  Int          // Bu konudan rastgele çekilecek soru sayısı (Örn: 5)
+  
+  @@unique([examTemplateId, topicId])
+}
+
+// --- SABİT DENEME SINAVLARI (ÜRETİLMİŞ SINAVLAR) ---
+
+model MockExam {
+  id          String   @id @default(cuid())
+  title       String   // Örn: "Deneme 1"
+  description String?
+  durationMin Int      // Şablondan kopyalanır
+  isPublished Boolean  @default(false) // Öğrenciler görebilir mi?
+  
+  templateId  String?
+  template    ExamTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  
+  questions   MockExamQuestion[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MockExamQuestion {
+  id          String   @id @default(cuid())
+  
+  mockExamId  String
+  mockExam    MockExam @relation(fields: [mockExamId], references: [id], onDelete: Cascade)
+  
+  questionId  String
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  
+  order       Int      @default(0) // Sınavdaki kaçıncı soru
+
+  @@unique([mockExamId, questionId])
+}
+
+// --- PLATFORM AYARLARI (GLOBAL SETTINGS) ---
+
+model PlatformSetting {
+  id                    String   @id @default("global_settings") // Sadece tek bir satır olacak
+  siteName              String   @default("SveaProv")
+  contactEmail          String   @default("destek@sveaprov.se")
+  maintenanceMode       Boolean  @default(false)
+  
+  freeDailyQuestionLimit Int     @default(20) // Ücretsiz üyeler için günlük soru limiti
+  passingScorePercentage Int     @default(60) // Sınav geçme barajı (Yüzde)
+  
+  seoTitle              String   @default("SveaProv - İsveç Vatandaşlık Sınavı Hazırlık Platformu")
+  seoDescription        String   @default("İsveç vatandaşlık sınavına (SveaProv) en güncel sorular, flashcardlar ve deneme sınavlarıyla hazırlanın.")
+  
+  updatedAt             DateTime @updatedAt
+}

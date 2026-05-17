@@ -1,0 +1,212 @@
+import React from 'react';
+import Link from 'next/link';
+import BottomNav from '@/components/BottomNav';
+import prisma from '@/lib/db';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
+
+export default async function DashboardPage() {
+  const session = await auth();
+  if (!session?.user) {
+    redirect('/');
+  }
+
+  // Fetch Platform Settings
+  const settings = await prisma.platformSetting.findUnique({
+    where: { id: 'global_settings' },
+  });
+
+  const isMaintenance = settings?.maintenanceMode ?? false;
+  const isAdmin = session.user.role === 'ADMIN';
+
+  // Maintenance Guard
+  if (isMaintenance && !isAdmin) {
+    return (
+      <div className="bg-background text-on-background min-h-screen flex flex-col items-center justify-center p-gutter text-center">
+        <div className="w-24 h-24 bg-warning-container text-on-warning-container flex items-center justify-center rounded-full mb-6">
+          <span className="material-symbols-outlined text-[48px]">construction</span>
+        </div>
+        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-sm">Bakım Modundayız</h1>
+        <p className="text-on-surface-variant font-body-md max-w-md mb-lg">
+          Platformumuz şu anda planlı bakım çalışması nedeniyle geçici olarak hizmet dışıdır. Lütfen daha sonra tekrar deneyin.
+        </p>
+        {settings?.contactEmail && (
+          <p className="text-sm font-label-md bg-surface-container px-4 py-2 rounded-full text-on-surface-variant">
+            Destek: <a href={`mailto:${settings.contactEmail}`} className="text-primary hover:underline">{settings.contactEmail}</a>
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  // Fetch topics from the database (only published ones or if ADMIN they can see all for previewing!)
+  const topics = await prisma.topic.findMany({
+    where: isAdmin ? {} : { isPublished: true },
+    orderBy: {
+      order: 'asc',
+    },
+  });
+
+  // Fetch student past test results for solved stats
+  const pastResults = await prisma.testResult.findMany({
+    where: { userId: session.user.id },
+  });
+
+  // Fetch complete User object to see subscription details
+  const dbUser = await prisma.user.findUnique({
+    where: { id: session.user.id },
+  });
+
+  const isUserPaid = dbUser?.isPaid ?? false;
+  const subEnds = dbUser?.subscriptionEndsAt;
+
+  // Analytics
+  const totalSolved = pastResults.length;
+
+  return (
+    <div className="bg-background text-on-background font-body-md min-h-screen pb-32">
+      {/* TopAppBar */}
+      <header className="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant">
+        <div className="flex justify-between items-center px-gutter h-16 w-full max-w-container-max mx-auto">
+          <div className="flex items-center gap-sm">
+            <div className="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg uppercase">
+              {session.user.name ? session.user.name.charAt(0) : session.user.email?.charAt(0)}
+            </div>
+            <h1 className="font-display-lg text-title-md text-primary font-bold">
+              {settings?.siteName || 'EduFlow'}
+            </h1>
+          </div>
+          
+          <div className="flex items-center gap-base">
+            {isAdmin && (
+              <Link href="/admin" className="text-xs bg-error text-on-error font-bold px-3 py-1.5 rounded-full hover:opacity-90 transition-opacity">
+                YÖNETİCİ PANELİ
+              </Link>
+            )}
+            {isUserPaid ? (
+              <span className="bg-tertiary-container text-on-tertiary-container text-xs px-3 py-1.5 rounded-full font-bold flex items-center gap-0.5">
+                <span className="material-symbols-outlined text-[14px]" style={{fontVariationSettings: "'FILL' 1"}}>star</span> VIP PREMIUM
+              </span>
+            ) : (
+              <Link href={`/payment?userId=${session.user.id}`} className="bg-primary text-on-primary text-xs px-3 py-1.5 rounded-full font-bold flex items-center gap-0.5 hover:bg-primary-dark transition-all">
+                PREMIUM'A GEÇ
+              </Link>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content Canvas */}
+      <main className="mt-16 px-gutter pt-md max-w-container-max mx-auto space-y-lg">
+        {/* Greeting Section */}
+        <section className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+          <div>
+            <h2 className="font-headline-lg-mobile text-headline-lg-mobile text-on-background font-bold">
+              Merhaba, {session.user.name || 'Öğrenci'}! 👋
+            </h2>
+            <p className="text-on-surface-variant font-body-md mt-1">
+              Bugün İsveç vatandaşlık sınavı hazırlığı için harika bir gün.
+            </p>
+            {subEnds && (
+              <p className="text-xs text-secondary font-semibold mt-2 flex items-center gap-xs">
+                <span className="material-symbols-outlined text-[16px]">calendar_today</span> 
+                Aboneliğiniz {new Date(subEnds).toLocaleDateString('tr-TR')} tarihinde sona erecektir.
+              </p>
+            )}
+          </div>
+
+          {!isUserPaid && (
+            <div className="w-full md:w-auto bg-primary-container/10 border border-primary/20 p-md rounded-xl space-y-sm">
+              <span className="text-xs font-bold text-primary uppercase block">ÜCRETSİZ DENEME HESABI</span>
+              <p className="text-xs text-on-surface-variant max-w-xs">
+                Günde en fazla {settings?.freeDailyQuestionLimit ?? 20} pratik sorusu çözebilirsiniz. Sınırsız pratik ve denemeler için üyeliğinizi VIP Premium yapın.
+              </p>
+              <Link 
+                href={`/payment?userId=${session.user.id}`}
+                className="w-full md:w-auto py-2 px-4 bg-primary text-on-primary font-bold text-xs rounded-lg hover:bg-primary-dark transition-colors inline-flex justify-center items-center gap-xs"
+              >
+                <span className="material-symbols-outlined text-xs">workspace_premium</span>
+                Premium VIP Ol (₺499.00)
+              </Link>
+            </div>
+          )}
+        </section>
+
+        {/* Topic Categories */}
+        <section className="space-y-md">
+          <div className="flex justify-between items-end">
+            <h3 className="font-title-md text-title-md text-on-background font-bold">Çalışma Konuları</h3>
+            <span className="text-xs font-semibold text-secondary uppercase">TOPLAM {topics.length} KONU</span>
+          </div>
+
+          {topics.length === 0 ? (
+            <div className="p-lg border-2 border-dashed border-outline-variant rounded-xl text-center">
+              <span className="material-symbols-outlined text-on-surface-variant text-4xl mb-sm">library_books</span>
+              <p className="text-on-surface-variant font-body-md">Henüz yayında olan konu bulunmuyor.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
+              {topics.map((topic, index) => {
+                const colors = [
+                  { bg: 'bg-primary-container/10 border-primary/20', text: 'text-primary', bar: 'bg-primary' },
+                  { bg: 'bg-secondary-container/15 border-secondary/20', text: 'text-secondary', bar: 'bg-secondary' },
+                  { bg: 'bg-tertiary-container/10 border-tertiary/20', text: 'text-tertiary', bar: 'bg-tertiary' }
+                ];
+                const theme = colors[index % colors.length];
+
+                return (
+                  <Link 
+                    key={topic.id} 
+                    href={`/topic/${topic.id}`} 
+                    className="block bg-surface-container-lowest p-md rounded-2xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex justify-between items-start mb-md">
+                      <div className="flex items-center gap-md">
+                        <div className={`w-12 h-12 rounded-xl ${theme.bg} border flex items-center justify-center`}>
+                          <span className={`material-symbols-outlined ${theme.text}`} style={{fontVariationSettings: "'FILL' 1"}}>menu_book</span>
+                        </div>
+                        <div>
+                          <h4 className="font-title-md text-title-md text-on-surface font-bold">{topic.title}</h4>
+                          <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">{topic.category}</p>
+                        </div>
+                      </div>
+                      <span className="material-symbols-outlined text-primary hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+                    {topic.description && (
+                      <p className="text-xs text-on-surface-variant leading-relaxed line-clamp-2">
+                        {topic.description}
+                      </p>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        {/* Stats Quick View */}
+        <section className="space-y-md">
+          <h3 className="font-title-md text-title-md text-on-background font-bold">Öğrenim Analizim</h3>
+          <div className="grid grid-cols-2 gap-md">
+            <div className="bg-primary-container text-on-primary-container p-md rounded-2xl flex flex-col gap-xs justify-between">
+              <span className="material-symbols-outlined text-3xl">task_alt</span>
+              <div>
+                <span className="font-display-lg text-3xl font-extrabold block">{totalSolved}</span>
+                <span className="font-label-md text-xs opacity-80 uppercase font-semibold">Çözülen Deneme</span>
+              </div>
+            </div>
+            <div className="bg-secondary-container text-on-secondary-container p-md rounded-2xl flex flex-col gap-xs justify-between">
+              <span className="material-symbols-outlined text-3xl">menu_book</span>
+              <div>
+                <span className="font-display-lg text-3xl font-extrabold block">{topics.length}</span>
+                <span className="font-label-md text-xs opacity-80 uppercase font-semibold">Aktif Çalışma Konusu</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <BottomNav activeTab="topics" />
+    </div>
+  );
+}
