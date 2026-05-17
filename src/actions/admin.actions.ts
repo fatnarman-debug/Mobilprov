@@ -6,6 +6,9 @@ import { revalidatePath } from 'next/cache';
 export async function getTopics() {
   try {
     return await prisma.topic.findMany({
+      include: {
+        materials: true
+      },
       orderBy: { createdAt: 'desc' }
     });
   } catch (error) {
@@ -111,6 +114,9 @@ export async function addTopic(formData: FormData) {
   const title = formData.get('title') as string;
   const category = formData.get('category') as string;
   const description = formData.get('description') as string;
+  const pdfUrl = formData.get('pdfUrl') as string;
+  const audioUrl = formData.get('audioUrl') as string;
+  const videoUrl = formData.get('videoUrl') as string;
 
   try {
     const newTopic = await prisma.topic.create({
@@ -118,14 +124,110 @@ export async function addTopic(formData: FormData) {
         title,
         category,
         description,
-        isPublished: true, // Şimdilik otomatik yayınlıyoruz
+        isPublished: true,
       }
     });
+
+    if (pdfUrl) {
+      await prisma.material.create({
+        data: {
+          topicId: newTopic.id,
+          type: 'READ',
+          title: `${title} - Konu Çalışma Dökümanı (PDF)`,
+          url: pdfUrl
+        }
+      });
+    }
+
+    if (audioUrl) {
+      await prisma.material.create({
+        data: {
+          topicId: newTopic.id,
+          type: 'LISTEN',
+          title: `${title} - Sesli Özet (MP3)`,
+          url: audioUrl
+        }
+      });
+    }
+
+    if (videoUrl) {
+      await prisma.material.create({
+        data: {
+          topicId: newTopic.id,
+          type: 'WATCH',
+          title: `${title} - Videolu Konu Özeti`,
+          url: videoUrl
+        }
+      });
+    }
     
     revalidatePath('/admin');
-    return { success: 'Konu başarıyla eklendi.', topic: newTopic };
+    return { success: 'Konu ve çalışma materyalleri başarıyla eklendi.', topic: newTopic };
   } catch (error) {
+    console.error(error);
     return { error: 'Konu eklenirken hata oluştu.' };
+  }
+}
+
+export async function updateTopicMaterials(topicId: string, formData: FormData) {
+  const pdfUrl = formData.get('pdfUrl') as string;
+  const audioUrl = formData.get('audioUrl') as string;
+  const videoUrl = formData.get('videoUrl') as string;
+
+  try {
+    // 1. Delete old materials
+    await prisma.material.deleteMany({
+      where: { topicId }
+    });
+
+    const topic = await prisma.topic.findUnique({
+      where: { id: topicId }
+    });
+
+    if (!topic) {
+      return { error: 'Konu bulunamadı.' };
+    }
+
+    // 2. Re-create new materials if provided
+    if (pdfUrl) {
+      await prisma.material.create({
+        data: {
+          topicId,
+          type: 'READ',
+          title: `${topic.title} - Konu Çalışma Dökümanı (PDF)`,
+          url: pdfUrl
+        }
+      });
+    }
+
+    if (audioUrl) {
+      await prisma.material.create({
+        data: {
+          topicId,
+          type: 'LISTEN',
+          title: `${topic.title} - Sesli Özet (MP3)`,
+          url: audioUrl
+        }
+      });
+    }
+
+    if (videoUrl) {
+      await prisma.material.create({
+        data: {
+          topicId,
+          type: 'WATCH',
+          title: `${topic.title} - Videolu Konu Özeti`,
+          url: videoUrl
+        }
+      });
+    }
+
+    revalidatePath('/admin');
+    revalidatePath(`/topic/${topicId}`);
+    return { success: 'Çalışma materyalleri başarıyla güncellendi!' };
+  } catch (error) {
+    console.error(error);
+    return { error: 'Materyaller güncellenirken bir hata oluştu.' };
   }
 }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { uploadQuestionsCSV, uploadFlashcardsCSV, addTopic, addQuestion, addFlashcard, getTopics } from '@/actions/admin.actions';
+import { uploadQuestionsCSV, uploadFlashcardsCSV, addTopic, addQuestion, addFlashcard, getTopics, updateTopicMaterials } from '@/actions/admin.actions';
 import Link from 'next/link';
 
 export default function AdminPage() {
@@ -10,6 +10,10 @@ export default function AdminPage() {
   const flashcardFormRef = useRef<HTMLFormElement>(null);
 
   const [topics, setTopics] = useState<any[]>([]);
+  const [editingTopicId, setEditingTopicId] = useState<string | null>(null);
+  const [editPdfUrl, setEditPdfUrl] = useState('');
+  const [editAudioUrl, setEditAudioUrl] = useState('');
+  const [editVideoUrl, setEditVideoUrl] = useState('');
 
   const fetchTopics = async () => {
     const data = await getTopics();
@@ -46,6 +50,19 @@ export default function AdminPage() {
       alert(`Başarılı! Yeni Konu ID: ${result.topic?.id}`);
       topicFormRef.current?.reset();
       fetchTopics(); // Listeyi güncelle
+    }
+  };
+
+  const handleUpdateMaterials = async (topicId: string, e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const result = await updateTopicMaterials(topicId, formData);
+    if (result.error) {
+      alert(result.error);
+    } else {
+      alert(result.success || 'Materyaller güncellendi!');
+      setEditingTopicId(null);
+      fetchTopics();
     }
   };
 
@@ -161,15 +178,23 @@ export default function AdminPage() {
                   <h3 className="font-title-md text-title-md text-on-surface">Yeni Konu (Ünite) Ekle</h3>
                 </div>
                 <form action={handleAddTopic} ref={topicFormRef} className="space-y-sm">
-                  <input type="text" name="title" placeholder="Konu Başlığı (Örn: Türev)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
-                  <input type="text" name="category" placeholder="Kategori (Örn: Matematik)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
+                  <input type="text" name="title" placeholder="Konu Başlığı (Örn: İsveç Tarihi)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
+                  <input type="text" name="category" placeholder="Kategori (Örn: Tarih & Kültür)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
                   <textarea name="description" placeholder="Açıklama (Opsiyonel)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" rows={2}></textarea>
+                  
+                  <div className="border-t border-outline-variant pt-2 mt-2 space-y-2">
+                    <label className="block text-[11px] font-bold text-primary uppercase">Çalışma Materyalleri</label>
+                    <input type="url" name="pdfUrl" placeholder="Okuma PDF / Belge URL (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm" />
+                    <input type="url" name="audioUrl" placeholder="Ses Özet MP3 URL (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm" />
+                    <input type="url" name="videoUrl" placeholder="Video MP4 / YouTube URL (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm" />
+                  </div>
+
                   <button type="submit" className="w-full bg-secondary text-on-secondary py-2 rounded-lg font-title-md text-title-md active:scale-95 transition-transform">Konuyu Oluştur</button>
                 </form>
               </div>
 
               {/* Topics List */}
-              <div className="bg-white p-md rounded-xl border border-outline-variant shadow-sm max-h-[400px] overflow-y-auto">
+              <div className="bg-white p-md rounded-xl border border-outline-variant shadow-sm max-h-[450px] overflow-y-auto">
                 <div className="flex items-center gap-base mb-md sticky top-0 bg-white pb-2 border-b border-outline-variant">
                   <span className="material-symbols-outlined text-primary">list_alt</span>
                   <h3 className="font-title-md text-title-md text-on-surface">Mevcut Konular</h3>
@@ -178,27 +203,111 @@ export default function AdminPage() {
                   <p className="text-sm text-on-surface-variant italic">Henüz konu eklenmedi.</p>
                 ) : (
                   <ul className="space-y-3">
-                    {topics.map(topic => (
-                      <li key={topic.id} className="bg-surface-container-lowest border border-outline-variant p-3 rounded-lg flex flex-col gap-1 hover:border-primary transition-colors">
-                        <div className="font-bold text-on-surface text-sm">{topic.title}</div>
-                        <div className="flex items-center justify-between mt-1">
-                          <code className="text-xs bg-surface-variant text-on-surface-variant px-2 py-1 rounded truncate max-w-[150px]" title={topic.id}>
-                            {topic.id}
-                          </code>
-                          <button 
-                            type="button"
-                            onClick={() => {
-                              navigator.clipboard.writeText(topic.id);
-                              alert('ID Kopyalandı!');
-                            }}
-                            className="text-xs flex items-center gap-1 text-primary hover:text-primary-dark font-bold"
-                          >
-                            <span className="material-symbols-outlined text-[16px]">content_copy</span>
-                            Kopyala
-                          </button>
-                        </div>
-                      </li>
-                    ))}
+                    {topics.map(topic => {
+                      const hasPdf = topic.materials?.some((m: any) => m.type === 'READ');
+                      const hasAudio = topic.materials?.some((m: any) => m.type === 'LISTEN');
+                      const hasVideo = topic.materials?.some((m: any) => m.type === 'WATCH');
+
+                      const pdfUrlVal = topic.materials?.find((m: any) => m.type === 'READ')?.url || '';
+                      const audioUrlVal = topic.materials?.find((m: any) => m.type === 'LISTEN')?.url || '';
+                      const videoUrlVal = topic.materials?.find((m: any) => m.type === 'WATCH')?.url || '';
+
+                      const isEditing = editingTopicId === topic.id;
+
+                      return (
+                        <li key={topic.id} className="bg-surface-container-lowest border border-outline-variant p-3 rounded-lg flex flex-col gap-2 hover:border-primary transition-colors">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <div className="font-bold text-on-surface text-sm">{topic.title}</div>
+                              <div className="text-[11px] text-on-surface-variant">{topic.category}</div>
+                            </div>
+                            <div className="flex gap-1 text-[9px] font-bold">
+                              <span className={`px-1 rounded ${hasPdf ? 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300' : 'bg-surface-variant text-outline opacity-40'}`}>PDF</span>
+                              <span className={`px-1 rounded ${hasAudio ? 'bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300' : 'bg-surface-variant text-outline opacity-40'}`}>SES</span>
+                              <span className={`px-1 rounded ${hasVideo ? 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300' : 'bg-surface-variant text-outline opacity-40'}`}>VİDEO</span>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center justify-between mt-1 border-t border-outline-variant/30 pt-1 text-xs">
+                            <code className="text-[10px] bg-surface-variant text-on-surface-variant px-1.5 py-0.5 rounded truncate max-w-[120px]" title={topic.id}>
+                              {topic.id}
+                            </code>
+                            <div className="flex gap-2">
+                              <button 
+                                type="button"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(topic.id);
+                                  alert('ID Kopyalandı!');
+                                }}
+                                className="text-primary hover:text-primary-dark font-bold flex items-center gap-0.5"
+                              >
+                                <span className="material-symbols-outlined text-[12px]">content_copy</span>
+                                Kopyala
+                              </button>
+                              <button 
+                                type="button"
+                                onClick={() => {
+                                  if (isEditing) {
+                                    setEditingTopicId(null);
+                                  } else {
+                                    setEditingTopicId(topic.id);
+                                    setEditPdfUrl(pdfUrlVal);
+                                    setEditAudioUrl(audioUrlVal);
+                                    setEditVideoUrl(videoUrlVal);
+                                  }
+                                }}
+                                className="text-secondary hover:text-secondary-dark font-bold flex items-center gap-0.5"
+                              >
+                                <span className="material-symbols-outlined text-[12px]">{isEditing ? 'close' : 'edit'}</span>
+                                {isEditing ? 'Kapat' : 'Materyal'}
+                              </button>
+                            </div>
+                          </div>
+
+                          {isEditing && (
+                            <form onSubmit={(e) => handleUpdateMaterials(topic.id, e)} className="border-t border-outline-variant/60 pt-2 mt-1 space-y-2 bg-surface-container-low p-2 rounded">
+                              <div className="text-[10px] font-bold text-primary mb-1">ÇALIŞMA MATERYALLERİ GÜNCELLE</div>
+                              <div>
+                                <label className="block text-[9px] font-semibold text-on-surface-variant">Okuma PDF URL</label>
+                                <input 
+                                  type="url" 
+                                  name="pdfUrl" 
+                                  value={editPdfUrl} 
+                                  onChange={(e) => setEditPdfUrl(e.target.value)} 
+                                  className="w-full bg-white border border-outline-variant rounded p-1 text-xs" 
+                                  placeholder="https://..."
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[9px] font-semibold text-on-surface-variant">Ses MP3 URL</label>
+                                <input 
+                                  type="url" 
+                                  name="audioUrl" 
+                                  value={editAudioUrl} 
+                                  onChange={(e) => setEditAudioUrl(e.target.value)} 
+                                  className="w-full bg-white border border-outline-variant rounded p-1 text-xs" 
+                                  placeholder="https://..."
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[9px] font-semibold text-on-surface-variant">Video MP4/YouTube URL</label>
+                                <input 
+                                  type="url" 
+                                  name="videoUrl" 
+                                  value={editVideoUrl} 
+                                  onChange={(e) => setEditVideoUrl(e.target.value)} 
+                                  className="w-full bg-white border border-outline-variant rounded p-1 text-xs" 
+                                  placeholder="https://..."
+                                />
+                              </div>
+                              <button type="submit" className="w-full bg-primary text-on-primary font-bold py-1 px-2 rounded text-xs active:scale-95 transition-all">
+                                Kaydet ve Güncelle
+                              </button>
+                            </form>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </div>

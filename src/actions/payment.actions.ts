@@ -8,7 +8,7 @@ export async function createCheckoutSession(userId: string) {
     throw new Error('User ID is required');
   }
 
-  const headersList = headers();
+  const headersList = await headers();
   const origin = headersList.get('origin') || 'http://localhost:3000';
 
   const session = await stripe.checkout.sessions.create({

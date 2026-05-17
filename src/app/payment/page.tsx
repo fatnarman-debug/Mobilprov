@@ -6,8 +6,8 @@ import { createCheckoutSession } from '@/actions/payment.actions';
 
 export default function PaymentPage() {
   const searchParams = useSearchParams();
-  const userId = searchParams.get('userId');
-  const canceled = searchParams.get('canceled');
+  const userId = searchParams?.get('userId');
+  const canceled = searchParams?.get('canceled');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleStripeCheckout = async () => {
