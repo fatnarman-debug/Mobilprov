@@ -7,14 +7,15 @@ import PracticeClient from './PracticeClient';
 export default async function PracticePage({
   searchParams,
 }: {
-  searchParams: { topicId?: string };
+  searchParams: Promise<{ topicId?: string }>;
 }) {
   const session = await auth();
   if (!session?.user) {
     redirect('/');
   }
 
-  const topicId = searchParams.topicId;
+  const resolvedParams = await searchParams;
+  const topicId = resolvedParams.topicId;
 
   // Fetch settings for global configurations
   const settings = await prisma.platformSetting.findUnique({
