@@ -2,6 +2,43 @@
 
 import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import fs from 'fs';
+import path from 'path';
+
+// Helper to save uploaded files locally
+async function saveUploadedFile(file: unknown, subFolder = ''): Promise<string | null> {
+  if (!file || !(file instanceof File) || file.size === 0 || file.name === 'undefined') {
+    return null;
+  }
+  
+  try {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    
+    // Define the upload directory
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads', subFolder);
+    
+    // Ensure directories exist
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    
+    // Create a safe, unique filename
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+    const filename = `${uniqueSuffix}-${safeName}`;
+    const filePath = path.join(uploadDir, filename);
+    
+    // Write file to filesystem
+    await fs.promises.writeFile(filePath, buffer);
+    
+    // Return relative URL for Next.js public access
+    return `/uploads/${subFolder ? subFolder + '/' : ''}${filename}`;
+  } catch (error) {
+    console.error('Error saving file:', error);
+    return null;
+  }
+}
 
 export async function getTopics() {
   try {
@@ -114,11 +151,25 @@ export async function addTopic(formData: FormData) {
   const title = formData.get('title') as string;
   const category = formData.get('category') as string;
   const description = formData.get('description') as string;
-  const pdfUrl = formData.get('pdfUrl') as string;
-  const audioUrl = formData.get('audioUrl') as string;
-  const videoUrl = formData.get('videoUrl') as string;
+
+  const pdfFile = formData.get('pdfFile');
+  const audioFile = formData.get('audioFile');
+  const videoFile = formData.get('videoFile');
+
+  let pdfUrl = (formData.get('pdfUrl') as string) || '';
+  let audioUrl = (formData.get('audioUrl') as string) || '';
+  let videoUrl = (formData.get('videoUrl') as string) || '';
 
   try {
+    const savedPdfPath = await saveUploadedFile(pdfFile, 'documents');
+    if (savedPdfPath) pdfUrl = savedPdfPath;
+
+    const savedAudioPath = await saveUploadedFile(audioFile, 'audio');
+    if (savedAudioPath) audioUrl = savedAudioPath;
+
+    const savedVideoPath = await saveUploadedFile(videoFile, 'video');
+    if (savedVideoPath) videoUrl = savedVideoPath;
+
     const newTopic = await prisma.topic.create({
       data: {
         title,
@@ -170,11 +221,24 @@ export async function addTopic(formData: FormData) {
 }
 
 export async function updateTopicMaterials(topicId: string, formData: FormData) {
-  const pdfUrl = formData.get('pdfUrl') as string;
-  const audioUrl = formData.get('audioUrl') as string;
-  const videoUrl = formData.get('videoUrl') as string;
+  let pdfUrl = (formData.get('pdfUrl') as string) || '';
+  let audioUrl = (formData.get('audioUrl') as string) || '';
+  let videoUrl = (formData.get('videoUrl') as string) || '';
+
+  const pdfFile = formData.get('pdfFile');
+  const audioFile = formData.get('audioFile');
+  const videoFile = formData.get('videoFile');
 
   try {
+    const savedPdfPath = await saveUploadedFile(pdfFile, 'documents');
+    if (savedPdfPath) pdfUrl = savedPdfPath;
+
+    const savedAudioPath = await saveUploadedFile(audioFile, 'audio');
+    if (savedAudioPath) audioUrl = savedAudioPath;
+
+    const savedVideoPath = await saveUploadedFile(videoFile, 'video');
+    if (savedVideoPath) videoUrl = savedVideoPath;
+
     // 1. Delete old materials
     await prisma.material.deleteMany({
       where: { topicId }

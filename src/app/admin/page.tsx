@@ -182,12 +182,34 @@ export default function AdminPage() {
                   <input type="text" name="category" placeholder="Kategori (Örn: Tarih & Kültür)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
                   <textarea name="description" placeholder="Açıklama (Opsiyonel)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" rows={2}></textarea>
                   
-                  <div className="border-t border-outline-variant pt-2 mt-2 space-y-2">
+                  <div className="border-t border-outline-variant pt-2 mt-2 space-y-3">
                     <label className="block text-[11px] font-bold text-primary uppercase">Çalışma Materyalleri</label>
-                    <input type="url" name="pdfUrl" placeholder="Okuma PDF / Belge URL (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm" />
-                    <input type="url" name="audioUrl" placeholder="Ses Özet MP3 URL (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm" />
-                    <input type="url" name="videoUrl" placeholder="Video MP4 / YouTube URL (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm" />
+                    
+                    <div className="space-y-1">
+                      <span className="block text-[10px] font-semibold text-on-surface-variant">Okuma Dökümanı (PDF)</span>
+                      <div className="grid grid-cols-1 gap-1">
+                        <input type="file" name="pdfFile" accept=".pdf" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
+                        <input type="url" name="pdfUrl" placeholder="Veya PDF Bağlantı Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="block text-[10px] font-semibold text-on-surface-variant">Ses Kaydı (MP3)</span>
+                      <div className="grid grid-cols-1 gap-1">
+                        <input type="file" name="audioFile" accept="audio/*" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
+                        <input type="url" name="audioUrl" placeholder="Veya Ses Bağlantı Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="block text-[10px] font-semibold text-on-surface-variant">Video Anlatım (MP4/YouTube)</span>
+                      <div className="grid grid-cols-1 gap-1">
+                        <input type="file" name="videoFile" accept="video/*" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
+                        <input type="url" name="videoUrl" placeholder="Veya Video/YouTube Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                      </div>
+                    </div>
                   </div>
+
 
                   <button type="submit" className="w-full bg-secondary text-on-secondary py-2 rounded-lg font-title-md text-title-md active:scale-95 transition-transform">Konuyu Oluştur</button>
                 </form>
@@ -265,42 +287,64 @@ export default function AdminPage() {
                           </div>
 
                           {isEditing && (
-                            <form onSubmit={(e) => handleUpdateMaterials(topic.id, e)} className="border-t border-outline-variant/60 pt-2 mt-1 space-y-2 bg-surface-container-low p-2 rounded">
+                            <form onSubmit={(e) => handleUpdateMaterials(topic.id, e)} className="border-t border-outline-variant/60 pt-2 mt-1 space-y-3 bg-surface-container-low p-2 rounded">
                               <div className="text-[10px] font-bold text-primary mb-1">ÇALIŞMA MATERYALLERİ GÜNCELLE</div>
-                              <div>
-                                <label className="block text-[9px] font-semibold text-on-surface-variant">Okuma PDF URL</label>
+                              
+                              <div className="space-y-1">
+                                <label className="block text-[9px] font-semibold text-on-surface-variant">Okuma PDF (Belge)</label>
+                                <input 
+                                  type="file" 
+                                  name="pdfFile" 
+                                  accept=".pdf" 
+                                  className="w-full text-xs bg-white border border-outline-variant rounded p-1 mb-1" 
+                                />
                                 <input 
                                   type="url" 
                                   name="pdfUrl" 
                                   value={editPdfUrl} 
                                   onChange={(e) => setEditPdfUrl(e.target.value)} 
                                   className="w-full bg-white border border-outline-variant rounded p-1 text-xs" 
-                                  placeholder="https://..."
+                                  placeholder="Veya PDF Bağlantı Linki (https://...)"
                                 />
                               </div>
-                              <div>
-                                <label className="block text-[9px] font-semibold text-on-surface-variant">Ses MP3 URL</label>
+
+                              <div className="space-y-1">
+                                <label className="block text-[9px] font-semibold text-on-surface-variant">Ses MP3 (Audio)</label>
+                                <input 
+                                  type="file" 
+                                  name="audioFile" 
+                                  accept="audio/*" 
+                                  className="w-full text-xs bg-white border border-outline-variant rounded p-1 mb-1" 
+                                />
                                 <input 
                                   type="url" 
                                   name="audioUrl" 
                                   value={editAudioUrl} 
                                   onChange={(e) => setEditAudioUrl(e.target.value)} 
                                   className="w-full bg-white border border-outline-variant rounded p-1 text-xs" 
-                                  placeholder="https://..."
+                                  placeholder="Veya MP3 Bağlantı Linki (https://...)"
                                 />
                               </div>
-                              <div>
-                                <label className="block text-[9px] font-semibold text-on-surface-variant">Video MP4/YouTube URL</label>
+
+                              <div className="space-y-1">
+                                <label className="block text-[9px] font-semibold text-on-surface-variant">Video MP4 / YouTube</label>
+                                <input 
+                                  type="file" 
+                                  name="videoFile" 
+                                  accept="video/*" 
+                                  className="w-full text-xs bg-white border border-outline-variant rounded p-1 mb-1" 
+                                />
                                 <input 
                                   type="url" 
                                   name="videoUrl" 
                                   value={editVideoUrl} 
                                   onChange={(e) => setEditVideoUrl(e.target.value)} 
                                   className="w-full bg-white border border-outline-variant rounded p-1 text-xs" 
-                                  placeholder="https://..."
+                                  placeholder="Veya Video Linki (https://...)"
                                 />
                               </div>
-                              <button type="submit" className="w-full bg-primary text-on-primary font-bold py-1 px-2 rounded text-xs active:scale-95 transition-all">
+
+                              <button type="submit" className="w-full bg-primary text-on-primary font-bold py-1.5 px-2 rounded text-xs active:scale-95 transition-all mt-1">
                                 Kaydet ve Güncelle
                               </button>
                             </form>

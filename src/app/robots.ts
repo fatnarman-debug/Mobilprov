@@ -1,0 +1,32 @@
+import { MetadataRoute } from 'next'
+
+export default function robots(): MetadataRoute.Robots {
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://medborgarprov.com'
+
+  return {
+    rules: [
+      {
+        userAgent: '*',
+        allow: [
+          '/',
+          '/ovning',
+          '/ovning/',
+          '/ovning/flashcards',
+          '/om-medborgarskapstestet',
+        ],
+        disallow: [
+          '/admin/',
+          '/dashboard/',
+          '/profile/',
+          '/api/',
+          '/auth/',
+          '/payment/',
+          '/test/',
+          '/analysis/',
+        ],
+      },
+    ],
+    sitemap: `${siteUrl}/sitemap.xml`,
+    host: siteUrl,
+  }
+}

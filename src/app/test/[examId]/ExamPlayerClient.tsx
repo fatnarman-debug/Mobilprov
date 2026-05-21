@@ -40,12 +40,15 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
     const saved = localStorage.getItem(`exam_${mockExam.id}_state`);
     if (saved) {
       try {
-        const { answers, currentIdx: savedIdx, timeLeft: savedTime } = JSON.parse(saved);
-        if (answers) setSelectedAnswers(answers);
-        if (savedIdx !== undefined) setCurrentIdx(savedIdx);
-        if (savedTime !== undefined) setTimeLeft(savedTime);
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed.answers === 'object' && parsed.answers !== null) {
+          setSelectedAnswers(parsed.answers);
+        }
+        if (typeof parsed?.currentIdx === 'number') setCurrentIdx(parsed.currentIdx);
+        if (typeof parsed?.timeLeft === 'number') setTimeLeft(parsed.timeLeft);
       } catch (e) {
         console.error("Failed to restore exam state from localStorage:", e);
+        localStorage.removeItem(`exam_${mockExam.id}_state`);
       }
     }
   }, [mockExam.id]);
@@ -315,7 +318,7 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
               SORU {currentIdx + 1} / {totalQuestions}
             </span>
             <span className="text-on-surface-variant font-label-md text-xs">
-              Tamamlanan: {Object.keys(selectedAnswers).length} / {totalQuestions}
+              Tamamlanan: {Object.keys(selectedAnswers ?? {}).length} / {totalQuestions}
             </span>
           </div>
           <div className="h-2.5 w-full bg-surface-container rounded-full mt-base overflow-hidden">

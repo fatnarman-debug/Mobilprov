@@ -1,10 +1,15 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
 import prisma from "@/lib/db"
 import bcrypt from "bcryptjs"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -44,14 +49,47 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-        token.role = user.role
-        token.isPaid = user.isPaid
+    // Google ile ilk girişte kullanıcıyı veritabanında oluştur
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        try {
+          const existingUser = await prisma.user.findUnique({
+            where: { email: user.email! }
+          })
+
+          if (!existingUser) {
+            await prisma.user.create({
+              data: {
+                email: user.email!,
+                name: user.name ?? "",
+                passwordHash: "", // Google kullanıcılarının şifresi yok
+                isPaid: false,
+              }
+            })
+          }
+        } catch (error) {
+          console.error("Google signIn DB error:", error)
+          return false
+        }
+      }
+      return true
+    },
+
+    async jwt({ token, user, account }) {
+      // İlk girişte veya her token yenilemesinde DB'den güncel veriyi çek
+      if (user || account) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: token.email! }
+        })
+        if (dbUser) {
+          token.id = dbUser.id
+          token.role = dbUser.role
+          token.isPaid = dbUser.isPaid
+        }
       }
       return token
     },
+
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string
@@ -62,7 +100,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }
   },
   pages: {
-    signIn: '/', // we will use the main page or /login for auth
+    signIn: '/',
   },
   session: {
     strategy: "jwt",

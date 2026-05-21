@@ -2,174 +2,327 @@
 
 import React, { useState } from 'react';
 import { loginUser, registerUser } from '@/actions/auth.actions';
+import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+
+// İsveç Bayrağı SVG
+function SwedenFlag({ size = 64 }: { size?: number }) {
+  const w = size * 1.5;
+  const h = size;
+  const crossX = w * 0.35;
+  const crossThickness = h * 0.22;
+  const r = size * 0.12;
+
+  return (
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} xmlns="http://www.w3.org/2000/svg" style={{ borderRadius: r, display: 'block', boxShadow: '0 4px 24px rgba(0,0,0,0.35)' }}>
+      {/* Blue background */}
+      <rect width={w} height={h} fill="#006AA7" rx={r} />
+      {/* Horizontal yellow stripe */}
+      <rect y={(h - crossThickness) / 2} width={w} height={crossThickness} fill="#FECC02" />
+      {/* Vertical yellow stripe */}
+      <rect x={crossX - crossThickness / 2} width={crossThickness} height={h} fill="#FECC02" />
+    </svg>
+  );
+}
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (formData: FormData) => {
     setError(null);
     setLoading(true);
-    
     try {
-      const response = isLogin 
-        ? await loginUser(formData) 
+      const response = isLogin
+        ? await loginUser(formData)
         : await registerUser(formData);
-        
       if (response?.error) {
         setError(response.error);
         setLoading(false);
       }
     } catch (e) {
       console.error(e);
-      // Next.js redirect might throw an error we need to catch or let bubble up depending on the implementation.
-      // But typically, successful redirect doesn't reach here or we don't need to unset loading.
     }
   };
 
   return (
-    <div className="bg-surface text-on-surface min-h-screen flex flex-col">
-      {/* Top Navigation Anchor */}
-      <header className="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant">
-        <div className="flex justify-between items-center px-gutter h-16 w-full max-w-container-max mx-auto">
-          <span className="font-display-lg text-title-md text-primary font-bold">EduFlow</span>
-          <div className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
-            <span className="material-symbols-outlined text-primary">school</span>
+    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg, #002244 0%, #003566 40%, #006AA7 100%)' }}>
+      
+      {/* Animated background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-0">
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full opacity-10" style={{ background: '#FECC02', filter: 'blur(80px)' }} />
+        <div className="absolute top-1/3 -right-32 w-80 h-80 rounded-full opacity-10" style={{ background: '#006AA7', filter: 'blur(80px)' }} />
+        <div className="absolute -bottom-32 left-1/3 w-96 h-96 rounded-full opacity-10" style={{ background: '#FECC02', filter: 'blur(100px)' }} />
+        {/* Swedish flag cross - subtle watermark */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: 'linear-gradient(#FECC02 0px, #FECC02 1px, transparent 1px), linear-gradient(90deg, #FECC02 0px, #FECC02 1px, transparent 1px)',
+          backgroundSize: '200px 200px',
+          backgroundPosition: '40% 50%'
+        }} />
+      </div>
+
+      {/* Header */}
+      <header className="relative z-10 flex justify-between items-center px-6 py-4">
+        <div className="flex items-center gap-3">
+          <SwedenFlag size={40} />
+          <div>
+            <span className="text-white font-bold text-lg tracking-tight">MEDBORGARPROV</span>
+            <span style={{ color: '#FECC02' }} className="font-bold text-lg">.com</span>
           </div>
+        </div>
+        <div className="flex items-center gap-2 text-white/60 text-sm">
+          <span>🇸🇪</span>
+          <span>Sverige</span>
         </div>
       </header>
 
-      {/* Main Content Canvas */}
-      <main className="flex-grow pt-24 pb-12 px-gutter flex flex-col items-center justify-start w-full max-w-container-max mx-auto">
-        {/* Welcome Section */}
-        <div className="w-full text-center mb-lg">
-          <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-xs">Geleceğini İnşa Et</h1>
-          <p className="font-body-md text-body-md text-on-surface-variant">Sınav hazırlığında en güvenilir çözüm ortağın.</p>
+      {/* Main */}
+      <main className="relative z-10 flex-grow flex flex-col lg:flex-row items-center justify-center px-4 py-8 gap-12 max-w-6xl mx-auto w-full">
+
+        {/* Left — Hero text (visible on large screens) */}
+        <div className="hidden lg:flex flex-col flex-1 text-white max-w-lg">
+          <div className="mb-8">
+            <SwedenFlag size={120} />
+          </div>
+          <h1 className="text-5xl font-extrabold leading-tight mb-4">
+            Bestå medborgarskapstestet<br />
+            <span style={{ color: '#FECC02' }}>på första försöket</span>
+          </h1>
+          <p className="text-xl text-white/80 mb-8 leading-relaxed">
+            Flashcards, övningsfrågor och provsimuleringar – allt på ett ställe
+          </p>
+
+          {/* Feature chips */}
+          <div className="flex flex-wrap gap-3">
+            {[
+              { icon: '📚', text: 'Konuya özel çalışma' },
+              { icon: '🧠', text: 'Flashcard sistemi' },
+              { icon: '✅', text: 'Deneme sınavları' },
+              { icon: '📊', text: 'İlerleme takibi' },
+            ].map((f) => (
+              <div
+                key={f.text}
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white border border-white/20"
+                style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}
+              >
+                <span>{f.icon}</span>
+                <span>{f.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Auth Card Container */}
-        <div className="w-full max-w-md bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden p-6 relative z-10">
-          {/* Toggle Tabs */}
-          <div className="flex bg-surface-container-low p-1 rounded-lg mb-8">
-            <button 
-              className={`flex-1 py-2 font-label-md text-label-md rounded-md transition-all ${isLogin ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => { setIsLogin(true); setError(null); }}
-              type="button"
-            >
-              Giriş Yap
-            </button>
-            <button 
-              className={`flex-1 py-2 font-label-md text-label-md transition-all ${!isLogin ? 'bg-white shadow-sm text-primary rounded-md' : 'text-on-surface-variant hover:text-primary'}`}
-              onClick={() => { setIsLogin(false); setError(null); }}
-              type="button"
-            >
-              Kayıt Ol
-            </button>
-          </div>
-
-          {/* Social Login */}
-          <div className="flex gap-4 mb-8">
-            <button className="flex-1 flex justify-center items-center py-3 border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors" type="button">
-              <img alt="Google" className="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKalRK8qYR-7UACPhuV1ZOTZ1LT09OgXRk6nSLvgqELYU5rFHmE3xR3-DIOO5amF8bnV2sXEjqUojovXvP7t1C5f1EtNSfrNf5xNER5gi_fet_oYis7CSmjoXkl6Cn6pej3K4TFNWbO5YXTLEvdjqWustNDsW_UfBtn-Ei2CIPZ-eA91Ua98VePBDX6xlOnycUatAj5ce1Q33NOZNiHFrh-QVLEbU_lFuBPExmFG6iVAbjhoyZFbFgexAwfb1rTvOl5RXwBTm5Jf8"/>
-            </button>
-            <button className="flex-1 flex justify-center items-center py-3 border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors" type="button">
-              <span className="material-symbols-outlined text-on-surface">account_circle</span>
-            </button>
-          </div>
-
-          <div className="relative flex items-center mb-8">
-            <div className="flex-grow border-t border-outline-variant"></div>
-            <span className="px-4 font-label-md text-label-md text-outline uppercase tracking-widest">veya</span>
-            <div className="flex-grow border-t border-outline-variant"></div>
-          </div>
-
-          {/* Form Fields */}
-          <form className="space-y-6" action={handleSubmit}>
-            {!isLogin && (
-              <div className="space-y-1">
-                <label className="block font-label-md text-label-md text-on-surface-variant ml-1">Ad Soyad</label>
-                <div className="relative">
-                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">person</span>
-                  <input className="w-full pl-10 pr-4 py-3 bg-surface border-outline-variant border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none font-body-md text-body-md" placeholder="Adınız ve Soyadınız" type="text" name="name" required />
-                </div>
-              </div>
-            )}
-            
-            <div className="space-y-1">
-              <label className="block font-label-md text-label-md text-on-surface-variant ml-1">E-posta</label>
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">mail</span>
-                <input className="w-full pl-10 pr-4 py-3 bg-surface border-outline-variant border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none font-body-md text-body-md" placeholder="ornek@edu.com" type="email" name="email" required />
-              </div>
+        {/* Right — Auth Card */}
+        <div
+          className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden"
+          style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.15)' }}
+        >
+          {/* Card Header */}
+          <div className="p-8 pb-0 text-center">
+            {/* Logo — mobile only */}
+            <div className="flex justify-center mb-4 lg:hidden">
+              <SwedenFlag size={72} />
             </div>
+            <h2 className="text-white text-2xl font-bold mb-1">
+              {isLogin ? 'Hoş Geldiniz' : 'Hesap Oluştur'}
+            </h2>
+            <p className="text-white/60 text-sm mb-6">
+              {isLogin ? 'Medborgarprov hesabınıza giriş yapın' : 'Sınavınıza hazırlanmaya başlayın'}
+            </p>
 
-            <div className="space-y-1">
-              <label className="block font-label-md text-label-md text-on-surface-variant ml-1">Şifre</label>
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">lock</span>
-                <input className="w-full pl-10 pr-12 py-3 bg-surface border-outline-variant border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none font-body-md text-body-md" placeholder="••••••••" type="password" name="password" required />
-                <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[20px] cursor-pointer">visibility</span>
-              </div>
-            </div>
-
-            {error && (
-              <div className="p-3 bg-error/10 text-error rounded-lg font-label-md text-sm">
-                {error}
-              </div>
-            )}
-
-            {/* Transactional Action Button */}
-            <div className="pt-4">
-              <button 
-                className="w-full bg-primary text-on-primary py-4 rounded-xl font-title-md text-title-md flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-md shadow-primary/20 disabled:opacity-70 disabled:active:scale-100" 
-                type="submit"
-                disabled={loading}
+            {/* Tabs */}
+            <div className="flex rounded-xl p-1 mb-6" style={{ background: 'rgba(0,0,0,0.25)' }}>
+              <button
+                onClick={() => { setIsLogin(true); setError(null); }}
+                type="button"
+                className="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all"
+                style={isLogin
+                  ? { background: '#FECC02', color: '#002244' }
+                  : { color: 'rgba(255,255,255,0.6)' }}
               >
-                <span>{loading ? 'İşleniyor...' : (isLogin ? 'Giriş Yap' : 'Kayıt Ol ve Ödeme Yap')}</span>
-                {!isLogin && !loading && <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>payments</span>}
+                Giriş Yap
+              </button>
+              <button
+                onClick={() => { setIsLogin(false); setError(null); }}
+                type="button"
+                className="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all"
+                style={!isLogin
+                  ? { background: '#FECC02', color: '#002244' }
+                  : { color: 'rgba(255,255,255,0.6)' }}
+              >
+                Kayıt Ol
               </button>
             </div>
-          </form>
+          </div>
 
-          {/* Trust Indicator (Only for Register) */}
-          {!isLogin && (
-            <div className="mt-8 p-4 bg-secondary-container rounded-lg border border-secondary/20 flex items-start gap-3">
-              <span className="material-symbols-outlined text-on-secondary-container mt-0.5">verified_user</span>
-              <div className="space-y-1">
-                <p className="font-label-md text-label-md text-on-secondary-container font-bold">Güvenli Ödeme</p>
-                <p className="text-[11px] leading-relaxed text-on-secondary-container/80">Erişiminiz, ödeme işlemi başarıyla tamamlandıktan hemen sonra aktif edilecektir. 256-bit SSL ile korunmaktasınız.</p>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Footer Links */}
-        <div className="mt-lg text-center space-y-4 z-10">
-          <p className="font-body-sm text-body-sm text-on-surface-variant">
-            {isLogin ? 'Hesabın yok mu? ' : 'Zaten bir hesabın var mı? '}
-            <button className="text-primary font-bold hover:underline" onClick={() => setIsLogin(!isLogin)} type="button">
-              {isLogin ? 'Kayıt Ol' : 'Giriş Yap'}
+          <div className="p-8 pt-0">
+            {/* Google Button */}
+            <button
+              type="button"
+              onClick={() => signIn('google', { callbackUrl: '/auth/google-callback' })}
+              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl font-semibold text-sm transition-all mb-5 hover:scale-[1.02] active:scale-95"
+              style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', color: 'white' }}
+            >
+              {/* Google "G" Logo SVG */}
+              <svg width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                <path fill="none" d="M0 0h48v48H0z"/>
+              </svg>
+              Google ile {isLogin ? 'Giriş Yap' : 'Kayıt Ol'}
             </button>
-          </p>
-          <div className="flex justify-center gap-base text-outline text-[12px] font-label-md">
-            <a className="hover:text-primary transition-colors" href="#">Kullanım Koşulları</a>
-            <span>•</span>
-            <a className="hover:text-primary transition-colors" href="#">Gizlilik Politikası</a>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 mb-5">
+              <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.15)' }} />
+              <span className="text-white/40 text-xs font-semibold tracking-widest">VEYA</span>
+              <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.15)' }} />
+            </div>
+
+            {/* Form */}
+            <form className="space-y-4" action={handleSubmit}>
+              {!isLogin && (
+                <div>
+                  <label className="block text-white/70 text-xs font-semibold mb-1.5 ml-1">Ad Soyad</label>
+                  <div className="relative">
+                    <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-[20px]">person</span>
+                    <input
+                      name="name"
+                      type="text"
+                      placeholder="Adınız ve Soyadınız"
+                      required
+                      className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all focus:ring-2"
+                      style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', focusRingColor: '#FECC02' } as React.CSSProperties}
+                      onFocus={e => (e.target.style.borderColor = '#FECC02')}
+                      onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.15)')}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <label className="block text-white/70 text-xs font-semibold mb-1.5 ml-1">E-posta</label>
+                <div className="relative">
+                  <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-[20px]">mail</span>
+                  <input
+                    name="email"
+                    type="email"
+                    placeholder="ornek@gmail.com"
+                    required
+                    className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
+                    style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
+                    onFocus={e => (e.target.style.borderColor = '#FECC02')}
+                    onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.15)')}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white/70 text-xs font-semibold mb-1.5 ml-1">Şifre</label>
+                <div className="relative">
+                  <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-[20px]">lock</span>
+                  <input
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    required
+                    className="w-full pl-10 pr-11 py-3 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
+                    style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
+                    onFocus={e => (e.target.style.borderColor = '#FECC02')}
+                    onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.15)')}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors"
+                  >
+                    <span className="material-symbols-outlined text-[20px]">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {error && (
+                <div className="flex items-center gap-2 p-3 rounded-xl text-sm" style={{ background: 'rgba(186,26,26,0.2)', border: '1px solid rgba(186,26,26,0.4)', color: '#ffb3b3' }}>
+                  <span className="material-symbols-outlined text-[18px]">error</span>
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3.5 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:scale-100 flex items-center justify-center gap-2"
+                style={{ background: '#FECC02', color: '#002244' }}
+              >
+                {loading ? (
+                  <>
+                    <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    İşleniyor...
+                  </>
+                ) : (
+                  <>
+                    {isLogin ? 'Giriş Yap' : 'Kayıt Ol ve Devam Et'}
+                    <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                  </>
+                )}
+              </button>
+            </form>
+
+            {/* Trust badge (register only) */}
+            {!isLogin && (
+              <div className="mt-4 flex items-center gap-2 p-3 rounded-xl text-xs" style={{ background: 'rgba(254,204,2,0.1)', border: '1px solid rgba(254,204,2,0.2)', color: 'rgba(255,255,255,0.7)' }}>
+                <span className="material-symbols-outlined text-[16px]" style={{ color: '#FECC02' }}>verified_user</span>
+                Ödeme işlemi 256-bit SSL ile güvence altındadır.
+              </div>
+            )}
+
+            {/* Switch mode */}
+            <p className="text-center text-white/50 text-sm mt-5">
+              {isLogin ? 'Hesabın yok mu? ' : 'Zaten hesabın var mı? '}
+              <button
+                type="button"
+                onClick={() => { setIsLogin(!isLogin); setError(null); }}
+                className="font-semibold transition-colors hover:underline"
+                style={{ color: '#FECC02' }}
+              >
+                {isLogin ? 'Kayıt Ol' : 'Giriş Yap'}
+              </button>
+            </p>
+
+            {/* Free trial link */}
+            <div className="mt-5 pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+              <Link
+                href="/ovning"
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02]"
+                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.7)' }}
+              >
+                <span>🆓</span>
+                Önce ücretsiz dene – kayıt gerekmez
+                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </Link>
+            </div>
           </div>
         </div>
       </main>
 
-      {/* Contextual Hero Image (Subtle Background Element) */}
-      <div className="fixed inset-0 -z-10 opacity-5 pointer-events-none overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary rounded-full blur-[120px]"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary rounded-full blur-[120px]"></div>
-      </div>
-      
-      {/* Background Illustration Placeholder */}
-      <div className="hidden lg:block fixed right-12 bottom-12 w-1/4 opacity-10 -z-10">
-        <img className="w-full h-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD62ZmOC0RCSi7SYK5t788qQpNPnz6GcDFveJL3NVi4Ojo0EmwQWwZxdmQxa7UVIbLgrVgmr9ssWVqDgxMI7IE7XjUiShYa1WJtUKO9AxxCwcxnjeigZBSr31qHmtc6juMtXSi12j_aDpEI9c7zJ2ICtKHJbr1ivVZcs34tqYojX5O9n_EkyLG6uu-J-SauU_LPlwz-n03MP_EW9UH1fyFhcxJET7HNP6Vgi-4iewifRaRN22rWisFL51NhHUe0bOAl8foKvKYM-3c" alt="Background decoration"/>
-      </div>
+      {/* Footer */}
+      <footer className="relative z-10 text-center pb-6 text-white/30 text-xs space-y-2">
+        <p>🇸🇪 &nbsp;medborgarprov.com</p>
+        <div className="flex justify-center gap-4">
+          <Link href="/ovning" className="hover:text-white/60 transition-colors">Gratis övning</Link>
+          <span>·</span>
+          <Link href="/ovning/flashcards" className="hover:text-white/60 transition-colors">Flashcards</Link>
+          <span>·</span>
+          <a href="#" className="hover:text-white/60 transition-colors">Kullanım Koşulları</a>
+        </div>
+      </footer>
     </div>
   );
 }
