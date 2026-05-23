@@ -29,3 +29,107 @@
 .flashcard-back {
     transform: rotateY(180deg);
 }
+
+/* Custom dynamic blog content styling with 30% font scale increase */
+.prose-custom p {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.3rem; /* text-xl scaled by 30% (~20.8px) */
+  line-height: 1.75;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+@media (min-width: 768px) {
+  .prose-custom p {
+    font-size: 1.45rem; /* md:text-2xl scaled by 30% (~23.2px) */
+  }
+}
+
+.prose-custom h2 {
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 2rem; /* text-3xl scaled by 30% (~32px) */
+  margin-top: 2.75rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.25;
+}
+@media (min-width: 768px) {
+  .prose-custom h2 {
+    font-size: 2.5rem; /* md:text-4xl scaled by 30% (~40px) */
+  }
+}
+
+.prose-custom h3 {
+  color: #FECC02; /* Swedish Yellow */
+  font-weight: 700;
+  font-size: 1.625rem; /* text-2xl scaled by 30% (~26px) */
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.35;
+}
+
+.prose-custom ul {
+  list-style-type: disc;
+  padding-left: 1.75rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.prose-custom ol {
+  list-style-type: decimal;
+  padding-left: 1.75rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.prose-custom li {
+  font-size: 1.3rem; /* text-xl scaled by 30% (~20.8px) */
+  line-height: 1.75;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+@media (min-width: 768px) {
+  .prose-custom li {
+    font-size: 1.45rem; /* md:text-2xl scaled by 30% (~23.2px) */
+  }
+}
+
+.prose-custom strong {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.prose-custom em {
+  color: rgba(255, 255, 255, 0.98);
+  font-style: italic;
+}
+
+.prose-custom code {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  border-radius: 0.375rem;
+  font-size: 1.15rem; /* text-lg scaled by 30% (~18.4px) */
+  color: #fef08a; /* text-yellow-200 */
+  font-family: monospace;
+}
+
+.prose-custom a {
+  color: #FECC02; /* brand yellow */
+  text-decoration-line: underline;
+  transition-property: color;
+  transition-duration: 150ms;
+}
+.prose-custom a:hover {
+  color: #fef08a; /* text-yellow-200 */
+}
+
+.prose-custom hr {
+  border-color: rgba(255, 255, 255, 0.15);
+  margin-top: 2.25rem;
+  margin-bottom: 2.25rem;
+}
+

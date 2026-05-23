@@ -12,6 +12,7 @@ export async function registerUser(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   const name = formData.get('name') as string;
+  const nativeLanguage = (formData.get('nativeLanguage') as string) || 'TR';
 
   if (!email || !password) {
     return { error: 'E-posta ve şifre zorunludur.' };
@@ -34,6 +35,7 @@ export async function registerUser(formData: FormData) {
         name,
         passwordHash,
         isPaid: false,
+        nativeLanguage,
       }
     });
 

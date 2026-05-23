@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import GlossaryText from '@/components/GlossaryText'
 
 interface Question {
   id: string
@@ -14,13 +15,29 @@ interface Question {
   topic: { title: string }
 }
 
-export default function OvningClient({ questions }: { questions: Question[] }) {
+export default function OvningClient({ questions, userLang = 'TR' }: { questions: Question[]; userLang?: string }) {
   const [current, setCurrent] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
   const [score, setScore] = useState(0)
   const [finished, setFinished] = useState(false)
+  const [lang, setLang] = useState(userLang)
+
+  useEffect(() => {
+    const saved = localStorage.getItem('preferred_language')
+    if (saved) {
+      setLang(saved)
+    } else if (userLang) {
+      setLang(userLang)
+    }
+  }, [userLang])
+
+  const handleLangChange = (val: string) => {
+    setLang(val)
+    localStorage.setItem('preferred_language', val)
+  }
 
   const q = questions[current]
+
   const options = [
     { key: 'A', text: q.optionA },
     { key: 'B', text: q.optionB },
@@ -108,19 +125,30 @@ export default function OvningClient({ questions }: { questions: Question[] }) {
       {/* Card */}
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
         <div className="p-8">
-          {/* Topic badge */}
-          <div className="mb-4">
+          {/* Topic badge & Language Selector */}
+          <div className="mb-4 flex items-center justify-between">
             <span
               className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
               style={{ background: '#ede9fe', color: '#7c3aed' }}
             >
               {q.topic.title}
             </span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Çeviri Dili / Lang:</span>
+              <select
+                value={lang}
+                onChange={(e) => handleLangChange(e.target.value)}
+                className="text-xs font-bold border border-gray-200 rounded-lg px-2.5 py-1 bg-white text-gray-700 outline-none focus:ring-1 focus:ring-purple-500 cursor-pointer shadow-sm"
+              >
+                <option value="TR">TR 🇹🇷</option>
+                <option value="EN">EN 🇬🇧</option>
+              </select>
+            </div>
           </div>
 
           {/* Question */}
           <h2 className="text-lg font-extrabold text-gray-800 mb-6 leading-snug">
-            <span style={{ color: '#7c3aed' }}>{current + 1}.</span> {q.text}
+            <span style={{ color: '#7c3aed' }}>{current + 1}.</span> <GlossaryText text={q.text} language={lang} />
           </h2>
 
           {/* Options */}
@@ -167,7 +195,7 @@ export default function OvningClient({ questions }: { questions: Question[] }) {
                   >
                     {opt.key}
                   </span>
-                  <span className="font-medium">{opt.text}</span>
+                  <span className="font-medium"><GlossaryText text={opt.text} language={lang} /></span>
                   {indicator}
                 </button>
               )
@@ -183,7 +211,7 @@ export default function OvningClient({ questions }: { questions: Question[] }) {
               <span className="text-yellow-500 text-base flex-shrink-0">💡</span>
               <div>
                 <span className="font-bold text-yellow-700">Förklaring: </span>
-                {q.explanation}
+                <GlossaryText text={q.explanation} language={lang} />
               </div>
             </div>
           )}

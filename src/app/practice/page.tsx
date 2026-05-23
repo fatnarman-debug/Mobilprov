@@ -3,6 +3,10 @@ import { notFound, redirect } from 'next/navigation';
 import prisma from '@/lib/db';
 import { auth } from '@/auth';
 import PracticeClient from './PracticeClient';
+import { privateSeo } from '@/lib/seo';
+
+export const metadata = privateSeo('Öva efter ämne – Medborgarskapsprov | Konuya Göre Çalış', 'Öva på frågor och flashcards efter ämne inför medborgarskapsprovet. İsveç vatandaşlık sınavına konu bazlı hazırlan.', '/practice');
+
 
 export default async function PracticePage({
   searchParams,
@@ -87,6 +91,11 @@ export default async function PracticePage({
     back: f.backText,
   }));
 
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { nativeLanguage: true }
+  });
+
   return (
     <PracticeClient 
       topic={topic} 
@@ -97,6 +106,7 @@ export default async function PracticePage({
       freeDailyQuestionLimit={settings?.freeDailyQuestionLimit ?? 20}
       siteName={settings?.siteName || 'EduFlow'}
       userId={session.user.id}
+      userLang={user?.nativeLanguage || 'TR'}
     />
   );
 }

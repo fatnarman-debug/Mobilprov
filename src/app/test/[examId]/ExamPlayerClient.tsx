@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { saveTestResult } from '@/actions/testResult.actions';
+import GlossaryText from '@/components/GlossaryText';
 import type { MockExam, Question } from '@prisma/client';
 
 type MockExamWithQuestions = MockExam & {
@@ -18,9 +19,10 @@ type ExamPlayerProps = {
   passingScore: number;
   siteName: string;
   userId: string;
+  userLang: string;
 };
 
-export default function ExamPlayerClient({ mockExam, passingScore, siteName, userId }: ExamPlayerProps) {
+export default function ExamPlayerClient({ mockExam, passingScore, siteName, userId, userLang }: ExamPlayerProps) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -113,15 +115,20 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
     let correct = 0;
     let wrong = 0;
     let empty = 0;
+    const wrongQuestionIds: string[] = [];
+    const correctQuestionIds: string[] = [];
 
     mockExam.questions.forEach(({ question }) => {
       const selected = selectedAnswers[question.id];
       if (!selected) {
         empty++;
+        wrongQuestionIds.push(question.id);
       } else if (selected === question.correctAnswer) {
         correct++;
+        correctQuestionIds.push(question.id);
       } else {
         wrong++;
+        wrongQuestionIds.push(question.id);
       }
     });
 
@@ -135,6 +142,8 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
       score,
       correctAnswers: correct,
       wrongAnswers: wrong,
+      wrongQuestionIds,
+      correctQuestionIds,
     });
 
     if (res.error) {
@@ -237,7 +246,9 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
                       </span>
                     </div>
 
-                    <p className="text-on-surface font-body-md whitespace-pre-wrap">{question.text}</p>
+                    <p className="text-on-surface font-body-md whitespace-pre-wrap">
+                      <GlossaryText text={question.text} language={userLang} />
+                    </p>
 
                     {/* Choices Review */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-sm">
@@ -260,7 +271,9 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
                         return (
                           <div key={opt} className={`flex items-center p-md rounded-xl text-left ${cardStyle}`}>
                             <span className={`w-8 h-8 rounded-full font-title-md text-sm flex items-center justify-center mr-md ${optStyle}`}>{opt}</span>
-                            <span className="font-body-md text-sm text-on-surface">{optText}</span>
+                            <span className="font-body-md text-sm text-on-surface">
+                              <GlossaryText text={optText} language={userLang} />
+                            </span>
                           </div>
                         );
                       })}
@@ -274,7 +287,7 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
                           <span className="font-bold text-sm">Cevap Açıklaması</span>
                         </div>
                         <p className="font-body-sm text-xs leading-relaxed text-on-surface-variant">
-                          {question.explanation}
+                          <GlossaryText text={question.explanation} language={userLang} />
                         </p>
                       </div>
                     )}
@@ -339,7 +352,7 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
           </div>
 
           <p className="font-body-lg text-lg text-on-surface leading-relaxed whitespace-pre-wrap">
-            {currentQuestion.text}
+            <GlossaryText text={currentQuestion.text} language={userLang} />
           </p>
 
           {/* Answer Choice Selector Buttons */}
@@ -355,7 +368,9 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
                   className={`w-full flex items-center p-md rounded-xl text-left transition-all duration-150 ${isSelected ? 'border-2 border-primary bg-primary/5 shadow-sm' : 'border border-outline-variant bg-surface hover:bg-surface-container-high'}`}
                 >
                   <span className={`w-9 h-9 flex-shrink-0 rounded-full font-title-md flex items-center justify-center mr-md transition-colors ${isSelected ? 'bg-primary text-on-primary' : 'border border-outline text-on-surface-variant'}`}>{opt}</span>
-                  <span className="font-body-md text-sm text-on-surface">{optText}</span>
+                  <span className="font-body-md text-sm text-on-surface">
+                    <GlossaryText text={optText} language={userLang} />
+                  </span>
                 </button>
               );
             })}

@@ -3,6 +3,10 @@ import { redirect } from 'next/navigation';
 import { auth, signOut } from '@/auth';
 import prisma from '@/lib/db';
 import ProfileClient from './ProfileClient';
+import { privateSeo } from '@/lib/seo';
+
+export const metadata = privateSeo('Profil och konto – Medborgarskapsprov | Kullanıcı Profili', 'Hantera konto, språk, betalning och studieresultat för medborgarskapsprovet. İsveç vatandaşlık sınavı profil ayarları.', '/profile');
+
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -21,6 +25,7 @@ export default async function ProfilePage() {
       email: true,
       role: true,
       isPaid: true,
+      nativeLanguage: true,
       subscriptionEndsAt: true,
       createdAt: true
     }
@@ -73,6 +78,13 @@ export default async function ProfilePage() {
     return await changeUserPassword(userId, formData);
   };
 
+  // Language Change Server Action
+  const handleLanguageChange = async (nativeLanguage: string) => {
+    'use server';
+    const { updateUserLanguage } = await import('@/actions/user.actions');
+    return await updateUserLanguage(userId, nativeLanguage);
+  };
+
   return (
     <ProfileClient
       user={{
@@ -92,6 +104,7 @@ export default async function ProfilePage() {
       }}
       logoutAction={handleLogout}
       changePasswordAction={handlePasswordChange}
+      changeLanguageAction={handleLanguageChange}
     />
   );
 }

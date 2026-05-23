@@ -1,25 +1,10 @@
-import { Metadata } from 'next'
 import Link from 'next/link'
 import prisma from '@/lib/db'
+import { auth } from '@/auth'
+import { publicSeo } from '@/lib/seo'
 import FlashcardDemoClient from './FlashcardDemoClient'
 
-export const metadata: Metadata = {
-  title: 'Gratis Flashcards – Medborgarskapsprov Sverige 2025',
-  description:
-    'Öva gratis med interaktiva flashcards för medborgarskapstestet. Lär dig fakta om Sverige, historia, demokrati och samhälle – utan registrering.',
-  keywords: [
-    'medborgarskapsprov flashcards',
-    'medborgarskapsprov Sverige gratis',
-    'flashcards medborgarskap',
-    'sverige historia flashcards',
-    'medborgarskapsprov 2025 övning',
-  ],
-  openGraph: {
-    title: 'Gratis Flashcards – Medborgarskapsprov 2025',
-    description: 'Interaktiva flashcards för medborgarskapstestet i Sverige.',
-    url: 'https://medborgarprov.com/ovning/flashcards',
-  },
-}
+export const metadata = publicSeo.flashcards
 
 async function getFreeFlashcards() {
   try {
@@ -34,7 +19,10 @@ async function getFreeFlashcards() {
 }
 
 export default async function FlashcardsPage() {
+  const session = await auth()
+  const userLang = session?.user?.nativeLanguage || 'TR'
   const cards = await getFreeFlashcards()
+
 
   return (
     <div style={{ background: 'linear-gradient(135deg, #002244 0%, #003566 40%, #006AA7 100%)', minHeight: '100vh' }}>
@@ -44,7 +32,7 @@ export default async function FlashcardsPage() {
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg">
             <span style={{ color: '#FECC02' }}>🇸🇪</span>
-            <span>MEDBORGARPROV</span>
+            <span>SVERIGEMEDBORGARSKAPSPROV</span>
             <span style={{ color: '#FECC02' }}>.com</span>
           </Link>
           <div className="flex items-center gap-3">
@@ -74,19 +62,19 @@ export default async function FlashcardsPage() {
             Öva med interaktiva<br />
             <span style={{ color: '#FECC02' }}>flashcards</span>
           </h1>
-          <p className="text-white/70 text-lg max-w-xl mx-auto">
+          <p className="text-white/90 text-lg max-w-xl mx-auto">
             Tryck på kortet för att se svaret. Bläddra igenom alla kort i din egen takt.
           </p>
         </div>
 
         {/* Flashcard Player */}
         {cards.length === 0 ? (
-          <div className="text-center text-white/50 py-16">
+          <div className="text-center text-white/70 py-16">
             <div className="text-5xl mb-4">📇</div>
             <p>Flashcards laddas snart.</p>
           </div>
         ) : (
-          <FlashcardDemoClient cards={cards} />
+          <FlashcardDemoClient cards={cards} userLang={userLang} />
         )}
 
         {/* CTA */}
@@ -98,7 +86,7 @@ export default async function FlashcardsPage() {
           <h2 className="text-2xl font-extrabold text-white mb-3">
             Vill du ha tillgång till alla 200+ flashcards?
           </h2>
-          <p className="text-white/70 mb-8 max-w-lg mx-auto">
+          <p className="text-white/90 mb-8 max-w-lg mx-auto">
             Skapa ett konto för att öva på alla ämnen, följa dina framsteg och ta hela provsimuleringen.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -120,8 +108,8 @@ export default async function FlashcardsPage() {
         </div>
 
         {/* SEO text */}
-        <div className="mt-12 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
-          <h2 className="text-white/60 text-base font-semibold mb-2">Varför använda flashcards för medborgarskapsprov?</h2>
+        <div className="mt-12 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
+          <h2 className="text-white/85 text-base font-semibold mb-2">Varför använda flashcards för medborgarskapsprov?</h2>
           <p>
             Flashcards är ett av de mest effektiva sätten att memorera information. Genom upprepning och 
             aktiv återkallning förbättrar du din förmåga att minnas fakta om Sverige – perfekt för att 
@@ -131,8 +119,8 @@ export default async function FlashcardsPage() {
         </div>
       </main>
 
-      <footer className="text-center py-8 text-white/30 text-xs">
-        <p>© 2025 Medborgarprov.com · Alla rättigheter förbehållna</p>
+      <footer className="text-center py-8 text-white/55 text-xs">
+        <p>© 2025 Sverigemedborgarskapsprov.com · Alla rättigheter förbehållna</p>
       </footer>
     </div>
   )

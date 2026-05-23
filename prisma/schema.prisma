@@ -20,6 +20,7 @@ model User {
   passwordHash       String
   role               String    @default("USER")
   isPaid             Boolean   @default(false)
+  nativeLanguage     String    @default("TR")
   subscriptionEndsAt DateTime? // Üyelik bitiş tarihi (Pazarlama ve Kontrol için)
   lastLoginAt        DateTime? // Son giriş tarihi (Re-engagement için)
   createdAt          DateTime  @default(now())
@@ -28,6 +29,7 @@ model User {
   // Relations
   progress      UserProgress[]
   testResults   TestResult[]
+  wrongQuestions UserWrongQuestion[]
 }
 
 // Education Content Models
@@ -80,6 +82,7 @@ model Question {
 
   topic         Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
   mockExams     MockExamQuestion[]
+  wrongAnswers  UserWrongQuestion[]
 }
 
 // Flashcards
@@ -121,6 +124,18 @@ model TestResult {
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model UserWrongQuestion {
+  id         String   @id @default(cuid())
+  userId     String
+  questionId String
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+}
+
 // Sınav Şablonu (Örn: Standart Deneme, Kısa Deneme)
 model ExamTemplate {
   id          String   @id @default(cuid())
@@ -158,6 +173,8 @@ model MockExam {
   description String?
   durationMin Int      // Şablondan kopyalanır
   isPublished Boolean  @default(false) // Öğrenciler görebilir mi?
+  isMistakesExam Boolean @default(false)
+  userId         String?
   
   templateId  String?
   template    ExamTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)

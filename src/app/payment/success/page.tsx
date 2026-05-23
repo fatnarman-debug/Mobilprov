@@ -1,5 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import { privateSeo } from '@/lib/seo';
+
+export const metadata = privateSeo('Betalning klar – Medborgarskapsprov | Ödeme Başarılı', 'Din betalning är klar och kontot är aktiverat. İsveç vatandaşlık sınavı hesabınız aktifleştirildi.', '/payment/success');
+
 
 export default function PaymentSuccessPage() {
   return (

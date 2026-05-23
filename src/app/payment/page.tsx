@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createCheckoutSession } from '@/actions/payment.actions';
 
-export default function PaymentPage() {
+function PaymentContent() {
   const searchParams = useSearchParams();
   const userId = searchParams?.get('userId');
   const canceled = searchParams?.get('canceled');
@@ -70,10 +70,46 @@ export default function PaymentPage() {
           )}
         </button>
 
+        {/* Development Bypass Button */}
+        <button 
+          onClick={async () => {
+            if (!userId) return;
+            setIsLoading(true);
+            const { bypassPayment } = await import('@/actions/payment.actions');
+            const res = await bypassPayment(userId);
+            if (res.success) {
+              window.location.href = '/dashboard';
+            } else if (res.error) {
+              alert(res.error);
+              setIsLoading(false);
+            }
+          }}
+          disabled={isLoading}
+          className="w-full mt-3 py-3 border-2 border-dashed border-secondary text-secondary hover:bg-secondary/5 font-semibold rounded-full active:scale-95 transition-all flex justify-center items-center gap-xs disabled:opacity-70"
+        >
+          <span className="material-symbols-outlined">bug_report</span>
+          Geliştirici Modu: Ödemeyi Atla (Test)
+        </button>
+
         <p className="font-label-sm text-label-sm text-on-surface-variant mt-md opacity-70">
           Ödeme altyapısı 256-bit SSL ve Stripe güvencesiyle korunmaktadır.
         </p>
       </div>
     </div>
+  );
+}
+
+export default function PaymentPage() {
+  return (
+    <Suspense fallback={
+      <div className="bg-surface text-on-surface min-h-screen flex items-center justify-center font-body-md">
+        <div className="flex flex-col items-center gap-sm">
+          <span className="material-symbols-outlined animate-spin text-primary text-4xl">progress_activity</span>
+          <span>Yükleniyor...</span>
+        </div>
+      </div>
+    }>
+      <PaymentContent />
+    </Suspense>
   );
 }

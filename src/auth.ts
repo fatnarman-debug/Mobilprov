@@ -44,6 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: user.name,
           role: user.role,
           isPaid: user.isPaid,
+          nativeLanguage: user.nativeLanguage,
         }
       }
     })
@@ -64,6 +65,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 name: user.name ?? "",
                 passwordHash: "", // Google kullanıcılarının şifresi yok
                 isPaid: false,
+                nativeLanguage: "TR", // Default to Turkish
               }
             })
           }
@@ -85,6 +87,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           token.id = dbUser.id
           token.role = dbUser.role
           token.isPaid = dbUser.isPaid
+          token.nativeLanguage = dbUser.nativeLanguage
         }
       }
       return token
@@ -95,6 +98,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string
         session.user.role = token.role as string
         session.user.isPaid = token.isPaid as boolean
+        session.user.nativeLanguage = token.nativeLanguage as string
       }
       return session
     }

@@ -3,6 +3,10 @@ import { redirect } from 'next/navigation';
 import prisma from '@/lib/db';
 import { auth } from '@/auth';
 import AnalysisClient from './AnalysisClient';
+import { privateSeo } from '@/lib/seo';
+
+export const metadata = privateSeo('Resultatanalys – Medborgarskapsprov | Sınav Analizi', 'Se dina resultat, styrkor och svagheter inför medborgarskapsprovet. İsveç vatandaşlık sınavı sonuç analizi.', '/analysis');
+
 
 export default async function AnalysisPage() {
   const session = await auth();

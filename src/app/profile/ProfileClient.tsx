@@ -11,6 +11,7 @@ type ProfileClientProps = {
     email: string;
     role: string;
     isPaid: boolean;
+    nativeLanguage: string;
     subscriptionEndsAt: string | null;
     createdAt: string;
   };
@@ -26,6 +27,7 @@ type ProfileClientProps = {
   };
   logoutAction: () => Promise<void>;
   changePasswordAction: (formData: FormData) => Promise<{ success?: string; error?: string }>;
+  changeLanguageAction: (nativeLanguage: string) => Promise<{ success?: string; error?: string }>;
 };
 
 export default function ProfileClient({ 
@@ -33,12 +35,33 @@ export default function ProfileClient({
   stats, 
   settings, 
   logoutAction,
-  changePasswordAction 
+  changePasswordAction,
+  changeLanguageAction
 }: ProfileClientProps) {
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Language state variables
+  const [activeLang, setActiveLang] = useState(user.nativeLanguage);
+  const [langStatus, setLangStatus] = useState<string | null>(null);
+  const [langLoading, setLangLoading] = useState(false);
+
+  const handleLanguageChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = e.target.value;
+    setActiveLang(selected);
+    setLangLoading(true);
+    setLangStatus('Güncelleniyor…');
+    const res = await changeLanguageAction(selected);
+    setLangLoading(false);
+    if (res?.error) {
+      setLangStatus(res.error);
+    } else if (res?.success) {
+      setLangStatus('Güncellendi!');
+      setTimeout(() => setLangStatus(null), 2500);
+    }
+  };
 
   const userInitials = user.name
     ? user.name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
@@ -86,7 +109,7 @@ export default function ProfileClient({
       <main className="mt-20 px-gutter max-w-container-max mx-auto space-y-md">
         
         {/* User Card */}
-        <section className="bg-surface-container-lowest border border-outline-variant rounded-3xl p-md shadow-sm flex items-center gap-md">
+        <section className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-md">
           {/* Avatar Initials bubble */}
           <div className="w-16 h-16 rounded-full bg-primary-container text-on-primary-container font-title-lg flex items-center justify-center font-bold text-xl border-2 border-primary/20 shrink-0">
             {userInitials}
@@ -94,7 +117,7 @@ export default function ProfileClient({
 
           <div className="space-y-xs min-w-0">
             <div className="flex items-center gap-xs flex-wrap">
-              <h2 className="font-title-lg text-lg text-on-surface font-bold truncate leading-none">
+              <h2 className="font-title-lg text-lg text-on-surface font-bold truncate leading-none text-pretty">
                 {user.name || 'Öğrenci'}
               </h2>
               {user.isPaid ? (
@@ -118,7 +141,7 @@ export default function ProfileClient({
         {/* Dynamic Paywall / Subscription Info Banner */}
         <section>
           {user.isPaid ? (
-            <div className="bg-gradient-to-r from-secondary-container/30 to-primary-container/30 border border-secondary/20 rounded-2xl p-md shadow-sm relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-base">
+            <div className="bg-gradient-to-r from-secondary-container/30 to-primary-container/30 border border-secondary/20 rounded-3xl p-md shadow-sm relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-base">
               {/* Background Sparkles */}
               <div className="absolute right-[-20px] top-[-20px] opacity-10 pointer-events-none">
                 <span className="material-symbols-outlined text-[120px] text-secondary">workspace_premium</span>
@@ -126,7 +149,7 @@ export default function ProfileClient({
 
               <div className="space-y-xs relative z-10">
                 <span className="text-xs font-bold text-secondary uppercase tracking-widest block">Premium Abonelik Aktif</span>
-                <h3 className="font-title-md text-base text-on-surface font-bold">Ayrıcalıklı Eğitim Dünyası</h3>
+                <h3 className="font-title-md text-base text-on-surface font-bold text-pretty">Ayrıcalıklı Eğitim Dünyası</h3>
                 <p className="text-xs text-on-surface-variant max-w-md">
                   Tüm sınav kilitleriniz kaldırıldı! Sınırsız deneme sınavı çözebilir, çalışma sorularına dilediğiniz gibi erişebilirsiniz.
                 </p>
@@ -142,7 +165,7 @@ export default function ProfileClient({
               )}
             </div>
           ) : (
-            <div className="bg-gradient-to-r from-amber-500/10 via-amber-600/5 to-transparent border border-amber-500/20 rounded-2xl p-md shadow-sm relative overflow-hidden flex flex-col gap-base">
+            <div className="bg-gradient-to-r from-amber-500/10 via-amber-600/5 to-transparent border border-amber-500/20 rounded-3xl p-md shadow-sm relative overflow-hidden flex flex-col gap-base">
               {/* Background VIP Icon */}
               <div className="absolute right-[-15px] top-[-15px] opacity-15 pointer-events-none text-amber-500">
                 <span className="material-symbols-outlined text-[100px]" style={{fontVariationSettings: "'FILL' 1"}}>star</span>
@@ -150,7 +173,7 @@ export default function ProfileClient({
 
               <div className="space-y-xs relative z-10">
                 <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest block">SINIRSIZ ERİŞİM KAZANIN</span>
-                <h3 className="font-title-md text-base text-on-surface font-bold">Premium VIP Avantajları</h3>
+                <h3 className="font-title-md text-base text-on-surface font-bold text-pretty">Premium VIP Avantajları</h3>
                 <p className="text-xs text-on-surface-variant max-w-lg leading-relaxed">
                   İsveç Vatandaşlık sınavına eksiksiz hazırlanmak için tüm kilitleri açın. Sınırsız deneme sınavları, akıllı yapay zeka analizleri ve limitsiz soru çözümü sizi bekliyor!
                 </p>
@@ -177,7 +200,7 @@ export default function ProfileClient({
           <h3 className="font-title-sm text-sm text-on-surface font-semibold px-xs">Performans Özeti</h3>
           <div className="grid grid-cols-2 gap-sm">
             
-            <div className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md flex flex-col justify-between min-h-[90px] shadow-sm">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md flex flex-col justify-between min-h-[90px] shadow-sm hover:shadow-md transition-all duration-300">
               <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Sınav Ortalaması</span>
               <div className="flex items-baseline gap-xs mt-xs">
                 <span className="text-2xl font-black text-primary">%{stats.averageScore}</span>
@@ -187,14 +210,14 @@ export default function ProfileClient({
               </div>
             </div>
 
-            <div className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md flex flex-col justify-between min-h-[90px] shadow-sm">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md flex flex-col justify-between min-h-[90px] shadow-sm hover:shadow-md transition-all duration-300">
               <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">En Yüksek Skor</span>
               <div className="flex items-baseline gap-xs mt-xs">
                 <span className="text-2xl font-black text-secondary">%{stats.maxScore}</span>
               </div>
             </div>
 
-            <div className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md flex flex-col justify-between min-h-[90px] shadow-sm">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md flex flex-col justify-between min-h-[90px] shadow-sm hover:shadow-md transition-all duration-300">
               <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Çözülen Denemeler</span>
               <div className="flex items-baseline gap-xs mt-xs">
                 <span className="text-2xl font-black text-on-surface">{stats.totalExamsAttempted}</span>
@@ -202,7 +225,7 @@ export default function ProfileClient({
               </div>
             </div>
 
-            <div className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md flex flex-col justify-between min-h-[90px] shadow-sm">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md flex flex-col justify-between min-h-[90px] shadow-sm hover:shadow-md transition-all duration-300">
               <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Tamamlanan Konular</span>
               <div className="flex items-baseline gap-xs mt-xs">
                 <span className="text-2xl font-black text-tertiary">{stats.completedTopicsCount}</span>
@@ -217,7 +240,7 @@ export default function ProfileClient({
         <section className="space-y-base">
           <h3 className="font-title-sm text-sm text-on-surface font-semibold px-xs">Hızlı İşlemler</h3>
           
-          <div className="bg-surface-container-lowest border border-outline-variant rounded-2xl overflow-hidden divide-y divide-outline-variant/60 shadow-sm">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl overflow-hidden divide-y divide-outline-variant/30 shadow-sm">
             
             {/* Admin Panel Access Button (Only for Admin accounts) */}
             {user.role === 'ADMIN' && (
@@ -237,6 +260,38 @@ export default function ProfileClient({
                 <span className="material-symbols-outlined text-on-surface-variant text-base group-hover:translate-x-1 transition-transform">chevron_right</span>
               </Link>
             )}
+
+            {/* Ana Dil Tercihi (Language Preference) */}
+            <div className="p-md hover:bg-surface-container-low transition-colors">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-base">
+                <div className="flex items-center gap-md">
+                  <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[20px]">translate</span>
+                  </div>
+                  <div>
+                    <h4 className="font-title-sm text-sm text-on-surface font-bold">Ana Dil Tercihi</h4>
+                    <p className="text-[10px] text-on-surface-variant">Kelime çevirilerinin gösterileceği dil.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-base">
+                  {langStatus && (
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg ${langStatus.includes('hata') ? 'text-error bg-error/15' : 'text-secondary bg-secondary-container/30'}`}>
+                      {langStatus}
+                    </span>
+                  )}
+                  <select
+                    value={activeLang}
+                    disabled={langLoading}
+                    onChange={handleLanguageChange}
+                    className="bg-surface border border-outline-variant px-3 py-1.5 rounded-xl font-title-sm text-xs text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer shadow-sm"
+                  >
+                    <option value="TR">🇹🇷 Türkçe</option>
+                    <option value="EN">🇬🇧 English</option>
+                  </select>
+                </div>
+              </div>
+            </div>
 
             {/* Şifre Değiştirme Butonu (Expandable Accordion) */}
             <div className="p-0">
@@ -268,8 +323,9 @@ export default function ProfileClient({
                       type="password" 
                       name="currentPassword" 
                       required 
+                      autoComplete="current-password"
                       placeholder="••••••••" 
-                      className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-sm text-on-surface focus:border-primary transition-all outline-none"
+                      className="w-full bg-surface-bright border border-outline-variant/60 rounded-xl px-3 py-2 font-body-md text-sm text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
                     />
                   </div>
                   <div className="space-y-xs">
@@ -278,8 +334,9 @@ export default function ProfileClient({
                       type="password" 
                       name="newPassword" 
                       required 
+                      autoComplete="new-password"
                       placeholder="En az 6 karakter" 
-                      className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-sm text-on-surface focus:border-primary transition-all outline-none"
+                      className="w-full bg-surface-bright border border-outline-variant/60 rounded-xl px-3 py-2 font-body-md text-sm text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
                     />
                   </div>
 
@@ -300,9 +357,9 @@ export default function ProfileClient({
                   <button 
                     type="submit" 
                     disabled={loading}
-                    className="w-full bg-primary text-on-primary hover:bg-primary-dark active:scale-95 disabled:opacity-50 text-xs font-bold py-2.5 rounded-lg shadow-sm transition-all"
+                    className="w-full bg-primary text-on-primary hover:bg-primary-dark active:scale-95 disabled:opacity-50 text-xs font-bold py-2.5 rounded-full shadow-sm transition-all"
                   >
-                    {loading ? 'Güncelleniyor...' : 'Şifreyi Güncelle'}
+                    {loading ? 'Güncelleniyor…' : 'Şifreyi Güncelle'}
                   </button>
                 </form>
               )}

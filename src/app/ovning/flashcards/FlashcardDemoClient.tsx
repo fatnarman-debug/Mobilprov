@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import GlossaryText from '@/components/GlossaryText'
 
 interface Flashcard {
   id: string
@@ -10,12 +11,28 @@ interface Flashcard {
   topic: { title: string }
 }
 
-export default function FlashcardDemoClient({ cards }: { cards: Flashcard[] }) {
+export default function FlashcardDemoClient({ cards, userLang = 'TR' }: { cards: Flashcard[]; userLang?: string }) {
   const [current, setCurrent] = useState(0)
   const [flipped, setFlipped] = useState(false)
   const [seen, setSeen] = useState<Set<number>>(new Set())
+  const [lang, setLang] = useState(userLang)
+
+  useEffect(() => {
+    const saved = localStorage.getItem('preferred_language')
+    if (saved) {
+      setLang(saved)
+    } else if (userLang) {
+      setLang(userLang)
+    }
+  }, [userLang])
+
+  const handleLangChange = (val: string) => {
+    setLang(val)
+    localStorage.setItem('preferred_language', val)
+  }
 
   const card = cards[current]
+
 
   const next = () => {
     setSeen(prev => new Set([...prev, current]))
@@ -80,7 +97,7 @@ export default function FlashcardDemoClient({ cards }: { cards: Flashcard[] }) {
           >
             <div className="text-xs font-bold mb-4 tracking-widest" style={{ color: 'rgba(254,204,2,0.6)' }}>FRÅGA</div>
             <p className="text-white text-lg font-semibold leading-snug">{card.frontText}</p>
-            <div className="mt-6 flex items-center gap-1.5 text-white/30 text-xs">
+            <div className="mt-6 flex items-center gap-1.5 text-white/60 text-xs">
               <span className="material-symbols-outlined text-[14px]">touch_app</span>
               Tryck för att visa svar
             </div>
@@ -130,7 +147,7 @@ export default function FlashcardDemoClient({ cards }: { cards: Flashcard[] }) {
 
       {/* Seen counter */}
       {seen.size > 0 && (
-        <p className="text-center text-white/40 text-xs mt-4">
+        <p className="text-center text-white/60 text-xs mt-4">
           {seen.size} av {cards.length} kort visade
         </p>
       )}

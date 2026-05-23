@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BottomNav from '@/components/BottomNav';
+import GlossaryText from '@/components/GlossaryText';
 import type { Topic } from '@prisma/client';
 
 type Question = {
@@ -35,6 +36,7 @@ type PracticeProps = {
   freeDailyQuestionLimit: number;
   siteName: string;
   userId: string;
+  userLang: string;
 };
 
 export default function PracticeClient({ 
@@ -45,7 +47,8 @@ export default function PracticeClient({
   isPaid, 
   freeDailyQuestionLimit, 
   siteName, 
-  userId 
+  userId,
+  userLang
 }: PracticeProps) {
   const [activeMode, setActiveMode] = useState<'questions' | 'flashcards'>('questions');
   
@@ -225,20 +228,26 @@ export default function PracticeClient({
                 </div>
                 
                 <p className="text-on-surface font-body-md leading-relaxed whitespace-pre-wrap">
-                  {currentQuestion.text}
+                  <GlossaryText text={currentQuestion.text} language={userLang} />
                 </p>
 
                 {/* Correct Answer Display - Clutter-Free Study Mode */}
-                <div className="bg-secondary-container/10 border-2 border-secondary/20 p-md rounded-2xl shadow-sm">
+                <div className="bg-secondary-container/10 border-2 border-secondary/20 p-md rounded-2xl shadow-sm space-y-md">
                   <div>
                     <span className="text-[10px] font-bold text-secondary bg-secondary/10 px-2.5 py-0.5 rounded uppercase tracking-wider mb-xs inline-block">Doğru Cevap</span>
-                    <div className="flex items-start gap-md mt-xs">
-                      <span className="w-8 h-8 rounded-full bg-secondary text-on-secondary font-title-md text-sm flex items-center justify-center flex-shrink-0">{currentQuestion.correctAnswer}</span>
-                      <p className="text-on-surface font-body-md text-base leading-relaxed">
-                        {currentQuestion[`option${currentQuestion.correctAnswer}` as keyof Question] as string}
+                    <p className="text-on-surface font-body-md text-base leading-relaxed mt-2">
+                      <GlossaryText text={currentQuestion[`option${currentQuestion.correctAnswer}` as keyof Question] as string} language={userLang} />
+                    </p>
+                  </div>
+                  
+                  {currentQuestion.explanation && (
+                    <div className="pt-sm border-t border-outline-variant/30">
+                      <span className="text-[10px] font-bold text-primary bg-primary/10 px-2.5 py-0.5 rounded uppercase tracking-wider mb-xs inline-block">Açıklama</span>
+                      <p className="text-on-surface-variant font-body-sm text-xs leading-relaxed mt-2">
+                        <GlossaryText text={currentQuestion.explanation} language={userLang} />
                       </p>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Question Navigation Control Buttons */}

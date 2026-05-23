@@ -127,3 +127,24 @@ export async function changeUserPassword(userId: string, formData: FormData) {
     return { error: 'Şifre güncellenirken bir hata oluştu.' };
   }
 }
+
+export async function updateUserLanguage(userId: string, nativeLanguage: string) {
+  if (!userId || !nativeLanguage) {
+    return { error: 'Geçersiz parametreler.' };
+  }
+
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        nativeLanguage
+      }
+    });
+
+    revalidatePath('/profile');
+    return { success: 'Dil tercihiniz başarıyla güncellendi!' };
+  } catch (error) {
+    console.error(error);
+    return { error: 'Dil güncellenirken bir hata oluştu.' };
+  }
+}

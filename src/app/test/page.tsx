@@ -3,6 +3,10 @@ import { redirect } from 'next/navigation';
 import prisma from '@/lib/db';
 import { auth } from '@/auth';
 import TestClient from './TestClient';
+import { privateSeo } from '@/lib/seo';
+
+export const metadata = privateSeo('Provsimulering – Medborgarskapsprov 2026 | Deneme Sınavı', 'Starta provsimuleringar för medborgarskapsprovet och följ dina resultat. İsveç vatandaşlık sınavı deneme testleri.', '/test');
+
 
 export default async function TestPage() {
   const session = await auth();
@@ -38,9 +42,12 @@ export default async function TestPage() {
     );
   }
 
-  // Fetch all mock exams with questions relation
+  // Fetch all mock exams with questions relation (excluding mistakes exams)
   const mockExams = await prisma.mockExam.findMany({
-    where: isAdmin ? {} : { isPublished: true },
+    where: {
+      isMistakesExam: false,
+      ...(isAdmin ? {} : { isPublished: true }),
+    },
     include: {
       questions: {
         select: {
@@ -59,6 +66,17 @@ export default async function TestPage() {
     orderBy: { completedAt: 'desc' },
   });
 
+  // Fetch user's native language preference
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { nativeLanguage: true },
+  });
+
+  // Fetch count of wrong questions in user's mistakes list
+  const wrongQuestionsCount = await prisma.userWrongQuestion.count({
+    where: { userId: session.user.id },
+  });
+
   return (
     <TestClient
       mockExams={mockExams}
@@ -67,6 +85,8 @@ export default async function TestPage() {
       isPaid={session.user.isPaid || false}
       siteName={settings?.siteName || 'EduFlow'}
       userId={session.user.id}
+      userLang={user?.nativeLanguage || 'TR'}
+      wrongQuestionsCount={wrongQuestionsCount}
     />
   );
 }

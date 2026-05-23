@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://medborgarprov.com'
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://sverigemedborgarskapsprov.com'
 
   return {
     rules: [
@@ -12,7 +12,8 @@ export default function robots(): MetadataRoute.Robots {
           '/ovning',
           '/ovning/',
           '/ovning/flashcards',
-          '/om-medborgarskapstestet',
+          '/artiklar',
+          '/artiklar/',
         ],
         disallow: [
           '/admin/',

@@ -1,25 +1,10 @@
-import { Metadata } from 'next'
 import prisma from '@/lib/db'
 import Link from 'next/link'
+import { auth } from '@/auth'
+import { publicSeo } from '@/lib/seo'
 import OvningClient from './OvningClient'
 
-export const metadata: Metadata = {
-  title: 'Gratis övningsfrågor – Medborgarskapsprov 2025',
-  description:
-    'Öva gratis på riktiga frågor från medborgarskapstestet. Testa dina kunskaper om Sverige, demokrati och samhälle – utan att registrera dig.',
-  keywords: [
-    'medborgarskapsprov gratis',
-    'medborgarskapsprov övningsfrågor',
-    'medborgarskapsprov test gratis',
-    'Sverige medborgarskapstest frågor',
-    'medborgarskapsprov 2025',
-  ],
-  openGraph: {
-    title: 'Gratis övningsfrågor – Medborgarskapsprov 2025',
-    description: 'Öva gratis på riktiga frågor från medborgarskapstestet.',
-    url: 'https://medborgarprov.com/ovning',
-  },
-}
+export const metadata = publicSeo.ovning
 
 async function getFreeQuestions() {
   try {
@@ -35,7 +20,10 @@ async function getFreeQuestions() {
 }
 
 export default async function OvningPage() {
+  const session = await auth()
+  const userLang = session?.user?.nativeLanguage || 'TR'
   const questions = await getFreeQuestions()
+
 
   return (
     <div style={{ background: 'linear-gradient(135deg, #002244 0%, #003566 40%, #006AA7 100%)', minHeight: '100vh' }}>
@@ -45,7 +33,7 @@ export default async function OvningPage() {
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg">
             <span style={{ color: '#FECC02' }}>🇸🇪</span>
-            <span>MEDBORGARPROV</span>
+            <span>SVERIGEMEDBORGARSKAPSPROV</span>
             <span style={{ color: '#FECC02' }}>.com</span>
           </Link>
           <Link
@@ -70,7 +58,7 @@ export default async function OvningPage() {
             Öva på riktiga<br />
             <span style={{ color: '#FECC02' }}>medborgarskapsfrågor</span>
           </h1>
-          <p className="text-white/70 text-lg max-w-xl mx-auto">
+          <p className="text-white/90 text-lg max-w-xl mx-auto">
             Välj ditt svar och se direkt om du har rätt. {questions.length} gratis frågor – ingen inloggning behövs.
           </p>
 
@@ -83,7 +71,7 @@ export default async function OvningPage() {
             ].map(s => (
               <div key={s.label} className="text-center">
                 <div className="text-xl font-extrabold" style={{ color: '#FECC02' }}>{s.number}</div>
-                <div className="text-white/50 text-xs mt-0.5">{s.label}</div>
+                <div className="text-white/70 text-xs mt-0.5">{s.label}</div>
               </div>
             ))}
           </div>
@@ -91,12 +79,12 @@ export default async function OvningPage() {
 
         {/* Interactive Quiz */}
         {questions.length === 0 ? (
-          <div className="text-center text-white/50 py-16">
+          <div className="text-center text-white/70 py-16">
             <div className="text-5xl mb-4">📝</div>
             <p>Övningsfrågor laddas snart. Kom tillbaka senare!</p>
           </div>
         ) : (
-          <OvningClient questions={questions} />
+          <OvningClient questions={questions} userLang={userLang} />
         )}
 
         {/* CTA Section */}
@@ -107,7 +95,7 @@ export default async function OvningPage() {
           <h2 className="text-xl font-extrabold text-white mb-2">
             Vill du öva på alla 500+ frågor?
           </h2>
-          <p className="text-white/60 mb-6 text-sm">
+          <p className="text-white/80 mb-6 text-sm">
             Skapa ett konto för att få tillgång till alla frågor, flashcards och provsimuleringar.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -129,19 +117,19 @@ export default async function OvningPage() {
         </div>
 
         {/* SEO text */}
-        <div className="mt-10 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>
-          <h2 className="text-white/55 text-base font-semibold mb-2">Om medborgarskapstestet i Sverige</h2>
+        <div className="mt-10 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
+          <h2 className="text-white/85 text-base font-semibold mb-2">Om medborgarskapstestet i Sverige</h2>
           <p>
             För att bli svensk medborgare behöver du klara medborgarskapstestet. Testet täcker ämnen som
-            Sveriges historia, demokrati, samhälle, lagar och rättigheter. På Medborgarprov.com kan du
+            Sveriges historia, demokrati, samhälle, lagar och rättigheter. På Sverigemedborgarskapsprov.com kan du
             förbereda dig med hundratals övningsfrågor, interaktiva flashcards och fullständiga
             provsimuleringar – allt anpassat för att hjälpa dig klara provet på första försöket.
           </p>
         </div>
       </main>
 
-      <footer className="text-center py-8 text-white/30 text-xs">
-        <p>© 2025 Medborgarprov.com · Alla rättigheter förbehållna</p>
+      <footer className="text-center py-8 text-white/55 text-xs">
+        <p>© 2025 Sverigemedborgarskapsprov.com · Alla rättigheter förbehållna</p>
       </footer>
     </div>
   )

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { articles } from '@/lib/articles'
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://medborgarprov.com'
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://sverigemedborgarskapsprov.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const articlePages = articles.map(a => ({
@@ -14,8 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: siteUrl, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: `${siteUrl}/ovning`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
-    { url: `${siteUrl}/ovning/flashcards`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
-    { url: `${siteUrl}/artiklar`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${siteUrl}/ovning/flashcards`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.85 },
+    { url: `${siteUrl}/artiklar`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
     ...articlePages,
   ]
 }
