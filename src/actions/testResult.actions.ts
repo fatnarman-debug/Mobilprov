@@ -2,6 +2,7 @@
 
 import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function saveTestResult(data: {
   userId: string;
@@ -12,6 +13,10 @@ export async function saveTestResult(data: {
   wrongQuestionIds?: string[];
   correctQuestionIds?: string[];
 }) {
+  const session = await auth();
+  if (!session || !session.user || (session.user.id !== data.userId && session.user.role !== 'ADMIN')) {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     const result = await prisma.$transaction(async (tx) => {
       // 1. Save the general test result summary

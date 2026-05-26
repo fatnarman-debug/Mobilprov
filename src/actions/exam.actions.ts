@@ -2,8 +2,13 @@
 
 import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function createExamTemplate(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const title = formData.get('title') as string;
   const durationMin = parseInt(formData.get('durationMin') as string);
 
@@ -27,6 +32,10 @@ export async function createExamTemplate(formData: FormData) {
 }
 
 export async function deleteExamTemplate(id: string) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     await prisma.examTemplate.delete({
       where: { id }
@@ -39,6 +48,10 @@ export async function deleteExamTemplate(id: string) {
 }
 
 export async function addExamTopicRule(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const examTemplateId = formData.get('examTemplateId') as string;
   const topicId = formData.get('topicId') as string;
   const questionCount = parseInt(formData.get('questionCount') as string);
@@ -67,6 +80,10 @@ export async function addExamTopicRule(formData: FormData) {
 }
 
 export async function deleteExamTopicRule(id: string) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     await prisma.examTopicRule.delete({
       where: { id }
@@ -79,6 +96,10 @@ export async function deleteExamTopicRule(id: string) {
 }
 
 export async function generateMockExam(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const templateId = formData.get('templateId') as string;
   const title = formData.get('title') as string;
 
@@ -160,6 +181,10 @@ export async function generateMockExam(formData: FormData) {
 }
 
 export async function deleteMockExam(id: string) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     await prisma.mockExam.delete({
       where: { id }

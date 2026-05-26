@@ -4,8 +4,14 @@ import { stripe } from '@/lib/stripe';
 import { headers } from 'next/headers';
 import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function createCheckoutSession(userId: string) {
+  const session = await auth();
+  if (!session || !session.user || (session.user.id !== userId && session.user.role !== 'ADMIN')) {
+    throw new Error('Unauthorized');
+  }
+
   if (!userId) {
     throw new Error('User ID is required');
   }
@@ -45,6 +51,11 @@ export async function createCheckoutSession(userId: string) {
 }
 
 export async function bypassPayment(userId: string) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz işlem.' };
+  }
+
   if (!userId) {
     return { error: 'Kullanıcı ID gereklidir.' };
   }

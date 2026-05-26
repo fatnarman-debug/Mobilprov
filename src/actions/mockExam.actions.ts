@@ -2,11 +2,17 @@
 
 import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 /**
  * Kullanıcının Hata Defteri'ndeki güncel yanlış soru sayısını döner.
  */
 export async function getUserWrongQuestionsCount(userId: string) {
+  const session = await auth();
+  if (!session || !session.user || (session.user.id !== userId && session.user.role !== 'ADMIN')) {
+    return { count: 0, error: 'Yetkisiz erişim.' };
+  }
+
   if (!userId) {
     return { count: 0 };
   }
@@ -27,6 +33,11 @@ export async function getUserWrongQuestionsCount(userId: string) {
  * Temizlik amacıyla kullanıcının eski Hata Temizleme sınavlarını veritabanından siler.
  */
 export async function createWrongQuestionsExam(userId: string) {
+  const session = await auth();
+  if (!session || !session.user || (session.user.id !== userId && session.user.role !== 'ADMIN')) {
+    return { error: 'Yetkisiz erişim.' };
+  }
+
   if (!userId) {
     return { error: 'Geçersiz kullanıcı kimliği.' };
   }

@@ -2,8 +2,13 @@
 
 import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function updateUserSubscription(userId: string, formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const isPaid = formData.get('isPaid') === 'on';
   const subscriptionEndsAtStr = formData.get('subscriptionEndsAt') as string;
 
@@ -30,6 +35,10 @@ export async function updateUserSubscription(userId: string, formData: FormData)
 }
 
 export async function deleteUser(userId: string) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     await prisma.user.delete({
       where: { id: userId }
@@ -44,6 +53,10 @@ export async function deleteUser(userId: string) {
 import bcrypt from 'bcryptjs';
 
 export async function createUser(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
   const password = formData.get('password') as string || '123456';
@@ -86,6 +99,10 @@ export async function createUser(formData: FormData) {
 }
 
 export async function changeUserPassword(userId: string, formData: FormData) {
+  const session = await auth();
+  if (!session || !session.user || (session.user.id !== userId && session.user.role !== 'ADMIN')) {
+    return { error: 'Yetkisiz erişim. Sadece kendi şifrenizi değiştirebilirsiniz.' };
+  }
   const currentPassword = formData.get('currentPassword') as string;
   const newPassword = formData.get('newPassword') as string;
 
@@ -129,6 +146,10 @@ export async function changeUserPassword(userId: string, formData: FormData) {
 }
 
 export async function updateUserLanguage(userId: string, nativeLanguage: string) {
+  const session = await auth();
+  if (!session || !session.user || (session.user.id !== userId && session.user.role !== 'ADMIN')) {
+    return { error: 'Yetkisiz erişim.' };
+  }
   if (!userId || !nativeLanguage) {
     return { error: 'Geçersiz parametreler.' };
   }

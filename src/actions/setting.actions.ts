@@ -2,8 +2,14 @@
 
 import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@/auth';
 
 export async function updatePlatformSettings(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
+
   const siteName = formData.get('siteName') as string;
   const contactEmail = formData.get('contactEmail') as string;
   const maintenanceMode = formData.get('maintenanceMode') === 'on';

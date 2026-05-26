@@ -4,6 +4,7 @@ import prisma from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import fs from 'fs';
 import path from 'path';
+import { auth } from '@/auth';
 
 // Helper to save uploaded files locally
 async function saveUploadedFile(file: unknown, subFolder = ''): Promise<string | null> {
@@ -29,6 +30,13 @@ async function saveUploadedFile(file: unknown, subFolder = ''): Promise<string |
     const filename = `${uniqueSuffix}-${safeName}`;
     const filePath = path.join(uploadDir, filename);
     
+    const ext = path.extname(file.name).toLowerCase();
+    const allowedExtensions = ['.pdf', '.mp3', '.mp4', '.mov', '.png', '.jpg', '.jpeg', '.gif', '.csv'];
+    if (!allowedExtensions.includes(ext)) {
+      console.warn(`File upload rejected: invalid extension ${ext}`);
+      return null;
+    }
+    
     // Write file to filesystem
     await fs.promises.writeFile(filePath, buffer);
     
@@ -41,6 +49,10 @@ async function saveUploadedFile(file: unknown, subFolder = ''): Promise<string |
 }
 
 export async function getTopics() {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return [];
+  }
   try {
     return await prisma.topic.findMany({
       include: {
@@ -75,6 +87,10 @@ function parseCSV(csvText: string) {
 }
 
 export async function uploadQuestionsCSV(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     const file = formData.get('file') as File;
     const topicId = formData.get('topicId') as string;
@@ -115,6 +131,10 @@ export async function uploadQuestionsCSV(formData: FormData) {
 }
 
 export async function uploadFlashcardsCSV(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     const file = formData.get('file') as File;
     const topicId = formData.get('topicId') as string;
@@ -148,6 +168,10 @@ export async function uploadFlashcardsCSV(formData: FormData) {
 }
 
 export async function addTopic(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const title = formData.get('title') as string;
   const category = formData.get('category') as string;
   const description = formData.get('description') as string;
@@ -221,6 +245,10 @@ export async function addTopic(formData: FormData) {
 }
 
 export async function updateTopicMaterials(topicId: string, formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   let pdfUrl = (formData.get('pdfUrl') as string) || '';
   let audioUrl = (formData.get('audioUrl') as string) || '';
   let videoUrl = (formData.get('videoUrl') as string) || '';
@@ -296,6 +324,10 @@ export async function updateTopicMaterials(topicId: string, formData: FormData) 
 }
 
 export async function addQuestion(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const topicId = formData.get('topicId') as string;
   const text = formData.get('text') as string;
   const optionA = formData.get('optionA') as string;
@@ -333,6 +365,10 @@ export async function addQuestion(formData: FormData) {
 }
 
 export async function addFlashcard(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const topicId = formData.get('topicId') as string;
   const frontText = formData.get('frontText') as string;
   const backText = formData.get('backText') as string;
@@ -358,6 +394,10 @@ export async function addFlashcard(formData: FormData) {
 }
 
 export async function deleteQuestion(id: string) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     await prisma.question.delete({
       where: { id }
@@ -370,6 +410,10 @@ export async function deleteQuestion(id: string) {
 }
 
 export async function updateQuestion(id: string, formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const text = formData.get('text') as string;
   const optionA = formData.get('optionA') as string;
   const optionB = formData.get('optionB') as string;
@@ -406,6 +450,10 @@ export async function updateQuestion(id: string, formData: FormData) {
 }
 
 export async function deleteFlashcard(id: string) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   try {
     await prisma.flashcard.delete({
       where: { id }
@@ -418,6 +466,10 @@ export async function deleteFlashcard(id: string) {
 }
 
 export async function updateFlashcard(id: string, formData: FormData) {
+  const session = await auth();
+  if (!session || session.user?.role !== 'ADMIN') {
+    return { error: 'Yetkisiz erişim.' };
+  }
   const frontText = formData.get('frontText') as string;
   const backText = formData.get('backText') as string;
 
