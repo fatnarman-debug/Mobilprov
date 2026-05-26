@@ -14,6 +14,12 @@ const defaultKeywords = [
   'İsveç vatandaşlık sınavı',
   'İsveç vatandaşlık testi',
   'İsveççe vatandaşlık sınavı soruları',
+  'svenskt medborgarskapsprov',
+  'svensk medborgarskapsprov',
+  'svenskt medborgarskapstest',
+  'svensk medborgarskapstest',
+  'svenskt medborgarskapsprov 2026',
+  'svenskt medborgarskapstest 2026',
 ]
 
 type SeoInput = {
@@ -92,7 +98,7 @@ export function seoMetadata({
 
 export const publicSeo = {
   home: seoMetadata({
-    title: 'Medborgarskapsprov 2026 – Öva på svenska | İsveç Vatandaşlık Sınavı',
+    title: 'Svenskt Medborgarskapsprov & Test 2026 | İsveç Vatandaşlık Sınavı',
     description:
       'Öva inför det svenska medborgarskapsprovet 2026 med frågor, flashcards och provsimuleringar. İsveç vatandaşlık sınavına Türkçe destekli İsveççe hazırlanın.',
     path: '/',
@@ -112,11 +118,17 @@ export const publicSeo = {
     keywords: ['medborgarskapsprov flashcards', 'sverige flashcards', 'İsveççe flashcard'],
   }),
   articles: seoMetadata({
-    title: 'Artiklar om medborgarskapsprovet 2026 | İsveç Vatandaşlık Rehberi',
+    title: 'Svenskt Medborgarskapsprov & Test: Artiklar & Guider 2026',
     description:
-      'Läs guider om medborgarskapsprovet, Sverige i fokus, regler, anmälan och vanliga frågor. İsveç vatandaşlık sınavı için Türkçe destekli rehberler.',
+      'Läs guider och artiklar om det svenska medborgarskapsprovet och medborgarskapstestet 2026. İsveç vatandaşlık sınavı için Türkçe destekli rehberler.',
     path: '/artiklar',
-    keywords: ['medborgarskapsprov guide', 'sverige i fokus', 'İsveç vatandaşlık rehberi'],
+    keywords: [
+      'medborgarskapsprov guide',
+      'sverige i fokus',
+      'İsveç vatandaşlık rehberi',
+      'svenskt medborgarskapsprov artiklar',
+      'medborgarskapstest guider',
+    ],
   }),
 }
 

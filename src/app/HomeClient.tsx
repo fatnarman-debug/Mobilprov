@@ -86,9 +86,9 @@ export default function HomeClient() {
           <div className="mb-8">
             <SwedenFlag size={120} />
           </div>
-          <h1 className="text-5xl font-extrabold leading-tight mb-4">
-            Bestå medborgarskapstestet<br />
-            <span style={{ color: '#FECC02' }}>på första försöket</span>
+          <h1 className="text-5xl font-extrabold leading-tight mb-4 text-pretty">
+            Svenskt Medborgarskapsprov & Test<br />
+            <span style={{ color: '#FECC02' }}>Bestå på första försöket</span>
           </h1>
           <p className="text-xl text-white/80 mb-8 leading-relaxed">
             Flashcards, övningsfrågor och provsimuleringar – allt på ett ställe
@@ -330,6 +330,103 @@ export default function HomeClient() {
           </div>
         </div>
       </main>
+
+      {/* Rich SEO Content Section */}
+      <section className="relative z-10 max-w-6xl mx-auto w-full px-6 py-16 space-y-12 text-white">
+        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Detailed Info */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-extrabold tracking-tight" style={{ color: '#FECC02' }}>
+              Vad är det svenska medborgarskapsprovet?
+            </h2>
+            <p className="text-white/80 leading-relaxed">
+              Från och med den <strong>6 juni 2026</strong> införs ett nytt obligatoriskt <strong>medborgarskapsprov</strong> (samhällskunskapstest) för alla som ansöker om svenskt medborgarskap. Syftet med testet är att säkerställa att nya medborgare har grundläggande kunskaper om hur det svenska samhället fungerar, dess lagar, historia och demokratiska värderingar.
+            </p>
+            <p className="text-white/80 leading-relaxed">
+              Vår plattform är skräddarsydd för att hjälpa dig att klara detta prov på första försöket. We erbjuder gratis övningsfrågor, interaktiva flashcards och realistiska provsimuleringar baserade på det officiella studiematerialet <em>Sverige i fokus</em>.
+            </p>
+            <div className="p-5 rounded-2xl border border-white/10 space-y-3" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(10px)' }}>
+              <h3 className="font-bold text-lg flex items-center gap-2" style={{ color: '#FECC02' }}>
+                <span className="material-symbols-outlined text-[20px]">translate</span>
+                Türkçe Destekli İsveççe Hazırlık
+              </h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                İsveç vatandaşlık sınavı sorularını İsveççe çözerken zorlanmamanız için tüm soruların, cevapların ve açıklamaların Türkçe çeviri desteği bulunmaktadır. Bu sayede hem dilinizi geliştirir hem de sınav konularını eksiksiz öğrenirsiniz.
+              </p>
+            </div>
+          </div>
+
+          {/* Key Facts / Features */}
+          <div className="space-y-6 bg-white/5 border border-white/10 p-8 rounded-3xl" style={{ backdropFilter: 'blur(20px)' }}>
+            <h3 className="text-2xl font-bold tracking-tight">Korta fakta om medborgarskapstestet</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <span className="text-lg">📝</span>
+                <div>
+                  <strong className="block text-white" style={{ color: '#FECC02' }}>60 flervalsfrågor</strong>
+                  <span className="text-sm text-white/75">Provet består av 60 frågor där du väljer ett av fyra svarsalternativ.</span>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-lg">⏱️</span>
+                <div>
+                  <strong className="block text-white" style={{ color: '#FECC02' }}>90 minuters provtid</strong>
+                  <span className="text-sm text-white/75">Du har 90 minuter på dig att besvara alla frågor under provet.</span>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-lg">🎯</span>
+                <div>
+                  <strong className="block text-white" style={{ color: '#FECC02' }}>Godkändgräns på 67%</strong>
+                  <span className="text-sm text-white/75">Det krävs minst 40 rätta svar av 60 för att få godkänt resultat.</span>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-lg">📚</span>
+                <div>
+                  <strong className="block text-white" style={{ color: '#FECC02' }}>Sverige i fokus</strong>
+                  <span className="text-sm text-white/75">Hela provet bygger på Universitets- och högskolerådets (UHR) officiella utbildningsmaterial.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* FAQs */}
+        <div className="space-y-6">
+          <h2 className="text-3xl font-extrabold text-center tracking-tight" style={{ color: '#FECC02' }}>
+            Vanliga frågor om det svenska medborgarskapsprovet
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+            <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
+              <h3 className="font-bold text-white">Vem måste göra medborgarskapstestet i Sverige?</h3>
+              <p className="text-sm text-white/70 leading-relaxed">
+                Alla personer över 15 år som ansöker om svenskt medborgarskap efter den 6 juni 2026 måste klara provet. Undantag kan göras för personer med vissa funktionsnedsättningar eller allvarlig sjukdom.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
+              <h3 className="font-bold text-white">Vad kostar provet att skriva?</h3>
+              <p className="text-sm text-white/70 leading-relaxed">
+                Det allra första utprövningsprovet den 15 augusti 2026 är helt kostnadsfritt för de som får kallelse. Avgiften för framtida ordinarie provtillfällen kommer att fastställas av regeringen och UHR.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
+              <h3 className="font-bold text-white">Kommer det finnas ett språktest i svenska också?</h3>
+              <p className="text-sm text-white/70 leading-relaxed">
+                Kravet på svenska språkkunskaper (språktest) planeras att införas i ett senare skede. Under 2026 testas enbart dina kunskaper om det svenska samhället (samhällskunskap), men frågorna är skrivna på svenska.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
+              <h3 className="font-bold text-white">Hur kan jag förbereda mig på bästa sätt?</h3>
+              <p className="text-sm text-white/70 leading-relaxed">
+                Det mest effektiva sättet är att läsa boken <em>Sverige i fokus</em> kombinerat med att göra realistiska provsimuleringar och flashcards på vår sajt.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="relative z-10 text-center pb-6 text-white/55 text-xs space-y-2">
