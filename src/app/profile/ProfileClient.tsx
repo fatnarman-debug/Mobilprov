@@ -172,7 +172,7 @@ export default function ProfileClient({
               </div>
 
               <div className="space-y-xs relative z-10">
-                <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest block">SINIRSIZ ERİŞİM KAZANIN</span>
+                <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest block">1 YILLIK ERİŞİM KAZANIN</span>
                 <h3 className="font-title-md text-base text-on-surface font-bold text-pretty">Premium VIP Avantajları</h3>
                 <p className="text-xs text-on-surface-variant max-w-lg leading-relaxed">
                   İsveç Vatandaşlık sınavına eksiksiz hazırlanmak için tüm kilitleri açın. Sınırsız deneme sınavları, akıllı yapay zeka analizleri ve limitsiz soru çözümü sizi bekliyor!
@@ -185,10 +185,10 @@ export default function ProfileClient({
                   className="inline-flex items-center gap-xs bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-sm transition-all"
                 >
                   <span className="material-symbols-outlined text-[18px]">workspace_premium</span>
-                  VIP Premium Ol (₺499.00)
+                  VIP Premium Ol (299 kr)
                 </Link>
                 <span className="text-[10px] text-on-surface-variant font-label-md">
-                  Tek Seferlik Ödeme
+                  1 Yıllık Erişim
                 </span>
               </div>
             </div>

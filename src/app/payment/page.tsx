@@ -49,10 +49,10 @@ function PaymentContent() {
 
         <div className="bg-surface-container p-md rounded-xl mb-lg text-left">
           <div className="flex justify-between items-center mb-xs">
-            <span className="text-on-surface-variant">EduFlow Premium</span>
-            <span className="font-title-md text-title-md font-bold text-primary">₺499.00</span>
+            <span className="text-on-surface-variant">Medborgarskapsprov Premium</span>
+            <span className="font-title-md text-title-md font-bold text-primary">299 kr</span>
           </div>
-          <span className="text-label-md text-on-surface-variant">Tek Seferlik Ödeme</span>
+          <span className="text-label-md text-on-surface-variant">1 Yıllık Erişim</span>
         </div>
 
         <button 

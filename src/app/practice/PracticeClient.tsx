@@ -421,7 +421,7 @@ export default function PracticeClient({
             </div>
 
             <p className="text-[10px] text-on-surface-variant opacity-70">
-              Tek seferlik ₺499.00 ödemeyle süresiz ve tam erişim kazanın.
+              299 kr ödemeyle 1 yıl boyunca tam erişim kazanın.
             </p>
           </div>
         </div>

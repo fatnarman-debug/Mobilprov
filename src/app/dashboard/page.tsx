@@ -123,14 +123,14 @@ export default async function DashboardPage() {
             <div className="w-full md:w-auto bg-primary-container/5 border border-primary-container/10 p-md rounded-2xl space-y-sm">
               <span className="text-xs font-bold text-primary uppercase block tracking-wider">Ücretsiz Deneme Hesabı</span>
               <p className="text-xs text-on-surface-variant max-w-xs leading-relaxed">
-                Günde en fazla {settings?.freeDailyQuestionLimit ?? 20} pratik sorusu çözebilirsiniz. Sınırsız pratik ve denemeler için üyeliğinizi VIP Premium yapın.
+                Günde en fazla {settings?.freeDailyQuestionLimit ?? 20} pratik sorusu çözebilirsiniz. 1 yıl boyunca sınırsız pratik ve denemeler için üyeliğinizi VIP Premium yapın.
               </p>
               <Link 
                 href={`/payment?userId=${session.user.id}`}
                 className="w-full md:w-auto py-2.5 px-5 bg-primary text-on-primary font-bold text-xs rounded-full hover:bg-primary-dark active:scale-95 transition-all inline-flex justify-center items-center gap-xs shadow-sm"
               >
                 <span className="material-symbols-outlined text-xs">workspace_premium</span>
-                Premium VIP Ol (₺499.00)
+                Premium VIP Ol (299 kr / 1 Yıl)
               </Link>
             </div>
           )}

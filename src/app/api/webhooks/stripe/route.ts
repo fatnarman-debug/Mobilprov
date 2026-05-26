@@ -27,13 +27,19 @@ export async function POST(req: Request) {
     const userId = session.metadata?.userId;
 
     if (userId) {
-      // Update the user's status to paid
+      // Update the user's status to paid and set subscription ends in 1 year
       try {
+        const oneYearFromNow = new Date();
+        oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+
         await prisma.user.update({
           where: { id: userId },
-          data: { isPaid: true },
+          data: { 
+            isPaid: true,
+            subscriptionEndsAt: oneYearFromNow
+          },
         });
-        console.log(`User ${userId} successfully upgraded to Paid status.`);
+        console.log(`User ${userId} successfully upgraded to Paid status for 1 year.`);
       } catch (dbError) {
         console.error(`Failed to update user ${userId} in database:`, dbError);
         return NextResponse.json({ error: 'Database update failed' }, { status: 500 });

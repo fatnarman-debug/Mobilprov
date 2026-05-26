@@ -25,12 +25,12 @@ export async function createCheckoutSession(userId: string) {
       line_items: [
         {
           price_data: {
-            currency: 'try',
+            currency: 'sek',
             product_data: {
-              name: 'EduFlow Premium',
-              description: 'Eğitim platformuna tam erişim (Sınırısız)',
+              name: 'Medborgarskapsprov Premium',
+              description: 'Full tillgång till medborgarskapsprovet i 1 år (İsveç Vatandaşlık Sınavı Hazırlığı - 1 Yıl)',
             },
-            unit_amount: 49900, // 499.00 TRY
+            unit_amount: 29900, // 299.00 SEK
           },
           quantity: 1,
         },
@@ -61,10 +61,14 @@ export async function bypassPayment(userId: string) {
   }
 
   try {
+    const oneYearFromNow = new Date();
+    oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+
     await prisma.user.update({
       where: { id: userId },
       data: {
-        isPaid: true
+        isPaid: true,
+        subscriptionEndsAt: oneYearFromNow
       }
     });
 
