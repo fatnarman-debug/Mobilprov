@@ -41,3 +41,16 @@ next-env.d.ts
 
 # uploaded media files
 public/uploads/
+
+# IDE / Agent configurations and local tools
+.agent/
+.cline/
+.clinerules
+.continue/
+.cursor/
+.windsurf/
+Skill/
+seo.plugin
+scratch/
+.github/skills/
+.github/copilot-instructions.md

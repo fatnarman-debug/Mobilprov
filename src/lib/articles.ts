@@ -259,106 +259,136 @@ Boken ger dig grunden, men att öva på faktiska provfrågor ökar din chans att
 
   {
     slug: 'medborgarskapsprovet-2026-ny-lag',
-    title: 'Medborgarskapsprovet 2026 – Ny lag, nytt krav och allt du behöver veta',
+    title: 'Nya kraven för svenskt medborgarskap 2026 – Komplett guide till lagändringen',
     metaDescription:
-      'Från 6 juni 2026 krävs ett godkänt medborgarskapsprov för att bli svensk medborgare. Lär dig om den nya lagen, provet och hur du förbereder dig.',
+      'Vad som förändras den 6 juni 2026: Samhällskunskapstest, språkkrav, egen försörjning och skärpta villkor för svenskt medborgarskap. Komplett guide.',
     publishedAt: '2025-05-20',
-    updatedAt: '2026-05-22',
-    readingTime: 8,
+    updatedAt: '2026-05-26',
+    readingTime: 12,
     keywords: [
+      'nya kraven för svenskt medborgarskap 2026',
       'medborgarskapsprovet 2026',
       'nytt krav medborgarskap sverige 2026',
       'samhällskunskapstestet 2026',
-      'ny medborgarskapslag sverige',
-      'medborgarskapsprov uhr',
+      'språktest medborgarskap sverige',
+      'försörjningskrav medborgarskap',
     ],
     content: `
-Från den **6 juni 2026** – Sveriges nationaldag – träder en ny medborgarskapslag i kraft. Alla som ansöker om **svenskt medborgarskap** måste från och med detta datum klara ett obligatoriskt **medborgarskapsprov** som visar grundläggande kunskaper om det svenska samhället.
+Den **6 juni 2026** – på Sveriges nationaldag – träder en ny och omfattande medborgarskapslagstiftning i kraft. Denna reform innebär de mest genomgripande och strängaste förändringarna av kraven för **svenskt medborgarskap** på flera decennier. 
 
-Det är **UHR (Universitets- och högskolerådet)** som ansvarar för att administrera provet. Migrationsverket hanterar ansökan och informerar sökande om vad som gäller.
+Reformen syftar till att stärka medborgarskapets status och säkerställa att den som beviljas svenskt medborgarskap har en etablerad anknytning till landet, grundläggande samhällskunskaper samt förmåga att försörja sig själv.
 
----
-
-## Vad testas i medborgarskapsprovet?
-
-Provet testar din kännedom om:
-
-- Det svenska samhällets organisation och demokrati
-- Sveriges historia, geografi och värderingar
-- Mänskliga rättigheter och grundlagar
-- Välfärdssystemet, utbildning och arbetsmarknad
-- Vardagslivet som medborgare i Sverige
-
-Provet bygger på UHR:s officiella studiematerial som finns kostnadsfritt på UHR:s webbplats (uhr.se/medborgarskapsprovet).
+I denna kompletta guide går vi igenom allt du behöver veta om de nya reglerna, de två nya testen, de skärpta kraven på hemvist och vandel, samt hur du bäst förbereder dig.
 
 ---
 
-## Det första provet – 15 augusti 2026 i Stockholm
+## Jämförelse: Gamla vs. Nya kraven för medborgarskap
 
-Det allra första provtillfället äger rum den **15 augusti 2026** enbart i **Stockholm**.
+Här är en snabb översikt över hur kraven förändras före och efter den 6 juni 2026:
 
-### Viktigt att veta:
-- Det är **kostnadsfritt** att delta
-- Provet testar **enbart samhällskunskaper** – kravet på svenska språket introduceras senare
-- Endast de som fått ett **kallelsebrev från Migrationsverket** kan anmäla sig
-- Anmälan öppnar i **början av juni 2026**
-
----
-
-## Vem måste göra provet?
-
-Kravet gäller alla som ansöker om **naturalisering** – det vill säga att bli medborgare utan svenska föräldrar.
-
-### Undantag:
-- Barn under **15 år** är undantagna
-- Sökande med vissa **funktionsnedsättningar** kan ansöka om undantag
-- Nordiska medborgare har särskilda regler
+| Krav | Äldre regler (Före 6 juni 2026) | Nya regler (Från 6 juni 2026) |
+| :--- | :--- | :--- |
+| **Samhällskunskap** | Inget krav på prov eller kunskapstest | Obligatoriskt **samhällskunskapstest** (UHR/Göteborgs univ.) |
+| **Språkkrav** | Inga formella krav på kunskaper i svenska | Obligatoriskt **språktest** i svenska (SFI B1/A2-nivå) |
+| **Hemvisttid (Normal)**| 5 år sammanhängande bosättning i Sverige | Förlängs till **8 år** (förlängt krav på hemvist) |
+| **Egen försörjning** | Inget inkomst- eller försörjningskrav | Krav på att kunna **försörja sig själv** och familjemedlemmar |
+| **Vandel (Hederlighet)**| Normal prövning av brottslighet/skulder | Skärpt kontroll, längre karenstider, hårda skuldgranskningar |
 
 ---
 
-## Hur förbereder man sig bäst?
+## 1. De två nya obligatoriska testen
 
-### 1. Studera det officiella materialet
-Läs UHR:s studiematerial noggrant – det täcker alla ämnesområden som testas.
+För första gången i modern svensk historia införs formella kunskapskrav. Om du ansöker efter lagändringen måste du klara två prov:
 
-### 2. Öva med riktiga provfrågor
-På **Sverigemedborgarskapsprov.com** hittar du hundratals övningsfrågor som speglar det verkliga provet – gratis, utan registrering.
+### A. Samhällskunskapstestet
+Detta prov testar dina grundläggande kunskaper om det svenska samhället. 
+- **Innehåll:** Frågorna spänner över 7 ämnesområden: geografi/natur, svensk historia, demokrati/statsskick, mänskliga rättigheter, det svenska välfärdssamhället, Sverige i världen (EU/NATO/FN) samt vardagsliv och integration.
+- **Utveckling:** Göteborgs universitet har utvecklat provet på uppdrag av UHR (Universitets- och högskolerådet).
+- **Studiematerial:** Provet utgår helt från den officiella studieboken *Sverige i fokus*.
+- **Format:** Består av 60 flervalsfrågor (fyra alternativ per fråga). Provtiden är 90 minuter, och godkäntgränsen är 40 rätta svar (67%).
 
-### 3. Använd flashcards
-Flashcards är effektivt för att memorera datum, lagar och begrepp som ofta dyker upp i provet.
-
-### 4. Ta hela provsimuleringar
-Simulera en riktig provsituation med tidsbegränsning och direkt feedback.
+### B. Språktestet (Krav på svenska)
+Du måste kunna visa tillräckliga kunskaper i det svenska språket.
+- **Nivå:** Förslaget kräver muntlig förmåga på B1-nivå och skriftlig/läsförståelse på A2-nivå enligt den gemensamma europeiska referensramen för språk (CEFR).
+- **Provformer:** Godkända betyg från SFI (Svenska för invandrare), gymnasiet eller ett särskilt framtaget nationellt språktest kommer att fungera som bevis.
+- **Undantag:** Språkkravet introduceras stegvis och kommer inte att ingå vid det allra första pilotprovet i augusti 2026.
 
 ---
 
-## Vanliga frågor om medborgarskapsprovet 2026
+## 2. Skärpt hemvisttid (Längre tid i Sverige)
 
-**Från vilket datum gäller kravet?**
-Från och med **6 juni 2026** för nya ansökningar.
+Tiden du måste ha bott i Sverige (hemvist) förlängs för att säkerställa en starkare integration innan du blir medborgare:
+- **Normal naturalisering:** Kravet höjs från dagens 5 år till **8 år**.
+- **Flyktingar och statslösa:** Tidigare krävdes 4 år, men även detta krav förlängs.
+- **Makar/sambor till svenska medborgare:** Tidigare gällde 3 år i kombination med att ha bott ihop i 2 år. Detta krav skärps också i motsvarande grad.
 
-**Vad händer om man inte klarar provet?**
-Du kan göra om provet. UHR publicerar mer info om antal försök och avgifter löpande.
+---
 
-**Hur anmäler man sig?**
-Via UHR:s webbplats. Det första tillfället kräver ett kallelsebrev från Migrationsverket.
+## 3. Nytt försörjningskrav (Egen försörjning)
 
-**Finns materialet på andra språk?**
-Ja – UHR:s studiematerial finns på flera språk. Se UHR:s webbplats för aktuell lista.
+Du ska kunna visa att du har en regelbunden och laglig inkomst som gör att du kan försörja dig själv och de familjemedlemmar som ingår i ditt hushåll.
+- **Godkänd inkomst:** Lön från anställning, näringsverksamhet, sjukpenning eller a-kassa.
+- **Ej godkänt:** Olika former av behovsprövat ekonomiskt bistånd (t.ex. försörjningsstöd/socialbidrag) som huvudsaklig försörjning.
+- **Undantag:** Regeringen has specificerat undantag för pensionärer, studenter och personer som på grund av långvarig funktionsnedsättning eller sjukdom inte kan arbeta.
 
-**Måste man klara ett språktest också?**
-Kravet på svenska introduceras i ett **senare skede** och gäller inte vid det första provet.
+---
+
+## 4. Skärpta vandelskrav (Hederligt levnadssätt)
+
+Att leva ett hederligt liv ("god vandel") är sedan länge ett krav, men detta skärps avsevärt:
+- **Brottslighet:** Karenstiden (tiden du måste vänta efter att ha dömts för ett brott innan du kan bli medborgare) förlängs dramatiskt.
+- **Skulder:** Granskningen hos Kronofogden blir hårdare. Aktiva skulder eller upprepade betalningsanmärkningar kan leda till omedelbart avslag.
+- **Säkerhetsprövning:** Säkerhetspolisen (SÄPO) får ett utökat mandat att granska sökande för att säkerställa att medborgarskapet inte utgör ett hot mot Sveriges säkerhet.
+
+---
+
+## Det första utprövningsprovet – 15 augusti 2026 i Stockholm
+
+För att testa provsystemet i praktiken arrangerar UHR ett pilotprov (utprövningsprov) den **15 augusti 2026** i **Stockholm**.
+- **Pris:** Helt kostnadsfritt att delta.
+- **Vilka kan skriva?** Endast de sökande som fått ett officiellt kallelsebrev från Migrationsverket.
+- **Anmälningsstart:** Anmälan till detta provtillfälle öppnar i **början av juni 2026**.
+- **Språk:** Detta första test provar enbart samhällskunskaperna; språkkravet tillämpas i senare skeden.
+
+---
+
+## Den politiska bakgrunden bakom lagen
+
+Vägen fram till lagändringen har präglats av gedigna statliga utredningar:
+- **SOU 2021:2:** Lade grunden och föreslog införandet av test i svenska och samhällskunskap.
+- **SOU 2025:1:** Specificerade de praktiska detaljerna kring testens struktur, provtid (90 minuter istället för de först föreslagna 60) samt UHR:s och Göteborgs universitets roller.
+Lagen har ett starkt politiskt stöd i riksdagen, vilket garanterar att reglerna kommer att gälla under lång tid framöver.
+
+---
+
+## Hur förbereder du dig bäst inför samhällskunskapstestet?
+
+Eftersom provet täcker en enorm bredd av information är strukturerade studier nyckeln till att bli godkänd på första försöket.
+
+1. **Läs och lyssna på "Sverige i fokus":** Ladda ner boken som gratis PDF och lyssna på MP3-ljudfilerna från UHR. Att göra båda samtidigt ökar din inlärningshastighet.
+2. **Träna löpande på Sverigemedborgarskapsprov.com:** Vi erbjuder hundratals realistiska övningsfrågor baserade på alla 14 kapitel i *Sverige i fokus*. Alla våra frågor har dessutom **Türkçe (turkisk) översättning och förklaringar** för att hjälpa dig att verka förstå svāra begrepp.
+3. **Plugga med flashcards:** Perfekt för att memorera årtal, historiska personer, riksdagsledamöter (349 st!) och grundlagarna.
+4. **Gör fulla provsimuleringar:** Visa din kunskap under tidspress (90 minuter) för att bygga upp rätt tempo inför provdagen.
+
+---
+
+## Vanliga frågor om de nya kraven 2026
+
+**Gäller de nya kraven om jag skickade min ansökan innan juni 2026?**
+Nej. Lagen tillämpas på ansökningar som lämnas in från och med den 6 juni 2026. Ansökningar som registrerats hos Migrationsverket före detta datum prövas enligt de äldre reglerna.
+
+**Hur många gånger får man göra om samhällskunskapstestet?**
+Det finns ingen övre gräns för antalet försök. Om du blir underkänd kan du anmäla dig till ett nytt provtillfälle, men du måste betala eventuell provavgift för framtida ordinarie prov.
+
+**Finns det undantag för äldre eller unga?**
+Ja. Barn under 15 år är helt undantagna från testkraven. Det finns även särskilda regler och undantag för äldre sökande samt personer med medicinska funktionshinder som gör det omöjligt att genomföra proven.
 
 ---
 
 ## Sammanfattning
+Den 6 juni 2026 höjs ribban för att få svenskt medborgarskap. Förutom förlängd hemvisttid till 8 år, striktare vandel och försörjningskrav måste du klara både ett **samhällskunskapstest** och ett **språktest**. 
 
-- 📅 **6 juni 2026**: Ny medborgarskapslag träder i kraft
-- 📝 **15 augusti 2026**: Första provet i Stockholm (kostnadsfritt, kallelse krävs)
-- 📚 Studera med UHR:s material + övningsfrågor på Sverigemedborgarskapsprov.com
-- ⚠️ Undantag: Barn under 15 år och vissa funktionsnedsättningar
-
-Vill du börja förbereda dig nu? På **Sverigemedborgarskapsprov.com** kan du öva gratis med riktiga provfrågor och interaktiva flashcards – utan registrering.
+Börja förbereda dig i god tid! Genom att kombinera studier av *Sverige i fokus* med våra kostnadsfria verktyg på **Sverigemedborgarskapsprov.com** ökar du dina chanser att klara provet på första försöket avsevärt.
 `.trim(),
   },
 
