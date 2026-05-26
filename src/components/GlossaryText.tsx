@@ -7,6 +7,7 @@ import { translateText } from '@/actions/translate.actions';
 type GlossaryTextProps = {
   text: string | null;
   language: string;
+  disableHover?: boolean;
 };
 
 // Global client-side cache to avoid translating the same word multiple times on the same page load
@@ -80,7 +81,8 @@ function DynamicWordTooltip({ word, language }: { word: string; language: string
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Normalize language key
-  const targetLang = (language === 'EN' || language === 'TR') ? language : 'TR';
+  const allowedLangs = ['TR', 'EN', 'AR', 'ES', 'UK', 'FR', 'FA', 'DA'];
+  const targetLang = allowedLangs.includes(language.toUpperCase()) ? language.toUpperCase() : 'TR';
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -136,7 +138,7 @@ function DynamicWordTooltip({ word, language }: { word: string; language: string
         }
       } catch (err) {
         console.error(`[Client Hover] Error:`, err);
-        setError('Çeviri hatası');
+        setError('Översättningsfel');
       } finally {
         setLoading(false);
       }
@@ -178,7 +180,7 @@ function DynamicWordTooltip({ word, language }: { word: string; language: string
           {loading ? (
             <span className="flex items-center gap-1.5 text-[10px] font-bold">
               <span className="material-symbols-outlined animate-spin !text-[12px]">progress_activity</span>
-              Çevriliyor…
+              Översätter…
             </span>
           ) : error ? (
             <span className="text-error text-[10px] block">{error}</span>
@@ -195,13 +197,18 @@ function DynamicWordTooltip({ word, language }: { word: string; language: string
   );
 }
 
-export default function GlossaryText({ text, language }: GlossaryTextProps) {
-  const lang = (language === 'EN' || language === 'TR') ? language : 'TR';
-  const langDict = glossaryData[lang] || glossaryData['TR'];
-
+export default function GlossaryText({ text, language, disableHover = false }: GlossaryTextProps) {
   if (!text) {
     return null;
   }
+
+  if (disableHover) {
+    return <>{text}</>;
+  }
+
+  const allowedLangs = ['TR', 'EN', 'AR', 'ES', 'UK', 'FR', 'FA', 'DA'];
+  const lang = allowedLangs.includes(language.toUpperCase()) ? language.toUpperCase() : 'TR';
+  const langDict = glossaryData[lang] || {};
 
   // Use Intl.Segmenter to segment text into words and punctuation/whitespace
   let segments: { segment: string; isWordLike: boolean }[] = [];
@@ -224,8 +231,8 @@ export default function GlossaryText({ text, language }: GlossaryTextProps) {
   } else {
     // Fallback regex splitting words and non-words
     const wordPattern = /([a-zA-ZåäöÅÄÖ]+)/g;
-    const parts = text.split(wordPattern);
-    segments = parts.map(part => ({
+    const textSplit = text.split(wordPattern);
+    segments = textSplit.map(part => ({
       segment: part,
       isWordLike: wordPattern.test(part)
     }));

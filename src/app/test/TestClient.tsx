@@ -59,7 +59,7 @@ export default function TestClient({
       }
     } catch (e) {
       console.error(e);
-      setExamError('Hata sınavı üretilirken bilinmeyen bir hata oluştu.');
+      setExamError('Ett okänt fel uppstod när felprovet skapades.');
     } finally {
       setGeneratingExam(false);
     }
@@ -88,7 +88,7 @@ export default function TestClient({
         <div className="flex items-center gap-sm">
           {!isPaid && (
             <span className="bg-primary-container text-on-primary-container text-xs px-3 py-1 rounded-full font-bold">
-              Ücretsiz Sürüm
+              Gratisversion
             </span>
           )}
           <span className="material-symbols-outlined text-primary">history_edu</span>
@@ -102,10 +102,10 @@ export default function TestClient({
         <section className="bg-gradient-to-br from-surface-container-lowest to-surface-container-low/50 border border-outline-variant/30 rounded-3xl p-md shadow-sm space-y-xs">
           <div className="flex items-center gap-xs">
             <span className="material-symbols-outlined text-primary">history_edu</span>
-            <h2 className="font-headline-lg-mobile text-lg font-bold text-primary text-pretty">Deneme Sınavı Merkezi</h2>
+            <h2 className="font-headline-lg-mobile text-lg font-bold text-primary text-pretty">Övningsprovscenter</h2>
           </div>
           <p className="text-on-surface-variant font-body-sm text-xs">
-            Yöneticiler tarafından hazırlanan güncel deneme sınavlarını seçerek süreli gerçek sınav simülasyonunu başlatın.
+            Välj ett av de aktuella övningsproven framtagna av administratörer och starta en tidsbegränsad provsimulering.
           </p>
         </section>
 
@@ -120,10 +120,10 @@ export default function TestClient({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-base border-b border-outline-variant/30 pb-sm">
             <div className="flex items-center gap-xs">
               <span className="material-symbols-outlined text-error font-bold">menu_book</span>
-              <h3 className="font-headline-sm text-primary font-bold text-base sm:text-lg text-pretty">Hata Defteri & Sıfır Hata Döngüsü</h3>
+              <h3 className="font-headline-sm text-primary font-bold text-base sm:text-lg text-pretty">Felbok & Nollfelsloop</h3>
             </div>
             <span className={`text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider ${wrongQuestionsCount > 0 ? 'bg-error/15 text-error border border-error/20' : 'bg-secondary/15 text-secondary border border-secondary/20'}`}>
-              {wrongQuestionsCount} Yanlış Soru
+              {wrongQuestionsCount} felaktiga frågor
             </span>
           </div>
 
@@ -131,7 +131,7 @@ export default function TestClient({
             {wrongQuestionsCount > 0 ? (
               <>
                 <p className="text-xs text-on-surface-variant leading-relaxed">
-                  Çözdüğünüz denemelerde yanlış cevapladığınız sorular burada biririk. Hatalarınızdan yeni bir deneme sınavı üreterek, sıfır yanlışa ulaşana kadar kendinizi deneyebilir ve eksiklerinizi tamamlayabilirsiniz.
+                  Frågor som du svarar fel på i övningsproven samlas här. Genom att skapa ett nytt övningsprov av dina fel kan du testa dig själv tills du når noll fel.
                 </p>
                 {examError && (
                   <div className="text-xs font-bold text-error bg-error/10 px-3 py-2 rounded-xl border border-error/20">
@@ -144,16 +144,16 @@ export default function TestClient({
                   className="w-full sm:w-auto px-6 py-3 bg-secondary text-on-secondary font-bold rounded-full shadow-md hover:bg-secondary/90 transition-all flex items-center justify-center gap-xs active:scale-95 disabled:opacity-50 cursor-pointer text-sm"
                 >
                   <span className="material-symbols-outlined text-sm animate-pulse">{generatingExam ? 'progress_activity' : 'bolt'}</span>
-                  {generatingExam ? 'Sınav Üretiliyor…' : 'Hatalarımdan Sınav Üret 🚀'}
+                  {generatingExam ? 'Skapar prov...' : 'Skapa prov av mina fel 🚀'}
                 </button>
               </>
             ) : (
               <div className="flex items-start gap-md py-sm">
                 <span className="text-3xl">🎯</span>
                 <div>
-                  <h4 className="font-title-sm text-secondary font-bold text-sm text-pretty">Tebrikler! Hiç Yanlışınız Kalmadı.</h4>
+                  <h4 className="font-title-sm text-secondary font-bold text-sm text-pretty">Grattis! Du har inga felaktiga frågor kvar.</h4>
                   <p className="text-xs text-on-surface-variant leading-relaxed mt-0.5">
-                    Hata defteriniz tamamen temiz. Bilgileriniz tam ve sınava tamamen hazırsınız! Yeni denemeler çözerek hatalarınızı sıfırda tutmaya çalışın.
+                    Din felbok är helt ren. Dina kunskaper är kompletta och du är redo för provet! Fortsätt göra prov och försök hålla dina fel på noll.
                   </p>
                 </div>
               </div>
@@ -166,17 +166,17 @@ export default function TestClient({
           <div className="flex items-center justify-between px-xs">
             <h3 className="font-headline-sm text-primary font-bold flex items-center gap-sm text-pretty">
               <span className="material-symbols-outlined text-secondary">library_books</span>
-              Aktif Denemeler
+              Aktiva övningsprov
             </h3>
             <span className="bg-primary/10 text-primary font-bold text-[10px] uppercase px-3 py-1 rounded-full tracking-wider">
-              {mockExams.length} Deneme
+              {mockExams.length} prov
             </span>
           </div>
 
           {mockExams.length === 0 ? (
             <div className="p-lg border-2 border-dashed border-outline-variant/30 rounded-3xl text-center bg-surface-container-lowest">
               <span className="material-symbols-outlined text-on-surface-variant text-4xl mb-sm">history_edu</span>
-              <p className="text-on-surface-variant font-body-md">Şu anda yayınlanmış deneme sınavı bulunmuyor.</p>
+              <p className="text-on-surface-variant font-body-md">Det finns inga publicerade övningsprov för närvarande.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
@@ -217,10 +217,10 @@ export default function TestClient({
 
                       <div className="flex gap-md pt-xs text-[11px] text-on-surface-variant">
                         <span className="flex items-center gap-xs">
-                          <span className="material-symbols-outlined text-[14px]">timer</span> {exam.durationMin} Dakika
+                          <span className="material-symbols-outlined text-[14px]">timer</span> {exam.durationMin} minuter
                         </span>
                         <span className="flex items-center gap-xs">
-                          <span className="material-symbols-outlined text-[14px]">quiz</span> {exam.questions.length} Soru
+                          <span className="material-symbols-outlined text-[14px]">quiz</span> {exam.questions.length} frågor
                         </span>
                       </div>
                     </div>
@@ -230,13 +230,13 @@ export default function TestClient({
                       <div>
                         {bestExamScore !== null ? (
                           <div className="space-y-xs">
-                            <span className="text-[9px] text-on-surface-variant uppercase tracking-wider block">En İyi Skorunuz</span>
+                            <span className="text-[9px] text-on-surface-variant uppercase tracking-wider block">Ditt bästa resultat</span>
                             <span className={`font-title-sm text-xs font-bold px-2.5 py-0.5 rounded-full ${bestExamScore >= passingScore ? 'bg-secondary/15 text-secondary' : 'bg-error/15 text-error'}`}>
-                              %{Math.round(bestExamScore)} ({bestExamScore >= passingScore ? 'Geçti' : 'Kaldı'})
+                              %{Math.round(bestExamScore)} ({bestExamScore >= passingScore ? 'Godkänd' : 'Underkänd'})
                             </span>
                           </div>
                         ) : (
-                          <span className="text-xs text-on-surface-variant font-label-md italic">Henüz çözülmedi</span>
+                          <span className="text-xs text-on-surface-variant font-label-md italic">Inte genomfört än</span>
                         )}
                       </div>
 
@@ -245,7 +245,7 @@ export default function TestClient({
                         className={`px-4 py-2 rounded-full font-title-sm text-xs flex items-center gap-xs transition-all active:scale-95 cursor-pointer ${isLocked ? 'bg-outline-variant text-on-surface-variant' : 'bg-primary text-on-primary hover:bg-primary-dark hover:shadow-md shadow-sm'}`}
                       >
                         <span className="material-symbols-outlined text-xs">{isLocked ? 'lock' : 'play_arrow'}</span>
-                        {isLocked ? 'Kilitli (VIP)' : 'Sınavı Başlat'}
+                        {isLocked ? 'Låst (VIP)' : 'Starta prov'}
                       </button>
                     </div>
                   </div>
@@ -275,23 +275,23 @@ export default function TestClient({
             </div>
 
             <div className="space-y-xs">
-              <h3 className="font-headline-sm text-xl font-bold text-primary">Sınav Kilidini Açın (VIP)</h3>
+              <h3 className="font-headline-sm text-xl font-bold text-primary">Lås upp provet (VIP)</h3>
               <p className="text-on-surface-variant text-sm leading-relaxed">
-                Bu deneme sınavına ve diğer tüm kilitli denemelere sınırsız erişim kazanmak için hesabınızı Premium VIP seviyesine yükseltin.
+                Uppgradera ditt konto till Premium VIP för att få obegränsad tillgång till detta övningsprov och alla andra låsta prov.
               </p>
             </div>
 
             <div className="bg-surface-container-low p-md rounded-2xl text-left border border-outline-variant">
-              <span className="text-xs font-bold text-secondary uppercase tracking-widest block mb-1">Premium VIP Avantajları</span>
+              <span className="text-xs font-bold text-secondary uppercase tracking-widest block mb-1">Premium VIP-fördelar</span>
               <ul className="space-y-1 text-xs text-on-surface">
                 <li className="flex items-center gap-xs">
-                  <span className="material-symbols-outlined text-[14px] text-secondary font-bold">check</span> Sınırsız Soru & Flashcard Çözümü
+                  <span className="material-symbols-outlined text-[14px] text-secondary font-bold">check</span> Obegränsat med frågor och flashcards
                 </li>
                 <li className="flex items-center gap-xs">
-                  <span className="material-symbols-outlined text-[14px] text-secondary font-bold">check</span> Tüm Sabit Deneme Sınavlarına Erişim
+                  <span className="material-symbols-outlined text-[14px] text-secondary font-bold">check</span> Tillgång till alla övningsprov
                 </li>
                 <li className="flex items-center gap-xs">
-                  <span className="material-symbols-outlined text-[14px] text-secondary font-bold">check</span> Detaylı Performans ve Sınav Analizi
+                  <span className="material-symbols-outlined text-[14px] text-secondary font-bold">check</span> Detaljerad prestanda- och provanalys
                 </li>
               </ul>
             </div>
@@ -302,12 +302,12 @@ export default function TestClient({
                 className="w-full py-4 bg-primary text-on-primary font-bold rounded-full shadow-lg hover:bg-primary-dark transition-all flex items-center justify-center gap-xs"
               >
                 <span className="material-symbols-outlined">workspace_premium</span>
-                Premium VIP'ye Yükselt
+                Uppgradera till Premium VIP
               </Link>
             </div>
 
             <p className="text-[10px] text-on-surface-variant opacity-70">
-              299 kr ödemeyle 1 yıl boyunca tam erişim kazanın.
+              Betala 299 kr for full tillgång i 1 år.
             </p>
           </div>
         </div>

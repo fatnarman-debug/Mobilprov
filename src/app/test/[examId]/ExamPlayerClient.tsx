@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { saveTestResult } from '@/actions/testResult.actions';
 import GlossaryText from '@/components/GlossaryText';
+import { translateText } from '@/actions/translate.actions';
 import type { MockExam, Question } from '@prisma/client';
 
 type MockExamWithQuestions = MockExam & {
@@ -28,6 +29,29 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [saving, setSaving] = useState(false);
   const [timeLeft, setTimeLeft] = useState(mockExam.durationMin * 60);
+
+  // Explanation translation states for review screen
+  const [translatedExplanations, setTranslatedExplanations] = useState<Record<string, string>>({});
+  const [translatingExplanationIds, setTranslatingExplanationIds] = useState<Record<string, boolean>>({});
+  const [translationErrors, setTranslationErrors] = useState<Record<string, string>>({});
+
+  const handleTranslateExplanation = async (questionId: string, explanationText: string) => {
+    setTranslatingExplanationIds(prev => ({ ...prev, [questionId]: true }));
+    setTranslationErrors(prev => ({ ...prev, [questionId]: '' }));
+    try {
+      const res = await translateText(explanationText, userLang);
+      if (res.error) {
+        setTranslationErrors(prev => ({ ...prev, [questionId]: res.error }));
+      } else if (res.translation) {
+        setTranslatedExplanations(prev => ({ ...prev, [questionId]: res.translation }));
+      }
+    } catch (err) {
+      console.error(err);
+      setTranslationErrors(prev => ({ ...prev, [questionId]: 'Ett fel uppstod vid översättning.' }));
+    } finally {
+      setTranslatingExplanationIds(prev => ({ ...prev, [questionId]: false }));
+    }
+  };
 
   // Result stats
   const [results, setResults] = useState<{
@@ -167,9 +191,9 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
     return (
       <div className="bg-background text-on-background min-h-screen flex flex-col items-center justify-center p-6 text-center">
         <span className="material-symbols-outlined text-[48px] text-error mb-4">warning</span>
-        <h2 className="text-xl font-bold">Bu sınavda soru bulunmuyor!</h2>
-        <p className="text-on-surface-variant mt-2 mb-6">Yönetici henüz bu deneme sınavına soru tanımlamamış.</p>
-        <Link href="/test" className="px-6 py-3 bg-primary text-on-primary rounded-full font-title-sm">Geri Dön</Link>
+        <h2 className="text-xl font-bold">Det finns inga frågor i detta prov!</h2>
+        <p className="text-on-surface-variant mt-2 mb-6">Administratören har inte lagt till några frågor till detta övningsprov än.</p>
+        <Link href="/test" className="px-6 py-3 bg-primary text-on-primary rounded-full font-title-sm">Gå tillbaka</Link>
       </div>
     );
   }
@@ -181,9 +205,9 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
     return (
       <div className="bg-background font-body-md text-on-background min-h-screen pb-20">
         <header className="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center px-gutter justify-between">
-          <span className="font-title-md text-primary font-bold">{mockExam.title} - Sonuç</span>
+          <span className="font-title-md text-primary font-bold">{mockExam.title} - Resultat</span>
           <Link href="/test" className="px-4 py-1.5 border border-outline-variant rounded-full text-sm font-title-sm hover:bg-surface-container-low transition-colors">
-            Sınavlara Dön
+            Gå till prov
           </Link>
         </header>
 
@@ -198,12 +222,12 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
             
             <div className="space-y-sm">
               <h2 className={`font-headline-lg-mobile text-2xl font-bold ${isPassed ? 'text-secondary' : 'text-error'}`}>
-                {isPassed ? 'Tebrikler, Sınavı Geçtiniz! 🎉' : 'Maalesef, Barajı Geçemediniz.'}
+                {isPassed ? 'Grattis, du blev godkänd på provet! 🎉' : 'Tyvärr blev du inte godkänd.'}
               </h2>
               <p className="text-on-surface-variant text-sm max-w-md">
                 {isPassed 
-                  ? 'Harika bir performans sergilediniz! Başarı yüzdeniz belirlenen baraj değerinin üzerindedir.' 
-                  : `Bu sınav için belirlenen baraj puanı %${passingScore} olup, sizin skorunuz %${results.score} seviyesinde kaldı. Konuları tekrar edip tekrar deneyebilirsiniz.`
+                  ? 'Fantastiskt resultat! Din procentandel ligger över godkändgränsen.' 
+                  : `Godkändgränsen för detta prov är %${passingScore} och ditt resultat blev %${results.score}. Repetera ämnena och försök igen.`
                 }
               </p>
             </div>
@@ -212,26 +236,26 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
             <div className="grid grid-cols-2 md:grid-cols-4 gap-md w-full max-w-xl pt-md">
               <div className="bg-surface-container-low p-md rounded-2xl flex flex-col items-center">
                 <span className="text-3xl font-extrabold text-primary">%{results.score}</span>
-                <span className="text-xs text-on-surface-variant font-label-md uppercase tracking-wider mt-1">Başarı Skoru</span>
+                <span className="text-xs text-on-surface-variant font-label-md uppercase tracking-wider mt-1">Resultat</span>
               </div>
               <div className="bg-surface-container-low p-md rounded-2xl flex flex-col items-center">
                 <span className="text-3xl font-extrabold text-secondary">{results.correct}</span>
-                <span className="text-xs text-on-surface-variant font-label-md uppercase tracking-wider mt-1">Doğru Yanıt</span>
+                <span className="text-xs text-on-surface-variant font-label-md uppercase tracking-wider mt-1">Rätt svar</span>
               </div>
               <div className="bg-surface-container-low p-md rounded-2xl flex flex-col items-center">
                 <span className="text-3xl font-extrabold text-error">{results.wrong}</span>
-                <span className="text-xs text-on-surface-variant font-label-md uppercase tracking-wider mt-1">Yanlış Yanıt</span>
+                <span className="text-xs text-on-surface-variant font-label-md uppercase tracking-wider mt-1">Felaktiga svar</span>
               </div>
               <div className="bg-surface-container-low p-md rounded-2xl flex flex-col items-center">
                 <span className="text-3xl font-extrabold text-on-surface-variant">{results.empty}</span>
-                <span className="text-xs text-on-surface-variant font-label-md uppercase tracking-wider mt-1">Boş / Atlanan</span>
+                <span className="text-xs text-on-surface-variant font-label-md uppercase tracking-wider mt-1">Obesvarade</span>
               </div>
             </div>
           </div>
 
           {/* Question Review Section */}
           <section className="space-y-md">
-            <h3 className="font-title-md text-title-md text-on-background font-bold">Soru Detaylı İncelemesi</h3>
+            <h3 className="font-title-md text-title-md text-on-background font-bold">Detaljerad genomgång av frågor</h3>
             <div className="space-y-lg">
               {mockExam.questions.map(({ question }, idx) => {
                 const selected = selectedAnswers[question.id];
@@ -240,9 +264,9 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
                 return (
                   <div key={question.id} className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md shadow-sm space-y-md">
                     <div className="flex justify-between items-center pb-base border-b border-outline-variant">
-                      <span className="text-primary font-bold">Soru {idx + 1}</span>
+                      <span className="text-primary font-bold">Fråga {idx + 1}</span>
                       <span className={`inline-flex px-3 py-1 rounded-full text-xs font-bold ${isCorrect ? 'bg-secondary-container text-on-secondary-container' : selected ? 'bg-error/10 text-error' : 'bg-surface-container-high text-on-surface-variant'}`}>
-                        {isCorrect ? 'DOĞRU' : selected ? 'YANLIŞ' : 'BOŞ'}
+                        {isCorrect ? 'RÄTT' : selected ? 'FEL' : 'TOM'}
                       </span>
                     </div>
 
@@ -281,14 +305,37 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
 
                     {/* Explanation */}
                     {question.explanation && (
-                      <div className="bg-primary-container/15 text-on-primary-container p-md rounded-xl border border-primary/10">
-                        <div className="flex items-center gap-xs mb-xs text-primary">
-                          <span className="material-symbols-outlined text-[18px]">info</span>
-                          <span className="font-bold text-sm">Cevap Açıklaması</span>
+                      <div className="bg-primary-container/15 text-on-primary-container p-md rounded-xl border border-primary/10 space-y-sm">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-xs text-primary">
+                            <span className="material-symbols-outlined text-[18px]">info</span>
+                            <span className="font-bold text-sm">Förklaring</span>
+                          </div>
+                          
+                          <button
+                            onClick={() => handleTranslateExplanation(question.id, question.explanation || '')}
+                            disabled={translatingExplanationIds[question.id]}
+                            className="text-[10px] font-bold text-secondary bg-secondary/15 hover:bg-secondary/25 px-2 py-0.5 rounded transition-colors flex items-center gap-1 active:scale-95 disabled:opacity-50"
+                          >
+                            <span className="material-symbols-outlined !text-[12px]">{translatingExplanationIds[question.id] ? 'progress_activity' : 'translate'}</span>
+                            {translatedExplanations[question.id] ? 'Uppdatera översättning' : 'Översätt förklaring'}
+                          </button>
                         </div>
+                        
                         <p className="font-body-sm text-xs leading-relaxed text-on-surface-variant">
                           <GlossaryText text={question.explanation} language={userLang} />
                         </p>
+
+                        {translatedExplanations[question.id] && (
+                          <div className="bg-surface-container/60 p-sm rounded-xl border border-outline-variant/20 mt-xs animate-in fade-in duration-200">
+                            <span className="text-[9px] font-bold text-secondary uppercase tracking-wider block mb-1">Översättning ({userLang})</span>
+                            <p className="text-on-surface font-body-sm text-xs leading-relaxed italic">{translatedExplanations[question.id]}</p>
+                          </div>
+                        )}
+
+                        {translationErrors[question.id] && (
+                          <p className="text-xs text-error font-semibold mt-1">⚠️ {translationErrors[question.id]}</p>
+                        )}
                       </div>
                     )}
                   </div>
@@ -328,10 +375,10 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
         <section className="flex flex-col gap-xs">
           <div className="flex items-center justify-between">
             <span className="bg-secondary-container text-on-secondary-container text-label-md font-label-md px-3 py-1 rounded-full uppercase text-xs">
-              SORU {currentIdx + 1} / {totalQuestions}
+              FRÅGA {currentIdx + 1} / {totalQuestions}
             </span>
             <span className="text-on-surface-variant font-label-md text-xs">
-              Tamamlanan: {Object.keys(selectedAnswers ?? {}).length} / {totalQuestions}
+              Besvarade: {Object.keys(selectedAnswers ?? {}).length} / {totalQuestions}
             </span>
           </div>
           <div className="h-2.5 w-full bg-surface-container rounded-full mt-base overflow-hidden">
@@ -345,14 +392,14 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
         {/* Central Card with Current Question */}
         <article className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md shadow-sm space-y-md">
           <div className="flex justify-between items-center pb-base border-b border-outline-variant">
-            <span className="text-primary font-bold">Soru {currentIdx + 1}</span>
+            <span className="text-primary font-bold">Fråga {currentIdx + 1}</span>
             <span className="bg-surface-container-high text-on-surface text-label-md font-bold px-2 py-0.5 rounded text-xs uppercase">
               {currentQuestion.difficulty}
             </span>
           </div>
 
           <p className="font-body-lg text-lg text-on-surface leading-relaxed whitespace-pre-wrap">
-            <GlossaryText text={currentQuestion.text} language={userLang} />
+            <GlossaryText text={currentQuestion.text} language={userLang} disableHover={true} />
           </p>
 
           {/* Answer Choice Selector Buttons */}
@@ -369,7 +416,7 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
                 >
                   <span className={`w-9 h-9 flex-shrink-0 rounded-full font-title-md flex items-center justify-center mr-md transition-colors ${isSelected ? 'bg-primary text-on-primary' : 'border border-outline text-on-surface-variant'}`}>{opt}</span>
                   <span className="font-body-md text-sm text-on-surface">
-                    <GlossaryText text={optText} language={userLang} />
+                    <GlossaryText text={optText} language={userLang} disableHover={true} />
                   </span>
                 </button>
               );
@@ -384,7 +431,7 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
             onClick={() => setCurrentIdx((p) => p - 1)}
             className="flex-1 py-3 px-4 border border-outline-variant font-semibold rounded-xl hover:bg-surface-container transition-colors disabled:opacity-30 disabled:pointer-events-none"
           >
-            Önceki
+            Föregående
           </button>
           
           {currentIdx < totalQuestions - 1 ? (
@@ -392,7 +439,7 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
               onClick={() => setCurrentIdx((p) => p + 1)}
               className="flex-1 py-3 px-4 bg-primary text-on-primary font-semibold rounded-xl hover:bg-primary-dark transition-all"
             >
-              Sonraki Soru
+              Nästa fråga
             </button>
           ) : (
             <button 
@@ -400,7 +447,7 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
               disabled={saving}
               className="flex-1 py-3 px-4 bg-secondary text-on-secondary font-semibold rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-xs disabled:opacity-50"
             >
-              {saving ? 'Hesaplanıyor...' : 'Sınavı Bitir'}
+              {saving ? 'Beräknar...' : 'Avsluta prov'}
             </button>
           )}
         </div>
@@ -408,9 +455,9 @@ export default function ExamPlayerClient({ mockExam, passingScore, siteName, use
         {/* Jump-to-Question Grid Navigator */}
         <section className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md shadow-sm space-y-base">
           <div className="flex items-center justify-between">
-            <h4 className="font-title-sm text-sm text-on-surface font-semibold">Sınav Haritası</h4>
+            <h4 className="font-title-sm text-sm text-on-surface font-semibold">Provkarta</h4>
             <span className="text-[10px] text-on-surface-variant font-label-md">
-              Mavi: Yanıtlandı | Siyah: Mevcut Soru
+              Blå: Besvarad | Svart: Aktuell fråga
             </span>
           </div>
           

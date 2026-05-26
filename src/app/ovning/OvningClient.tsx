@@ -134,7 +134,7 @@ export default function OvningClient({ questions, userLang = 'TR' }: { questions
               {q.topic.title}
             </span>
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Çeviri Dili / Lang:</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Översättningsspråk:</span>
               <select
                 value={lang}
                 onChange={(e) => handleLangChange(e.target.value)}
@@ -142,6 +142,12 @@ export default function OvningClient({ questions, userLang = 'TR' }: { questions
               >
                 <option value="TR">TR 🇹🇷</option>
                 <option value="EN">EN 🇬🇧</option>
+                <option value="AR">AR 🇸🇦</option>
+                <option value="ES">ES 🇪🇸</option>
+                <option value="UK">UK 🇺🇦</option>
+                <option value="FR">FR 🇫🇷</option>
+                <option value="FA">FA 🇮🇷</option>
+                <option value="DA">DA 🇦🇫</option>
               </select>
             </div>
           </div>

@@ -30,13 +30,13 @@ export default async function DashboardPage() {
         <div className="w-24 h-24 bg-warning-container text-on-warning-container flex items-center justify-center rounded-full mb-6">
           <span className="material-symbols-outlined text-[48px]">construction</span>
         </div>
-        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-sm">Bakım Modundayız</h1>
+        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-sm">Underhåll pågår</h1>
         <p className="text-on-surface-variant font-body-md max-w-md mb-lg">
-          Platformumuz şu anda planlı bakım çalışması nedeniyle geçici olarak hizmet dışıdır. Lütfen daha sonra tekrar deneyin.
+          Vår plattform är för närvarande stängd för planerat underhåll. Vänligen försök igen senare.
         </p>
         {settings?.contactEmail && (
           <p className="text-sm font-label-md bg-surface-container px-4 py-2 rounded-full text-on-surface-variant">
-            Destek: <a href={`mailto:${settings.contactEmail}`} className="text-primary hover:underline">{settings.contactEmail}</a>
+            Support: <a href={`mailto:${settings.contactEmail}`} className="text-primary hover:underline">{settings.contactEmail}</a>
           </p>
         )}
       </div>
@@ -84,7 +84,7 @@ export default async function DashboardPage() {
           <div className="flex items-center gap-base">
             {isAdmin && (
               <Link href="/admin" className="text-xs bg-error text-on-error font-bold px-3 py-1.5 rounded-full hover:opacity-90 transition-opacity">
-                YÖNETİCİ PANELİ
+                ADMINPANEL
               </Link>
             )}
             {isUserPaid ? (
@@ -93,7 +93,7 @@ export default async function DashboardPage() {
               </span>
             ) : (
               <Link href={`/payment?userId=${session.user.id}`} className="bg-primary text-on-primary text-xs px-3 py-1.5 rounded-full font-bold flex items-center gap-0.5 hover:bg-primary-dark transition-all">
-                PREMIUM'A GEÇ
+                UPPGRADERA
               </Link>
             )}
           </div>
@@ -106,31 +106,31 @@ export default async function DashboardPage() {
         <section className="bg-gradient-to-br from-surface-container-lowest to-surface-container-low/50 border border-outline-variant/30 rounded-3xl p-md shadow-sm hover:shadow-md transition-all duration-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
           <div>
             <h2 className="font-headline-lg-mobile text-headline-lg-mobile text-on-background font-bold text-pretty">
-              Merhaba, {session.user.name || 'Öğrenci'}! 👋
+              Hej, {session.user.name || 'studerande'}! 👋
             </h2>
             <p className="text-on-surface-variant font-body-md mt-1">
-              Bugün İsveç vatandaşlık sınavı hazırlığı için harika bir gün.
+              Idag är en fantastisk dag att förbereda sig för det svenska medborgarskapsprovet.
             </p>
             {subEnds && (
               <p className="text-xs text-secondary font-semibold mt-2 flex items-center gap-xs">
                 <span className="material-symbols-outlined text-[16px]">calendar_today</span> 
-                Aboneliğiniz {new Date(subEnds).toLocaleDateString('tr-TR')} tarihinde sona erecektir.
+                Din prenumeration löper ut den {new Date(subEnds).toLocaleDateString('sv-SE')}.
               </p>
             )}
           </div>
 
           {!isUserPaid && (
             <div className="w-full md:w-auto bg-primary-container/5 border border-primary-container/10 p-md rounded-2xl space-y-sm">
-              <span className="text-xs font-bold text-primary uppercase block tracking-wider">Ücretsiz Deneme Hesabı</span>
+              <span className="text-xs font-bold text-primary uppercase block tracking-wider">Kostnadsfritt testkonto</span>
               <p className="text-xs text-on-surface-variant max-w-xs leading-relaxed">
-                Günde en fazla {settings?.freeDailyQuestionLimit ?? 20} pratik sorusu çözebilirsiniz. 1 yıl boyunca sınırsız pratik ve denemeler için üyeliğinizi VIP Premium yapın.
+                Du kan lösa max {settings?.freeDailyQuestionLimit ?? 20} övningsfrågor per dag. Bli VIP Premium för obegränsad övning och prov i 1 år.
               </p>
               <Link 
                 href={`/payment?userId=${session.user.id}`}
                 className="w-full md:w-auto py-2.5 px-5 bg-primary text-on-primary font-bold text-xs rounded-full hover:bg-primary-dark active:scale-95 transition-all inline-flex justify-center items-center gap-xs shadow-sm"
               >
                 <span className="material-symbols-outlined text-xs">workspace_premium</span>
-                Premium VIP Ol (299 kr / 1 Yıl)
+                Bli Premium VIP (299 kr / 1 år)
               </Link>
             </div>
           )}
@@ -139,14 +139,14 @@ export default async function DashboardPage() {
         {/* Topic Categories */}
         <section className="space-y-md">
           <div className="flex justify-between items-end px-xs">
-            <h3 className="font-title-md text-title-md text-on-background font-bold text-pretty">Çalışma Konuları</h3>
-            <span className="text-xs font-semibold text-secondary uppercase tracking-wider">TOPLAM {topics.length} KONU</span>
+            <h3 className="font-title-md text-title-md text-on-background font-bold text-pretty">Studieämnen</h3>
+            <span className="text-xs font-semibold text-secondary uppercase tracking-wider">TOTALT {topics.length} ÄMNEN</span>
           </div>
 
           {topics.length === 0 ? (
             <div className="p-lg border-2 border-dashed border-outline-variant/30 rounded-3xl text-center bg-surface-container-lowest">
               <span className="material-symbols-outlined text-on-surface-variant text-4xl mb-sm">library_books</span>
-              <p className="text-on-surface-variant font-body-md">Henüz yayında olan konu bulunmuyor.</p>
+              <p className="text-on-surface-variant font-body-md">Det finns inga publicerade ämnen ännu.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
@@ -190,20 +190,20 @@ export default async function DashboardPage() {
 
         {/* Stats Quick View */}
         <section className="space-y-md">
-          <h3 className="font-title-md text-title-md text-on-background font-bold text-pretty px-xs">Öğrenim Analizim</h3>
+          <h3 className="font-title-md text-title-md text-on-background font-bold text-pretty px-xs">Min studieanalys</h3>
           <div className="grid grid-cols-2 gap-md">
             <div className="bg-gradient-to-br from-primary/5 to-primary-container/10 border border-primary-container/15 text-primary p-md rounded-3xl flex flex-col gap-xs justify-between shadow-sm hover:shadow-md transition-all duration-300">
               <span className="material-symbols-outlined text-3xl">task_alt</span>
               <div>
                 <span className="font-display-lg text-3xl font-extrabold block">{totalSolved}</span>
-                <span className="font-label-md text-[10px] opacity-80 uppercase font-bold tracking-wider">Çözülen Deneme</span>
+                <span className="font-label-md text-[10px] opacity-80 uppercase font-bold tracking-wider">Genomförda prov</span>
               </div>
             </div>
             <div className="bg-gradient-to-br from-secondary/5 to-secondary-container/10 border border-secondary-container/15 text-secondary p-md rounded-3xl flex flex-col gap-xs justify-between shadow-sm hover:shadow-md transition-all duration-300">
               <span className="material-symbols-outlined text-3xl">menu_book</span>
               <div>
                 <span className="font-display-lg text-3xl font-extrabold block">{topics.length}</span>
-                <span className="font-label-md text-[10px] opacity-80 uppercase font-bold tracking-wider">Aktif Çalışma Konusu</span>
+                <span className="font-label-md text-[10px] opacity-80 uppercase font-bold tracking-wider">Aktiva ämnen</span>
               </div>
             </div>
           </div>

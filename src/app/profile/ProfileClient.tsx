@@ -52,13 +52,13 @@ export default function ProfileClient({
     const selected = e.target.value;
     setActiveLang(selected);
     setLangLoading(true);
-    setLangStatus('Güncelleniyor…');
+    setLangStatus('Uppdaterar…');
     const res = await changeLanguageAction(selected);
     setLangLoading(false);
     if (res?.error) {
       setLangStatus(res.error);
     } else if (res?.success) {
-      setLangStatus('Güncellendi!');
+      setLangStatus('Uppdaterad!');
       setTimeout(() => setLangStatus(null), 2500);
     }
   };
@@ -67,7 +67,7 @@ export default function ProfileClient({
     ? user.name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
     : user.email.slice(0, 2).toUpperCase();
 
-  const formattedJoinDate = new Date(user.createdAt).toLocaleDateString('tr-TR', {
+  const formattedJoinDate = new Date(user.createdAt).toLocaleDateString('sv-SE', {
     year: 'numeric',
     month: 'long'
   });
@@ -102,7 +102,7 @@ export default function ProfileClient({
       <header className="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center px-gutter justify-between">
         <span className="font-title-md text-primary font-bold">{settings.siteName}</span>
         <span className="font-label-md text-xs bg-surface-container-high px-3 py-1 rounded-full text-on-surface-variant">
-          Hesabım
+          Mitt konto
         </span>
       </header>
 
@@ -118,7 +118,7 @@ export default function ProfileClient({
           <div className="space-y-xs min-w-0">
             <div className="flex items-center gap-xs flex-wrap">
               <h2 className="font-title-lg text-lg text-on-surface font-bold truncate leading-none text-pretty">
-                {user.name || 'Öğrenci'}
+                {user.name || 'Student'}
               </h2>
               {user.isPaid ? (
                 <span className="inline-flex items-center gap-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
@@ -127,13 +127,13 @@ export default function ProfileClient({
                 </span>
               ) : (
                 <span className="inline-flex bg-surface-container-high text-on-surface-variant text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  STANDART
+                  STANDARD
                 </span>
               )}
             </div>
             <p className="text-on-surface-variant text-xs truncate">{user.email}</p>
             <p className="text-[10px] text-on-surface-variant/80 font-label-md">
-              Katılım Tarihi: {formattedJoinDate}
+              Medlem sedan: {formattedJoinDate}
             </p>
           </div>
         </section>
@@ -148,18 +148,18 @@ export default function ProfileClient({
               </div>
 
               <div className="space-y-xs relative z-10">
-                <span className="text-xs font-bold text-secondary uppercase tracking-widest block">Premium Abonelik Aktif</span>
-                <h3 className="font-title-md text-base text-on-surface font-bold text-pretty">Ayrıcalıklı Eğitim Dünyası</h3>
+                <span className="text-xs font-bold text-secondary uppercase tracking-widest block">Premium-prenumeration aktiv</span>
+                <h3 className="font-title-md text-base text-on-surface font-bold text-pretty">Exklusiv studievärld</h3>
                 <p className="text-xs text-on-surface-variant max-w-md">
-                  Tüm sınav kilitleriniz kaldırıldı! Sınırsız deneme sınavı çözebilir, çalışma sorularına dilediğiniz gibi erişebilirsiniz.
+                  Alla dina prov är upplåsta! Du kan göra obegränsat med övningsprov och få full tillgång till övningsfrågor.
                 </p>
               </div>
 
               {user.subscriptionEndsAt && (
                 <div className="bg-surface/50 border border-outline-variant/60 rounded-xl px-4 py-2 shrink-0 relative z-10 self-start sm:self-auto">
-                  <span className="text-[10px] text-on-surface-variant uppercase font-semibold block tracking-wider">Yenilenme Tarihi</span>
+                  <span className="text-[10px] text-on-surface-variant uppercase font-semibold block tracking-wider">Utgångsdatum</span>
                   <span className="text-xs font-bold text-on-surface">
-                    {new Date(user.subscriptionEndsAt).toLocaleDateString('tr-TR', { year: 'numeric', month: 'numeric', day: 'numeric' })}
+                    {new Date(user.subscriptionEndsAt).toLocaleDateString('sv-SE', { year: 'numeric', month: 'numeric', day: 'numeric' })}
                   </span>
                 </div>
               )}
@@ -172,10 +172,10 @@ export default function ProfileClient({
               </div>
 
               <div className="space-y-xs relative z-10">
-                <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest block">1 YILLIK ERİŞİM KAZANIN</span>
-                <h3 className="font-title-md text-base text-on-surface font-bold text-pretty">Premium VIP Avantajları</h3>
+                <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest block">FÅ 1 ÅRS TILLGÅNG</span>
+                <h3 className="font-title-md text-base text-on-surface font-bold text-pretty">Premium VIP-fördelar</h3>
                 <p className="text-xs text-on-surface-variant max-w-lg leading-relaxed">
-                  İsveç Vatandaşlık sınavına eksiksiz hazırlanmak için tüm kilitleri açın. Sınırsız deneme sınavları, akıllı yapay zeka analizleri ve limitsiz soru çözümü sizi bekliyor!
+                  Lås upp allt för att förbereda dig inför det svenska medborgarskapsprovet. Obegränsade övningsprov, smarta analyser och obegränsat med frågor väntar på dig!
                 </p>
               </div>
 
@@ -185,10 +185,10 @@ export default function ProfileClient({
                   className="inline-flex items-center gap-xs bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-sm transition-all"
                 >
                   <span className="material-symbols-outlined text-[18px]">workspace_premium</span>
-                  VIP Premium Ol (299 kr)
+                  Bli VIP Premium (299 kr)
                 </Link>
                 <span className="text-[10px] text-on-surface-variant font-label-md">
-                  1 Yıllık Erişim
+                  1 års tillgång
                 </span>
               </div>
             </div>
@@ -197,39 +197,39 @@ export default function ProfileClient({
 
         {/* Dynamic Performance Stats Grid */}
         <section className="space-y-base">
-          <h3 className="font-title-sm text-sm text-on-surface font-semibold px-xs">Performans Özeti</h3>
+          <h3 className="font-title-sm text-sm text-on-surface font-semibold px-xs">Prestandaöversikt</h3>
           <div className="grid grid-cols-2 gap-sm">
             
             <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md flex flex-col justify-between min-h-[90px] shadow-sm hover:shadow-md transition-all duration-300">
-              <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Sınav Ortalaması</span>
+              <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Provgenomsnitt</span>
               <div className="flex items-baseline gap-xs mt-xs">
                 <span className="text-2xl font-black text-primary">%{stats.averageScore}</span>
                 {stats.averageScore > 0 && (
-                  <span className="text-[10px] font-bold text-secondary uppercase">Başarı</span>
+                  <span className="text-[10px] font-bold text-secondary uppercase">Resultat</span>
                 )}
               </div>
             </div>
 
             <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md flex flex-col justify-between min-h-[90px] shadow-sm hover:shadow-md transition-all duration-300">
-              <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">En Yüksek Skor</span>
+              <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Högsta poäng</span>
               <div className="flex items-baseline gap-xs mt-xs">
                 <span className="text-2xl font-black text-secondary">%{stats.maxScore}</span>
               </div>
             </div>
 
             <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md flex flex-col justify-between min-h-[90px] shadow-sm hover:shadow-md transition-all duration-300">
-              <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Çözülen Denemeler</span>
+              <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Genomförda prov</span>
               <div className="flex items-baseline gap-xs mt-xs">
                 <span className="text-2xl font-black text-on-surface">{stats.totalExamsAttempted}</span>
-                <span className="text-[10px] font-label-md text-on-surface-variant">Sınav</span>
+                <span className="text-[10px] font-label-md text-on-surface-variant">prov</span>
               </div>
             </div>
 
             <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md flex flex-col justify-between min-h-[90px] shadow-sm hover:shadow-md transition-all duration-300">
-              <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Tamamlanan Konular</span>
+              <span className="text-on-surface-variant font-label-md text-xs uppercase tracking-wide">Avklarade ämnen</span>
               <div className="flex items-baseline gap-xs mt-xs">
                 <span className="text-2xl font-black text-tertiary">{stats.completedTopicsCount}</span>
-                <span className="text-[10px] font-label-md text-on-surface-variant">Konu</span>
+                <span className="text-[10px] font-label-md text-on-surface-variant">ämnen</span>
               </div>
             </div>
 
@@ -238,7 +238,7 @@ export default function ProfileClient({
 
         {/* Quick Actions List */}
         <section className="space-y-base">
-          <h3 className="font-title-sm text-sm text-on-surface font-semibold px-xs">Hızlı İşlemler</h3>
+          <h3 className="font-title-sm text-sm text-on-surface font-semibold px-xs">Snabba åtgärder</h3>
           
           <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl overflow-hidden divide-y divide-outline-variant/30 shadow-sm">
             
@@ -253,8 +253,8 @@ export default function ProfileClient({
                     <span className="material-symbols-outlined text-[20px]">admin_panel_settings</span>
                   </div>
                   <div>
-                    <h4 className="font-title-sm text-sm text-on-surface font-bold">Yönetici Paneli</h4>
-                    <p className="text-[10px] text-on-surface-variant">Soruları, konuları ve sınavları düzenleyin.</p>
+                    <h4 className="font-title-sm text-sm text-on-surface font-bold">Adminpanel</h4>
+                    <p className="text-[10px] text-on-surface-variant">Hantera frågor, ämnen och prov.</p>
                   </div>
                 </div>
                 <span className="material-symbols-outlined text-on-surface-variant text-base group-hover:translate-x-1 transition-transform">chevron_right</span>
@@ -269,14 +269,14 @@ export default function ProfileClient({
                     <span className="material-symbols-outlined text-[20px]">translate</span>
                   </div>
                   <div>
-                    <h4 className="font-title-sm text-sm text-on-surface font-bold">Ana Dil Tercihi</h4>
-                    <p className="text-[10px] text-on-surface-variant">Kelime çevirilerinin gösterileceği dil.</p>
+                    <h4 className="font-title-sm text-sm text-on-surface font-bold">Modersmål</h4>
+                    <p className="text-[10px] text-on-surface-variant">Språk för ordöversättningar.</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-base">
                   {langStatus && (
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg ${langStatus.includes('hata') ? 'text-error bg-error/15' : 'text-secondary bg-secondary-container/30'}`}>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg ${langStatus.includes('hata') || langStatus.includes('fel') ? 'text-error bg-error/15' : 'text-secondary bg-secondary-container/30'}`}>
                       {langStatus}
                     </span>
                   )}
@@ -288,6 +288,12 @@ export default function ProfileClient({
                   >
                     <option value="TR">🇹🇷 Türkçe</option>
                     <option value="EN">🇬🇧 English</option>
+                    <option value="AR">🇸🇦 العربية</option>
+                    <option value="ES">🇪🇸 Español</option>
+                    <option value="UK">🇺🇦 Українська</option>
+                    <option value="FR">🇫🇷 Français</option>
+                    <option value="FA">🇮🇷 فارسی</option>
+                    <option value="DA">🇦🇫 دری</option>
                   </select>
                 </div>
               </div>
@@ -308,8 +314,8 @@ export default function ProfileClient({
                     <span className="material-symbols-outlined text-[20px]">lock_reset</span>
                   </div>
                   <div>
-                    <h4 className="font-title-sm text-sm text-on-surface font-bold">Şifre Değiştir</h4>
-                    <p className="text-[10px] text-on-surface-variant">Hesap güvenlik şifrenizi güncelleyin.</p>
+                    <h4 className="font-title-sm text-sm text-on-surface font-bold">Ändra lösenord</h4>
+                    <p className="text-[10px] text-on-surface-variant">Uppdatera ditt lösenord.</p>
                   </div>
                 </div>
                 <span className={`material-symbols-outlined text-on-surface-variant text-base transition-transform duration-200 ${isChangingPassword ? 'rotate-90' : 'group-hover:translate-x-1'}`}>chevron_right</span>
@@ -318,7 +324,7 @@ export default function ProfileClient({
               {isChangingPassword && (
                 <form onSubmit={handleSubmitPassword} className="p-md bg-surface-container-low/40 border-t border-outline-variant/40 space-y-sm transition-all duration-300">
                   <div className="space-y-xs">
-                    <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider block">Mevcut Şifre</label>
+                    <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider block">Nuvarande lösenord</label>
                     <input 
                       type="password" 
                       name="currentPassword" 
@@ -329,13 +335,13 @@ export default function ProfileClient({
                     />
                   </div>
                   <div className="space-y-xs">
-                    <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider block">Yeni Şifre</label>
+                    <label className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider block">Nytt lösenord</label>
                     <input 
                       type="password" 
                       name="newPassword" 
                       required 
                       autoComplete="new-password"
-                      placeholder="En az 6 karakter" 
+                      placeholder="Minst 6 tecken" 
                       className="w-full bg-surface-bright border border-outline-variant/60 rounded-xl px-3 py-2 font-body-md text-sm text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
                     />
                   </div>
@@ -359,7 +365,7 @@ export default function ProfileClient({
                     disabled={loading}
                     className="w-full bg-primary text-on-primary hover:bg-primary-dark active:scale-95 disabled:opacity-50 text-xs font-bold py-2.5 rounded-full shadow-sm transition-all"
                   >
-                    {loading ? 'Güncelleniyor…' : 'Şifreyi Güncelle'}
+                    {loading ? 'Uppdaterar…' : 'Uppdatera lösenord'}
                   </button>
                 </form>
               )}
@@ -372,8 +378,8 @@ export default function ProfileClient({
                   <span className="material-symbols-outlined text-[20px]">mail</span>
                 </div>
                 <div>
-                  <h4 className="font-title-sm text-sm text-on-surface font-bold">Destek Al</h4>
-                  <p className="text-[10px] text-on-surface-variant">Sorularınız veya görüşleriniz için destek maili.</p>
+                  <h4 className="font-title-sm text-sm text-on-surface font-bold">Få support</h4>
+                  <p className="text-[10px] text-on-surface-variant">E-post för dina frågor eller feedback.</p>
                 </div>
               </div>
               <a 
@@ -395,8 +401,8 @@ export default function ProfileClient({
                     <span className="material-symbols-outlined text-[20px]">logout</span>
                   </div>
                   <div>
-                    <h4 className="font-title-sm text-sm text-error font-bold">Çıkış Yap</h4>
-                    <p className="text-[10px] text-on-surface-variant">Hesabınızdan güvenli bir şekilde ayrılın.</p>
+                    <h4 className="font-title-sm text-sm text-error font-bold">Logga ut</h4>
+                    <p className="text-[10px] text-on-surface-variant">Logga ut säkert från ditt konto.</p>
                   </div>
                 </div>
                 <span className="material-symbols-outlined text-error text-base group-hover:translate-x-1 transition-transform">chevron_right</span>

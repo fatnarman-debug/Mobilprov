@@ -2,20 +2,30 @@
 
 export async function translateText(text: string, targetLang: string = 'tr') {
   if (!text) {
-    return { error: 'Metin boş olamaz.' };
+    return { error: 'Texten kan inte vara tom.' };
   }
 
   const cleanText = text.trim();
-  if (cleanText.length > 200) {
-    return { error: 'Metin çok uzun (Maks. 200 karakter).' };
+  if (cleanText.length > 2000) {
+    return { error: 'Texten är för lång (Max 2000 tecken).' };
   }
 
   try {
-    const lang = targetLang.toLowerCase() === 'en' ? 'en' : 'tr';
+    const langMap: Record<string, string> = {
+      en: 'en',
+      tr: 'tr',
+      ar: 'ar',
+      es: 'es',
+      uk: 'uk',
+      fr: 'fr',
+      fa: 'fa',
+      da: 'prs' // Dari code in Google Translate
+    };
+    
+    const lang = langMap[targetLang.toLowerCase()] || 'tr';
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=sv&tl=${lang}&dt=t&q=${encodeURIComponent(cleanText)}`;
     
-    console.log(`[Translation Request] Text: "${cleanText}", targetLang: "${targetLang}", lang: "${lang}"`);
-    console.log(`[Translation Request] URL: "${url}"`);
+    console.log(`[Translation Request] Text: "${cleanText.substring(0, 50)}...", targetLang: "${targetLang}", lang: "${lang}"`);
 
     const res = await fetch(url, {
       method: 'GET',
@@ -31,25 +41,22 @@ export async function translateText(text: string, targetLang: string = 'tr') {
     }
 
     const data = await res.json();
-    console.log('[Translation Request] Raw response data:', JSON.stringify(data));
     
     // Parse Google Translate single char single array format
-    // data[0] contains array of translation segments: [[translation, original, ...]]
     let translation = '';
     if (data && data[0] && Array.isArray(data[0])) {
       translation = data[0].map((item: any) => item[0]).join('');
     }
 
-    console.log(`[Translation Request] Parsed translation: "${translation}"`);
-
     if (!translation) {
-      return { error: 'Çeviri bulunamadı.' };
+      return { error: 'Ingen översättning hittades.' };
     }
 
     return { translation };
   } catch (error) {
     console.error('Translation server action error:', error);
-    return { error: 'Çeviri servisine şu anda ulaşılamıyor.' };
+    return { error: 'Översättningstjänsten är inte tillgänglig för tillfället.' };
   }
 }
+
 

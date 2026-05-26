@@ -46,16 +46,16 @@ export default function AnalysisClient({
 
   // Helper to map exam ID to Exam Title
   const getExamTitle = (topicId: string | null) => {
-    if (!topicId) return 'Genel Deneme';
+    if (!topicId) return 'Generellt prov';
     const found = mockExams.find(m => m.id === topicId);
-    return found ? found.title : 'Deneme Sınavı';
+    return found ? found.title : 'Övningsprov';
   };
 
   // Date format helper
   const formatDate = (dateStr: string) => {
     try {
       const d = new Date(dateStr);
-      return d.toLocaleDateString('tr-TR', {
+      return d.toLocaleDateString('sv-SE', {
         day: 'numeric',
         month: 'short',
         year: 'numeric',
@@ -63,7 +63,7 @@ export default function AnalysisClient({
         minute: '2-digit'
       });
     } catch {
-      return 'Bilinmeyen Tarih';
+      return 'Okänt datum';
     }
   };
 
@@ -79,7 +79,7 @@ export default function AnalysisClient({
         </div>
         <div className="flex items-center gap-sm">
           <span className="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full font-bold">
-            Gelişmiş İstatistikler
+            Avancerad statistik
           </span>
         </div>
       </header>
@@ -91,10 +91,10 @@ export default function AnalysisClient({
         <section className="bg-surface-container-lowest border border-outline-variant rounded-2xl p-md shadow-sm space-y-xs">
           <div className="flex items-center gap-xs">
             <span className="material-symbols-outlined text-primary">analytics</span>
-            <h2 className="font-headline-lg-mobile text-lg font-bold text-primary">Başarı & Performans Analizi</h2>
+            <h2 className="font-headline-lg-mobile text-lg font-bold text-primary">Resultat- & prestationsanalys</h2>
           </div>
           <p className="text-on-surface-variant font-body-sm text-xs">
-            Çözdüğünüz deneme sınavlarının sonuçları, başarı oranları ve detaylı geçmiş analiziniz.
+            Resultat, framsteg och detaljerad historik för dina genomförda prov.
           </p>
         </section>
 
@@ -107,36 +107,36 @@ export default function AnalysisClient({
                 <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--md-sys-color-outline-variant)" strokeWidth="3" />
                 <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--md-sys-color-secondary)" strokeWidth="3" strokeDasharray={`${avgScore}, 100`} strokeLinecap="round" />
               </svg>
-              <span className="absolute inset-0 flex items-center justify-center font-title-md text-title-md text-primary font-bold">%{avgScore}</span>
+              <span className="absolute inset-0 flex items-center justify-center font-title-md text-title-md text-primary font-bold">{avgScore}%</span>
             </div>
-            <span className="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-[10px]">Ortalama Başarı</span>
+            <span className="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-[10px]">Genomsnittligt resultat</span>
           </div>
 
           {/* Highest Score Card */}
           <div className="bg-surface-container-low border border-outline-variant p-md rounded-2xl flex flex-col items-center justify-center text-center shadow-sm">
             <span className="material-symbols-outlined text-[36px] text-tertiary mb-xs">workspace_premium</span>
-            <span className="text-2xl font-bold text-primary">%{maxScore}</span>
-            <span className="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-[10px] mt-xs">En Yüksek Skor</span>
+            <span className="text-2xl font-bold text-primary">{maxScore}%</span>
+            <span className="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-[10px] mt-xs">Högsta resultat</span>
           </div>
 
           {/* Total Solved Card */}
           <div className="bg-surface-container-low border border-outline-variant p-md rounded-2xl flex flex-col items-center justify-center text-center shadow-sm">
             <span className="material-symbols-outlined text-[36px] text-secondary mb-xs">assignment_turned_in</span>
             <span className="text-2xl font-bold text-primary">{totalExams}</span>
-            <span className="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-[10px] mt-xs">Çözülen Sınav</span>
+            <span className="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-[10px] mt-xs">Genomförda prov</span>
           </div>
 
           {/* Correct / Wrong Split Card */}
           <div className="bg-surface-container-low border border-outline-variant p-md rounded-2xl flex flex-col justify-between shadow-sm">
             <div className="flex items-center justify-between w-full">
               <span className="text-secondary font-bold text-title-md flex items-center gap-xs">
-                <span className="material-symbols-outlined text-sm">done</span> {totalCorrect} Doğru
+                <span className="material-symbols-outlined text-sm">done</span> {totalCorrect} Rätt
               </span>
               <span className="text-error font-bold text-title-md flex items-center gap-xs">
-                <span className="material-symbols-outlined text-sm">close</span> {totalWrong} Yanlış
+                <span className="material-symbols-outlined text-sm">close</span> {totalWrong} Fel
               </span>
             </div>
-            <div className="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-[10px] text-center mt-xs">Cevap Dağılımı</div>
+            <div className="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-[10px] text-center mt-xs">Svarsfördelning</div>
             <div className="h-2 w-full bg-outline-variant rounded-full overflow-hidden mt-base">
               <div 
                 className="bg-secondary h-full transition-all duration-300" 
@@ -151,22 +151,22 @@ export default function AnalysisClient({
           <div className="flex items-center justify-between px-xs">
             <h3 className="font-headline-sm text-primary font-bold flex items-center gap-sm">
               <span className="material-symbols-outlined">history</span>
-              Çözüm Geçmişi Logları
+              Historik över genomförda prov
             </h3>
             <span className="bg-secondary-container text-on-secondary-container font-bold text-[10px] uppercase px-3 py-1 rounded-full">
-              {totalExams} Kayıt
+              {totalExams} genomförda prov
             </span>
           </div>
 
           {testResults.length === 0 ? (
             <div className="p-lg border-2 border-dashed border-outline-variant rounded-2xl text-center bg-surface-container-lowest">
               <span className="material-symbols-outlined text-on-surface-variant text-4xl mb-sm">bar_chart</span>
-              <p className="text-on-surface-variant font-body-md">Henüz hiçbir deneme sınavı tamamlamadınız.</p>
+              <p className="text-on-surface-variant font-body-md">Du har inte slutfört något övningsprov än.</p>
               <Link 
                 href="/test" 
                 className="mt-sm px-6 py-2 bg-primary text-on-primary font-bold text-xs rounded-full inline-flex items-center gap-xs active:scale-95 transition-transform"
               >
-                <span className="material-symbols-outlined text-xs">play_arrow</span> Sınavlara Git
+                <span className="material-symbols-outlined text-xs">play_arrow</span> Gå till prov
               </Link>
             </div>
           ) : (
@@ -188,19 +188,19 @@ export default function AnalysisClient({
                           <span className="material-symbols-outlined text-xs">calendar_month</span> {formatDate(result.completedAt)}
                         </span>
                         <span className="flex items-center gap-xs font-semibold text-secondary">
-                          {result.correctAnswers} Doğru
+                          {result.correctAnswers} Rätt
                         </span>
                         <span className="flex items-center gap-xs font-semibold text-error">
-                          {result.wrongAnswers} Yanlış
+                          {result.wrongAnswers} Fel
                         </span>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between sm:justify-end gap-md pl-5 sm:pl-0">
                       <span className={`text-xs font-bold px-3 py-1 rounded-full uppercase ${isPassed ? 'bg-secondary/15 text-secondary' : 'bg-error/15 text-error'}`}>
-                        {isPassed ? 'GEÇTİ' : 'KALDI'}
+                        {isPassed ? 'GODKÄND' : 'UNDERKÄND'}
                       </span>
-                      <span className="text-xl font-bold text-primary">%{Math.round(result.score)}</span>
+                      <span className="text-xl font-bold text-primary">{Math.round(result.score)}%</span>
                     </div>
                   </div>
                 );

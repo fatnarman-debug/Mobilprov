@@ -12,7 +12,7 @@ function PaymentContent() {
 
   const handleStripeCheckout = async () => {
     if (!userId) {
-      alert('Kullanıcı kimliği bulunamadı. Lütfen tekrar kayıt olun veya giriş yapın.');
+      alert('Användar-ID hittades inte. Registrera dig eller logga in igen.');
       return;
     }
 
@@ -24,7 +24,7 @@ function PaymentContent() {
       }
     } catch (error) {
       console.error(error);
-      alert('Ödeme sayfası başlatılırken bir hata oluştu. Lütfen tekrar deneyin.');
+      alert('Ett fel uppstod när betalningssidan skulle initieras. Försök igen.');
       setIsLoading(false);
     }
   };
@@ -36,14 +36,14 @@ function PaymentContent() {
           <span className="material-symbols-outlined text-[32px]">credit_card</span>
         </div>
         
-        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-xs">Hesabınızı Aktifleştirin</h1>
+        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-xs">Aktivera ditt konto</h1>
         <p className="text-on-surface-variant font-body-md mb-lg">
-          Eğitim platformuna tam erişim sağlamak için ödeme işlemini tamamlamanız gerekmektedir.
+          Du måste slutföra betalningen för att få full tillgång till studieplattformen.
         </p>
 
         {canceled && (
           <div className="mb-md p-sm bg-error-container text-on-error-container rounded-lg text-sm">
-            Ödeme işlemi iptal edildi. Lütfen tekrar deneyin.
+            Betalningen avbröts. Försök igen.
           </div>
         )}
 
@@ -52,7 +52,7 @@ function PaymentContent() {
             <span className="text-on-surface-variant">Medborgarskapsprov Premium</span>
             <span className="font-title-md text-title-md font-bold text-primary">299 kr</span>
           </div>
-          <span className="text-label-md text-on-surface-variant">1 Yıllık Erişim</span>
+          <span className="text-label-md text-on-surface-variant">1 års tillgång</span>
         </div>
 
         <button 
@@ -65,7 +65,7 @@ function PaymentContent() {
           ) : (
             <>
               <span className="material-symbols-outlined">lock</span>
-              Güvenli Ödeme Yap
+              Betala säkert
             </>
           )}
         </button>
@@ -88,11 +88,11 @@ function PaymentContent() {
           className="w-full mt-3 py-3 border-2 border-dashed border-secondary text-secondary hover:bg-secondary/5 font-semibold rounded-full active:scale-95 transition-all flex justify-center items-center gap-xs disabled:opacity-70"
         >
           <span className="material-symbols-outlined">bug_report</span>
-          Geliştirici Modu: Ödemeyi Atla (Test)
+          Utvecklarläge: Hoppa över betalning (Test)
         </button>
 
         <p className="font-label-sm text-label-sm text-on-surface-variant mt-md opacity-70">
-          Ödeme altyapısı 256-bit SSL ve Stripe güvencesiyle korunmaktadır.
+          Betalningsinfrastrukturen är skyddad med 256-bitars SSL och Stripe-säkerhet.
         </p>
       </div>
     </div>
@@ -105,7 +105,7 @@ export default function PaymentPage() {
       <div className="bg-surface text-on-surface min-h-screen flex items-center justify-center font-body-md">
         <div className="flex flex-col items-center gap-sm">
           <span className="material-symbols-outlined animate-spin text-primary text-4xl">progress_activity</span>
-          <span>Yükleniyor...</span>
+          <span>Laddar...</span>
         </div>
       </div>
     }>

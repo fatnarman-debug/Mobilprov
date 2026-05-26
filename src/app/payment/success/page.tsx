@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { privateSeo } from '@/lib/seo';
 
-export const metadata = privateSeo('Betalning klar – Medborgarskapsprov | Ödeme Başarılı', 'Din betalning är klar och kontot är aktiverat. İsveç vatandaşlık sınavı hesabınız aktifleştirildi.', '/payment/success');
+export const metadata = privateSeo('Betalning klar – Medborgarskapsprov', 'Din betalning är klar och kontot är aktiverat.', '/payment/success');
 
 
 export default function PaymentSuccessPage() {
@@ -13,16 +13,16 @@ export default function PaymentSuccessPage() {
           <span className="material-symbols-outlined text-[32px]" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
         </div>
         
-        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-xs">Ödeme Başarılı!</h1>
+        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-xs">Betalning klar!</h1>
         <p className="text-on-surface-variant font-body-md mb-lg">
-          Hesabınız başarıyla aktifleştirildi. EduFlow'a hoş geldiniz.
+          Ditt konto har aktiverats. Välkommen!
         </p>
 
         <Link 
           href="/"
           className="w-full py-4 block bg-primary text-on-primary font-title-md rounded-full shadow-md active:scale-95 transition-transform"
         >
-          Giriş Yap
+          Logga in
         </Link>
       </div>
     </div>

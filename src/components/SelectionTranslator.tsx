@@ -93,7 +93,7 @@ export default function SelectionTranslator({ language }: SelectionTranslatorPro
     >
       <div className="flex items-center justify-between border-b border-inverse-on-surface/20 pb-1.5 mb-1.5">
         <span className="font-bold text-[10px] uppercase tracking-wider text-secondary-container">
-          🔎 Çeviri ({language})
+          🔎 Översättning ({language})
         </span>
         <button 
           onClick={() => setSelectedText('')}
@@ -105,16 +105,16 @@ export default function SelectionTranslator({ language }: SelectionTranslatorPro
 
       <div className="space-y-sm">
         <div>
-          <span className="text-[10px] text-inverse-on-surface/50 block font-semibold">Orijinal:</span>
+          <span className="text-[10px] text-inverse-on-surface/50 block font-semibold">Original:</span>
           <p className="italic font-body-sm font-semibold truncate">"{selectedText}"</p>
         </div>
 
         <div>
-          <span className="text-[10px] text-inverse-on-surface/50 block font-semibold">Karşılığı:</span>
+          <span className="text-[10px] text-inverse-on-surface/50 block font-semibold">Översättning:</span>
           {loading ? (
             <div className="flex items-center gap-xs mt-xs text-[10px] font-bold">
               <span className="material-symbols-outlined animate-spin !text-[12px]">progress_activity</span>
-              Çevriliyor…
+              Översätter…
             </div>
           ) : error ? (
             <p className="text-error font-body-sm mt-xs">{error}</p>

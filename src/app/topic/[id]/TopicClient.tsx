@@ -14,8 +14,8 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
   if (!topic) {
     return (
       <div className="bg-background text-on-background min-h-screen pb-32 flex flex-col items-center justify-center">
-        <h2 className="text-title-lg font-bold">Konu Bulunamadı</h2>
-        <Link href="/dashboard" className="text-primary mt-4 underline">Geri Dön</Link>
+        <h2 className="text-title-lg font-bold">Ämne hittades inte</h2>
+        <Link href="/dashboard" className="text-primary mt-4 underline">Gå tillbaka</Link>
       </div>
     );
   }
@@ -33,7 +33,7 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
           <Link href="/dashboard" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors duration-200">
             <span className="material-symbols-outlined text-primary">arrow_back</span>
           </Link>
-          <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold">Konu Çalışma Alanı</h1>
+          <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold">Studieområde för ämne</h1>
         </div>
         <div className="flex items-center gap-xs">
           <span className="material-symbols-outlined text-on-surface-variant">query_stats</span>
@@ -49,21 +49,21 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
             className={`flex-1 flex flex-col items-center justify-center rounded-lg py-2 transition-all duration-150 ${activeTab === 'oku' ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
           >
             <span className="material-symbols-outlined mb-1">auto_stories</span>
-            <span className="font-label-md text-label-md">Oku</span>
+            <span className="font-label-md text-label-md">Läs</span>
           </button>
           <button 
             onClick={() => setActiveTab('dinle')}
             className={`flex-1 flex flex-col items-center justify-center rounded-lg py-2 transition-all duration-150 ${activeTab === 'dinle' ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
           >
             <span className="material-symbols-outlined mb-1">headset</span>
-            <span className="font-label-md text-label-md">Dinle</span>
+            <span className="font-label-md text-label-md">Lyssna</span>
           </button>
           <button 
             onClick={() => setActiveTab('izle')}
             className={`flex-1 flex flex-col items-center justify-center rounded-lg py-2 transition-all duration-150 ${activeTab === 'izle' ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
           >
             <span className="material-symbols-outlined mb-1">play_circle</span>
-            <span className="font-label-md text-label-md">İzle</span>
+            <span className="font-label-md text-label-md">Titta</span>
           </button>
         </nav>
 
@@ -77,8 +77,8 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
                 <p className="font-body-sm text-body-sm text-on-surface-variant">{topic.category}</p>
               </div>
               <div className="flex gap-xs">
-                <span className="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full font-label-md text-label-md">Zor</span>
-                <span className="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full font-label-md text-label-md">45 Dakika</span>
+                <span className="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full font-label-md text-label-md">Svår</span>
+                <span className="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full font-label-md text-label-md">45 minuter</span>
               </div>
             </div>
           </div>
@@ -89,7 +89,7 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
               <div className="bg-surface-container px-md py-base flex justify-between items-center border-b border-outline-variant">
                 <div className="flex items-center gap-sm">
                   <span className="material-symbols-outlined text-primary" style={{fontVariationSettings: "'FILL' 1"}}>picture_as_pdf</span>
-                  <span className="font-body-md text-body-md text-primary font-semibold truncate max-w-[200px] md:max-w-none">{readMaterial?.title || 'Döküman'}</span>
+                  <span className="font-body-md text-body-md text-primary font-semibold truncate max-w-[200px] md:max-w-none">{readMaterial?.title || 'Dokument'}</span>
                 </div>
                 {readMaterial && (
                   <a 
@@ -99,7 +99,7 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
                     className="flex items-center gap-1 text-xs bg-primary text-on-primary px-3 py-1.5 rounded-full hover:bg-primary-dark transition-colors font-bold shadow active:scale-95 duration-100"
                   >
                     <span className="material-symbols-outlined text-[14px]">open_in_new</span>
-                    Yeni Sekmede Aç / İndir
+                    Öppna i ny flik / Ladda ner
                   </a>
                 )}
               </div>
@@ -115,7 +115,7 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full p-md text-center">
                     <span className="material-symbols-outlined text-[48px] text-on-surface-variant mb-4">description</span>
-                    <p className="text-on-surface-variant font-body-md">Bu konu için henüz okuma dökümanı eklenmemiş.</p>
+                    <p className="text-on-surface-variant font-body-md">Det finns inget läsmaterial tillagt för detta ämne än.</p>
                   </div>
                 )}
               </div>
@@ -127,9 +127,9 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
               <div className="w-24 h-24 bg-primary flex items-center justify-center rounded-full text-on-primary mb-6">
                 <span className="material-symbols-outlined text-[48px]" style={{fontVariationSettings: "'FILL' 1"}}>headphones</span>
               </div>
-              <h3 className="text-xl font-bold text-primary mb-2">{listenMaterial?.title || 'Sesli Anlatım'}</h3>
+              <h3 className="text-xl font-bold text-primary mb-2">{listenMaterial?.title || 'Ljudguide'}</h3>
               <p className="text-on-surface-variant text-center mb-8">
-                {listenMaterial ? 'Bu ses kaydını dinleyerek konuyu tekrar edebilirsiniz.' : 'Bu konu için henüz ses kaydı eklenmemiş.'}
+                {listenMaterial ? 'Du kan repetera ämnet genom att lyssna på denna ljudfil.' : 'Det finns inget ljudmaterial tillagt för detta ämne än.'}
               </p>
               
               {listenMaterial && (
@@ -180,7 +180,7 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full p-8 text-center">
                     <span className="material-symbols-outlined text-[48px] text-on-surface-variant mb-4">videocam_off</span>
-                    <p className="text-on-surface-variant font-body-md">Bu konu için henüz video eklenmemiş.</p>
+                    <p className="text-on-surface-variant font-body-md">Det finns inget videomaterial tillagt för detta ämne än.</p>
                   </div>
                 )}
              </div>
@@ -195,14 +195,14 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
                 </div>
                 <div className="flex-1">
                   <p className="font-title-md text-title-md text-primary text-sm truncate">{listenMaterial.title}</p>
-                  <p className="text-xs text-on-surface-variant">Konunun sesli özeti hazır</p>
+                  <p className="text-xs text-on-surface-variant">Ljudsammanfattning för ämnet är tillgänglig</p>
                 </div>
                 <button 
                   onClick={() => setActiveTab('dinle')}
                   className="bg-secondary-container text-on-secondary-container rounded-full px-4 py-2 text-xs font-bold active:scale-95 transition-transform duration-150 flex items-center gap-1 hover:bg-secondary-container-hover"
                 >
                   <span className="material-symbols-outlined text-[14px]">headphones</span>
-                  Dinle
+                  Lyssna
                 </button>
               </div>
             </div>
@@ -212,10 +212,10 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
         {/* Actions */}
         <div className="flex gap-md mt-lg pb-md">
           <button className="flex-1 py-3 px-4 border border-primary text-primary font-semibold rounded-xl hover:bg-surface-container-low transition-colors duration-200">
-            Not Al
+            Skriv anteckning
           </button>
           <Link href={`/practice?topicId=${topic.id}`} className="flex-1 py-3 px-4 bg-primary text-on-primary font-semibold rounded-xl shadow-md active:scale-95 transition-transform duration-150 text-center flex items-center justify-center gap-2">
-            Pratiğe Geç <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            Börja öva <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
           </Link>
         </div>
       </main>

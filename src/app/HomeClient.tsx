@@ -97,10 +97,10 @@ export default function HomeClient() {
           {/* Feature chips */}
           <div className="flex flex-wrap gap-3">
             {[
-              { icon: '📚', text: 'Konuya özel çalışma' },
-              { icon: '🧠', text: 'Flashcard sistemi' },
-              { icon: '✅', text: 'Deneme sınavları' },
-              { icon: '📊', text: 'İlerleme takibi' },
+              { icon: '📚', text: 'Ämnesspecifika studier' },
+              { icon: '🧠', text: 'Flashcard-system' },
+              { icon: '✅', text: 'Övningsprov' },
+              { icon: '📊', text: 'Framstegsspårning' },
             ].map((f) => (
               <div
                 key={f.text}
@@ -126,10 +126,10 @@ export default function HomeClient() {
               <SwedenFlag size={72} />
             </div>
             <h2 className="text-white text-2xl font-bold mb-1">
-              {isLogin ? 'Hoş Geldiniz' : 'Hesap Oluştur'}
+              {isLogin ? 'Välkommen' : 'Skapa konto'}
             </h2>
             <p className="text-white/75 text-sm mb-6">
-              {isLogin ? 'Sverigemedborgarskapsprov.com hesabınıza giriş yapın' : 'Sınavınıza hazırlanmaya başlayın'}
+              {isLogin ? 'Logga in på ditt konto på Sverigemedborgarskapsprov.com' : 'Börja förbereda dig för provet'}
             </p>
 
             {/* Tabs */}
@@ -142,7 +142,7 @@ export default function HomeClient() {
                   ? { background: '#FECC02', color: '#002244' }
                   : { color: 'rgba(255,255,255,0.6)' }}
               >
-                Giriş Yap
+                Logga in
               </button>
               <button
                 onClick={() => { setIsLogin(false); setError(null); }}
@@ -152,7 +152,7 @@ export default function HomeClient() {
                   ? { background: '#FECC02', color: '#002244' }
                   : { color: 'rgba(255,255,255,0.6)' }}
               >
-                Kayıt Ol
+                Skapa konto
               </button>
             </div>
           </div>
@@ -173,13 +173,13 @@ export default function HomeClient() {
                 <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
                 <path fill="none" d="M0 0h48v48H0z"/>
               </svg>
-              Google ile {isLogin ? 'Giriş Yap' : 'Kayıt Ol'}
+              {isLogin ? 'Logga in med Google' : 'Registrera med Google'}
             </button>
 
             {/* Divider */}
             <div className="flex items-center gap-3 mb-5">
               <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.15)' }} />
-              <span className="text-white/40 text-xs font-semibold tracking-widest">VEYA</span>
+              <span className="text-white/40 text-xs font-semibold tracking-widest">ELLER</span>
               <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.15)' }} />
             </div>
 
@@ -188,16 +188,16 @@ export default function HomeClient() {
               {!isLogin && (
                 <>
                   <div>
-                    <label className="block text-white/80 text-xs font-semibold mb-1.5 ml-1">Ad Soyad</label>
+                    <label className="block text-white/80 text-xs font-semibold mb-1.5 ml-1">Namn</label>
                     <div className="relative">
                       <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-[20px]">person</span>
                       <input
                         name="name"
                         type="text"
-                        placeholder="Adınız ve Soyadınız"
+                        placeholder="Ditt för- och efternamn"
                         required
                         className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all focus:ring-2"
-                        style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', focusRingColor: '#FECC02' } as React.CSSProperties}
+                        style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' } as React.CSSProperties}
                         onFocus={e => (e.target.style.borderColor = '#FECC02')}
                         onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.15)')}
                       />
@@ -205,7 +205,7 @@ export default function HomeClient() {
                   </div>
 
                   <div>
-                    <label className="block text-white/80 text-xs font-semibold mb-1.5 ml-1">Ana Diliniz (Çeviriler İçin)</label>
+                    <label className="block text-white/80 text-xs font-semibold mb-1.5 ml-1">Ditt modersmål (för översättningar)</label>
                     <div className="relative">
                       <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-[20px]">translate</span>
                       <select
@@ -216,6 +216,12 @@ export default function HomeClient() {
                       >
                         <option value="TR" className="bg-[#002244] text-white">🇹🇷 Türkçe</option>
                         <option value="EN" className="bg-[#002244] text-white">🇬🇧 English</option>
+                        <option value="AR" className="bg-[#002244] text-white">🇸🇦 العربية</option>
+                        <option value="ES" className="bg-[#002244] text-white">🇪🇸 Español</option>
+                        <option value="UK" className="bg-[#002244] text-white">🇺🇦 Українська</option>
+                        <option value="FR" className="bg-[#002244] text-white">🇫🇷 Français</option>
+                        <option value="FA" className="bg-[#002244] text-white">🇮🇷 فارسی</option>
+                        <option value="DA" className="bg-[#002244] text-white">🇦🇫 دری</option>
                       </select>
                       <span className="material-symbols-outlined absolute right-3.5 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none text-[20px]">expand_more</span>
                     </div>
@@ -224,13 +230,13 @@ export default function HomeClient() {
               )}
 
               <div>
-                <label className="block text-white/80 text-xs font-semibold mb-1.5 ml-1">E-posta</label>
+                <label className="block text-white/80 text-xs font-semibold mb-1.5 ml-1">E-post</label>
                 <div className="relative">
                   <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-[20px]">mail</span>
                   <input
                     name="email"
                     type="email"
-                    placeholder="ornek@gmail.com"
+                    placeholder="exempel@gmail.com"
                     required
                     className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
                     style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
@@ -241,7 +247,7 @@ export default function HomeClient() {
               </div>
 
               <div>
-                <label className="block text-white/80 text-xs font-semibold mb-1.5 ml-1">Şifre</label>
+                <label className="block text-white/80 text-xs font-semibold mb-1.5 ml-1">Lösenord</label>
                 <div className="relative">
                   <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-[20px]">lock</span>
                   <input
@@ -283,11 +289,11 @@ export default function HomeClient() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
-                    İşleniyor...
+                    Bearbetar...
                   </>
                 ) : (
                   <>
-                    {isLogin ? 'Giriş Yap' : 'Kayıt Ol ve Devam Et'}
+                    {isLogin ? 'Logga in' : 'Registrera dig och fortsätt'}
                     <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
                   </>
                 )}
@@ -298,20 +304,20 @@ export default function HomeClient() {
             {!isLogin && (
               <div className="mt-4 flex items-center gap-2 p-3 rounded-xl text-xs" style={{ background: 'rgba(254,204,2,0.1)', border: '1px solid rgba(254,204,2,0.2)', color: 'rgba(255,255,255,0.7)' }}>
                 <span className="material-symbols-outlined text-[16px]" style={{ color: '#FECC02' }}>verified_user</span>
-                Ödeme işlemi 256-bit SSL ile güvence altındadır.
+                Betalningen är säkrad med 256-bitars SSL.
               </div>
             )}
 
             {/* Switch mode */}
             <p className="text-center text-white/70 text-sm mt-5">
-              {isLogin ? 'Hesabın yok mu? ' : 'Zaten hesabın var mı? '}
+              {isLogin ? 'Har du inget konto? ' : 'Har du redan ett konto? '}
               <button
                 type="button"
                 onClick={() => { setIsLogin(!isLogin); setError(null); }}
                 className="font-semibold transition-colors hover:underline"
                 style={{ color: '#FECC02' }}
               >
-                {isLogin ? 'Kayıt Ol' : 'Giriş Yap'}
+                {isLogin ? 'Registrera dig' : 'Logga in'}
               </button>
             </p>
 
@@ -323,7 +329,7 @@ export default function HomeClient() {
                 style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.7)' }}
               >
                 <span>🆓</span>
-                Önce ücretsiz dene – kayıt gerekmez
+                Prova gratis först – ingen registrering krävs
                 <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
               </Link>
             </div>
@@ -350,10 +356,10 @@ export default function HomeClient() {
             <div className="p-5 rounded-2xl border border-white/10 space-y-3" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(10px)' }}>
               <h3 className="font-bold text-lg flex items-center gap-2" style={{ color: '#FECC02' }}>
                 <span className="material-symbols-outlined text-[20px]">translate</span>
-                Türkçe Destekli İsveççe Hazırlık
+                Förberedelse på svenska med flerspråkigt stöd
               </h3>
               <p className="text-xs text-white/70 leading-relaxed">
-                İsveç vatandaşlık sınavı sorularını İsveççe çözerken zorlanmamanız için tüm soruların, cevapların ve açıklamaların Türkçe çeviri desteği bulunmaktadır. Bu sayede hem dilinizi geliştirir hem de sınav konularını eksiksiz öğrenirsiniz.
+                För att hjälpa dig att förstå frågorna på svenska finns översättningsstöd för alla frågor, svar och förklaringar till ditt valda modersmål (turkiska, engelska, arabiska, spanska, ukrainska, franska, persiska och dari). På så sätt utvecklar du ditt språk samtidigt som du lär dig allt inför provet.
               </p>
             </div>
           </div>
@@ -436,7 +442,7 @@ export default function HomeClient() {
           <span>·</span>
           <Link href="/ovning/flashcards" className="text-white/60 hover:text-white transition-colors">Flashcards</Link>
           <span>·</span>
-          <a href="#" className="text-white/60 hover:text-white transition-colors">Kullanım Koşulları</a>
+          <a href="#" className="text-white/60 hover:text-white transition-colors">Användarvillkor</a>
         </div>
       </footer>
     </div>

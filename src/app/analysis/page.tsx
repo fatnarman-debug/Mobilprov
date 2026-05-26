@@ -5,7 +5,7 @@ import { auth } from '@/auth';
 import AnalysisClient from './AnalysisClient';
 import { privateSeo } from '@/lib/seo';
 
-export const metadata = privateSeo('Resultatanalys – Medborgarskapsprov | Sınav Analizi', 'Se dina resultat, styrkor och svagheter inför medborgarskapsprovet. İsveç vatandaşlık sınavı sonuç analizi.', '/analysis');
+export const metadata = privateSeo('Resultatanalys – Medborgarskapsprov', 'Se dina resultat, styrkor och svagheter inför medborgarskapsprovet.', '/analysis');
 
 
 export default async function AnalysisPage() {
@@ -29,13 +29,13 @@ export default async function AnalysisPage() {
         <div className="w-24 h-24 bg-warning-container text-on-warning-container flex items-center justify-center rounded-full mb-6">
           <span className="material-symbols-outlined text-[48px]">construction</span>
         </div>
-        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-sm">Bakım Modundayız</h1>
+        <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-sm">Underhåll pågår</h1>
         <p className="text-on-surface-variant font-body-md max-w-md mb-lg">
-          Platformumuz şu anda planlı bakım çalışması nedeniyle geçici olarak hizmet dışıdır. Lütfen daha sonra tekrar deneyin.
+          Vår plattform är för närvarande stängd för planerat underhåll. Vänligen försök igen senare.
         </p>
         {settings?.contactEmail && (
           <p className="text-sm font-label-md bg-surface-container px-4 py-2 rounded-full text-on-surface-variant">
-            Destek: <a href={`mailto:${settings.contactEmail}`} className="text-primary hover:underline">{settings.contactEmail}</a>
+            Support: <a href={`mailto:${settings.contactEmail}`} className="text-primary hover:underline">{settings.contactEmail}</a>
           </p>
         )}
       </div>
