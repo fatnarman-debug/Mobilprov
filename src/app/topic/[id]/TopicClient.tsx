@@ -26,128 +26,169 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
   const watchMaterial = topic.materials.find(m => m.type === 'WATCH');
 
   return (
-    <div className="bg-background text-on-background min-h-screen pb-32">
-      {/* Top App Bar */}
-      <header className="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center px-gutter justify-between">
-        <div className="flex items-center gap-base">
-          <Link href="/dashboard" className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors duration-200">
-            <span className="material-symbols-outlined text-primary">arrow_back</span>
+    <div className="bg-gradient-to-b from-surface-container-lowest to-surface min-h-screen pb-32 font-sans selection:bg-primary selection:text-on-primary">
+      {/* Top App Bar - Glassmorphism */}
+      <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/50 h-16 flex items-center px-4 md:px-8 justify-between shadow-sm">
+        <div className="flex items-center gap-3">
+          <Link href="/dashboard" className="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-low hover:bg-surface-container-high transition-colors duration-200 text-on-surface">
+            <span className="material-symbols-outlined text-[20px]">arrow_back_ios_new</span>
           </Link>
-          <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold">Studieområde för ämne</h1>
+          <h1 className="font-title-md text-on-surface font-semibold tracking-tight">Studieområde</h1>
         </div>
-        <div className="flex items-center gap-xs">
-          <span className="material-symbols-outlined text-on-surface-variant">query_stats</span>
+        <div className="flex items-center gap-2">
+           <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+             <span className="material-symbols-outlined text-[18px]">school</span>
+           </div>
         </div>
       </header>
 
       {/* Main Content Canvas */}
-      <main className="mt-16 pt-md px-gutter max-w-container-max mx-auto">
-        {/* Tabbed Navigation */}
-        <nav className="flex w-full bg-surface-container-low rounded-xl p-1 mb-md">
+      <main className="mt-20 px-4 md:px-8 max-w-4xl mx-auto space-y-6">
+        
+        {/* Topic Title Hero Card */}
+        <div className="relative overflow-hidden bg-primary text-on-primary p-6 md:p-8 rounded-3xl shadow-lg border border-primary-dark/20">
+          {/* Decorative background circle */}
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+          <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-black/10 rounded-full blur-xl"></div>
+          
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium tracking-wide uppercase">
+                {topic.category}
+              </span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-extrabold mb-2 leading-tight">{topic.title}</h2>
+            {topic.description && (
+              <p className="text-primary-container/80 text-sm md:text-base max-w-2xl leading-relaxed">
+                {topic.description}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Premium Segmented Controls (Tabs) */}
+        <nav className="flex w-full bg-surface-container-low/50 backdrop-blur-sm rounded-2xl p-1.5 shadow-inner border border-outline-variant/30">
           <button 
             onClick={() => setActiveTab('oku')}
-            className={`flex-1 flex flex-col items-center justify-center rounded-lg py-2 transition-all duration-150 ${activeTab === 'oku' ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
+            className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-3 transition-all duration-300 font-medium text-sm
+              ${activeTab === 'oku' ? 'bg-white text-primary shadow-sm ring-1 ring-black/5' : 'text-on-surface-variant hover:bg-surface-container-highest/50'}`}
           >
-            <span className="material-symbols-outlined mb-1">auto_stories</span>
-            <span className="font-label-md text-label-md">Läs</span>
+            <span className="material-symbols-outlined text-[20px]" style={{fontVariationSettings: activeTab === 'oku' ? "'FILL' 1" : "'FILL' 0"}}>auto_stories</span>
+            <span className="hidden sm:inline">Läs dokument</span>
+            <span className="sm:hidden">Läs</span>
           </button>
           <button 
             onClick={() => setActiveTab('dinle')}
-            className={`flex-1 flex flex-col items-center justify-center rounded-lg py-2 transition-all duration-150 ${activeTab === 'dinle' ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
+            className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-3 transition-all duration-300 font-medium text-sm
+              ${activeTab === 'dinle' ? 'bg-white text-primary shadow-sm ring-1 ring-black/5' : 'text-on-surface-variant hover:bg-surface-container-highest/50'}`}
           >
-            <span className="material-symbols-outlined mb-1">headset</span>
-            <span className="font-label-md text-label-md">Lyssna</span>
+            <span className="material-symbols-outlined text-[20px]" style={{fontVariationSettings: activeTab === 'dinle' ? "'FILL' 1" : "'FILL' 0"}}>headphones</span>
+            <span className="hidden sm:inline">Lyssna på ljud</span>
+            <span className="sm:hidden">Lyssna</span>
           </button>
           <button 
             onClick={() => setActiveTab('izle')}
-            className={`flex-1 flex flex-col items-center justify-center rounded-lg py-2 transition-all duration-150 ${activeTab === 'izle' ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
+            className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-3 transition-all duration-300 font-medium text-sm
+              ${activeTab === 'izle' ? 'bg-white text-primary shadow-sm ring-1 ring-black/5' : 'text-on-surface-variant hover:bg-surface-container-highest/50'}`}
           >
-            <span className="material-symbols-outlined mb-1">play_circle</span>
-            <span className="font-label-md text-label-md">Titta</span>
+            <span className="material-symbols-outlined text-[20px]" style={{fontVariationSettings: activeTab === 'izle' ? "'FILL' 1" : "'FILL' 0"}}>play_circle</span>
+            <span className="hidden sm:inline">Titta på video</span>
+            <span className="sm:hidden">Titta</span>
           </button>
         </nav>
 
         {/* Dynamic Study Area Context */}
-        <section className="space-y-md">
-          {/* Topic Title Card */}
-          <div className="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm">
-            <div className="flex justify-between items-start mb-base">
-              <div>
-                <h2 className="font-title-md text-title-md text-primary">{topic.title}</h2>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">{topic.category}</p>
-              </div>
-              <div className="flex gap-xs">
-                <span className="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full font-label-md text-label-md">Svår</span>
-                <span className="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full font-label-md text-label-md">45 minuter</span>
-              </div>
-            </div>
-          </div>
-
+        <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          {/* READ TAB */}
           {activeTab === 'oku' && (
-            <div className="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col h-[600px]">
-              {/* PDF Header/Controls */}
-              <div className="bg-surface-container px-md py-base flex justify-between items-center border-b border-outline-variant">
-                <div className="flex items-center gap-sm">
-                  <span className="material-symbols-outlined text-primary" style={{fontVariationSettings: "'FILL' 1"}}>picture_as_pdf</span>
-                  <span className="font-body-md text-body-md text-primary font-semibold truncate max-w-[200px] md:max-w-none">{readMaterial?.title || 'Dokument'}</span>
+            <div className="bg-white rounded-3xl border border-outline-variant/50 shadow-md overflow-hidden flex flex-col h-[650px] transition-all">
+              <div className="bg-surface-container-lowest px-5 py-4 flex justify-between items-center border-b border-outline-variant/50">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg flex items-center justify-center">
+                    <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>picture_as_pdf</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-on-surface leading-tight truncate max-w-[180px] md:max-w-md">
+                      {readMaterial?.title || 'Läsmaterial'}
+                    </h3>
+                    <p className="text-xs text-on-surface-variant">PDF Dokument</p>
+                  </div>
                 </div>
                 {readMaterial && (
                   <a 
                     href={readMaterial.url} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="flex items-center gap-1 text-xs bg-primary text-on-primary px-3 py-1.5 rounded-full hover:bg-primary-dark transition-colors font-bold shadow active:scale-95 duration-100"
+                    className="flex items-center gap-1.5 text-sm bg-surface-container-high text-on-surface hover:bg-surface-container-highest px-4 py-2 rounded-xl font-medium transition-colors duration-200"
                   >
-                    <span className="material-symbols-outlined text-[14px]">open_in_new</span>
-                    Öppna i ny flik / Ladda ner
+                    <span className="material-symbols-outlined text-[18px]">open_in_new</span>
+                    <span className="hidden sm:inline">Öppna externt</span>
                   </a>
                 )}
               </div>
-
-              {/* Content Canvas */}
-              <div className="flex-1 bg-surface-container-lowest">
+              <div className="flex-1 bg-surface-container-lowest relative">
                 {readMaterial ? (
                   <iframe 
                     src={readMaterial.url} 
-                    className="w-full h-full border-0"
+                    className="w-full h-full border-0 absolute inset-0"
                     title={readMaterial.title}
                   />
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full p-md text-center">
-                    <span className="material-symbols-outlined text-[48px] text-on-surface-variant mb-4">description</span>
-                    <p className="text-on-surface-variant font-body-md">Det finns inget läsmaterial tillagt för detta ämne än.</p>
+                  <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-surface/30">
+                    <div className="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mb-4">
+                      <span className="material-symbols-outlined text-[40px] text-on-surface-variant/50">description</span>
+                    </div>
+                    <h4 className="text-lg font-semibold text-on-surface mb-1">Inget material tillagt</h4>
+                    <p className="text-on-surface-variant text-sm max-w-sm">Det finns tyvärr inget läsmaterial tillagt för detta ämne än. Fortsätt till övningarna!</p>
                   </div>
                 )}
               </div>
             </div>
           )}
 
+          {/* LISTEN TAB */}
           {activeTab === 'dinle' && (
-            <div className="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden p-8 flex flex-col items-center justify-center h-[500px]">
-              <div className="w-24 h-24 bg-primary flex items-center justify-center rounded-full text-on-primary mb-6">
-                <span className="material-symbols-outlined text-[48px]" style={{fontVariationSettings: "'FILL' 1"}}>headphones</span>
-              </div>
-              <h3 className="text-xl font-bold text-primary mb-2">{listenMaterial?.title || 'Ljudguide'}</h3>
-              <p className="text-on-surface-variant text-center mb-8">
-                {listenMaterial ? 'Du kan repetera ämnet genom att lyssna på denna ljudfil.' : 'Det finns inget ljudmaterial tillagt för detta ämne än.'}
-              </p>
+            <div className="bg-white rounded-3xl border border-outline-variant/50 shadow-md overflow-hidden p-8 md:p-12 flex flex-col items-center justify-center min-h-[400px] relative">
+              <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-primary/5 to-transparent"></div>
               
-              {listenMaterial && (
-                <div className="w-full max-w-sm bg-surface-container-low p-4 rounded-xl flex flex-col items-center gap-md shadow-inner">
-                  <audio 
-                    src={listenMaterial.url} 
-                    controls 
-                    className="w-full focus:outline-none"
-                  />
+              <div className="relative z-10 flex flex-col items-center">
+                <div className="w-24 h-24 bg-gradient-to-tr from-primary to-primary-container shadow-lg shadow-primary/20 flex items-center justify-center rounded-full text-on-primary mb-6 ring-4 ring-primary/10">
+                  <span className="material-symbols-outlined text-[48px]" style={{fontVariationSettings: "'FILL' 1"}}>graphic_eq</span>
                 </div>
-              )}
+                <h3 className="text-2xl font-bold text-on-surface mb-2 text-center">{listenMaterial?.title || 'Ljudguide'}</h3>
+                <p className="text-on-surface-variant text-center max-w-md mb-8 text-sm leading-relaxed">
+                  {listenMaterial ? 'Lyssna på sammanfattningen av detta ämne. Perfekt när du är på språng.' : 'Det finns inget ljudmaterial tillagt för detta ämne än.'}
+                </p>
+                
+                {listenMaterial && (
+                  <div className="w-full max-w-md bg-surface border border-outline-variant/50 p-4 rounded-2xl shadow-sm">
+                    <audio 
+                      src={listenMaterial.url} 
+                      controls 
+                      className="w-full focus:outline-none"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
+          {/* WATCH TAB */}
           {activeTab === 'izle' && (
-             <div className="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col h-[500px]">
+             <div className="bg-white rounded-3xl border border-outline-variant/50 shadow-md overflow-hidden flex flex-col">
+                <div className="bg-surface-container-lowest px-5 py-4 flex items-center gap-3 border-b border-outline-variant/50">
+                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center">
+                    <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>smart_display</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-on-surface leading-tight">
+                      {watchMaterial?.title || 'Videomaterial'}
+                    </h3>
+                  </div>
+                </div>
+                
                 {watchMaterial ? (
-                  <div className="relative w-full h-full bg-black flex items-center justify-center">
+                  <div className="w-full aspect-video bg-black flex items-center justify-center">
                     {(() => {
                       const isYouTube = watchMaterial.url.includes('youtube.com') || watchMaterial.url.includes('youtu.be');
                       if (isYouTube) {
@@ -172,50 +213,51 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
                         <video 
                           src={watchMaterial.url} 
                           controls 
-                          className="w-full h-full object-contain"
+                          className="w-full h-full object-cover"
                         />
                       );
                     })()}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-                    <span className="material-symbols-outlined text-[48px] text-on-surface-variant mb-4">videocam_off</span>
-                    <p className="text-on-surface-variant font-body-md">Det finns inget videomaterial tillagt för detta ämne än.</p>
+                  <div className="flex flex-col items-center justify-center h-[400px] p-8 text-center bg-surface/30">
+                    <div className="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mb-4">
+                      <span className="material-symbols-outlined text-[40px] text-on-surface-variant/50">videocam_off</span>
+                    </div>
+                    <h4 className="text-lg font-semibold text-on-surface mb-1">Ingen video tillagd</h4>
+                    <p className="text-on-surface-variant text-sm max-w-sm">Det finns tyvärr inget videomaterial tillagt för detta ämne än.</p>
                   </div>
                 )}
              </div>
           )}
 
-          {/* Contextual Audio Player (Collapsible Preview) - Show only if not currently listening */}
+          {/* Contextual Preview (Collapsible) - Show if listening is available but not active */}
           {activeTab !== 'dinle' && listenMaterial && (
-            <div className="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md">
-              <div className="flex items-center gap-md">
-                <div className="w-12 h-12 bg-primary flex items-center justify-center rounded-xl text-on-primary">
-                  <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>graphic_eq</span>
-                </div>
-                <div className="flex-1">
-                  <p className="font-title-md text-title-md text-primary text-sm truncate">{listenMaterial.title}</p>
-                  <p className="text-xs text-on-surface-variant">Ljudsammanfattning för ämnet är tillgänglig</p>
-                </div>
-                <button 
-                  onClick={() => setActiveTab('dinle')}
-                  className="bg-secondary-container text-on-secondary-container rounded-full px-4 py-2 text-xs font-bold active:scale-95 transition-transform duration-150 flex items-center gap-1 hover:bg-secondary-container-hover"
-                >
-                  <span className="material-symbols-outlined text-[14px]">headphones</span>
-                  Lyssna
-                </button>
+            <div className="mt-4 bg-surface rounded-2xl border border-outline-variant/40 shadow-sm p-4 flex items-center gap-4 hover:border-primary/30 transition-colors">
+              <div className="w-12 h-12 bg-secondary-container text-on-secondary-container flex items-center justify-center rounded-xl shrink-0">
+                <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>headphones</span>
               </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-on-surface text-sm truncate">{listenMaterial.title}</p>
+                <p className="text-xs text-on-surface-variant truncate">Ljudsammanfattning är tillgänglig</p>
+              </div>
+              <button 
+                onClick={() => setActiveTab('dinle')}
+                className="bg-primary text-on-primary rounded-xl px-4 py-2.5 text-sm font-semibold active:scale-95 transition-transform shrink-0"
+              >
+                Lyssna
+              </button>
             </div>
           )}
         </section>
 
-        {/* Actions */}
-        <div className="flex gap-md mt-lg pb-md">
-          <button className="flex-1 py-3 px-4 border border-primary text-primary font-semibold rounded-xl hover:bg-surface-container-low transition-colors duration-200">
-            Skriv anteckning
-          </button>
-          <Link href={`/practice?topicId=${topic.id}`} className="flex-1 py-3 px-4 bg-primary text-on-primary font-semibold rounded-xl shadow-md active:scale-95 transition-transform duration-150 text-center flex items-center justify-center gap-2">
-            Börja öva <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+        {/* Bottom CTA Actions */}
+        <div className="pt-6 pb-4">
+          <Link 
+            href={`/practice?topicId=${topic.id}`} 
+            className="group w-full py-4 px-6 bg-primary text-on-primary font-bold rounded-2xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200 flex items-center justify-between text-lg"
+          >
+            <span>Börja öva frågor</span>
+            <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
           </Link>
         </div>
       </main>

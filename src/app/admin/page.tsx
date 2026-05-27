@@ -199,7 +199,7 @@ export default function AdminPage() {
                       <span className="block text-[10px] font-semibold text-on-surface-variant">Okuma Dökümanı (PDF)</span>
                       <div className="grid grid-cols-1 gap-1">
                         <input type="file" name="pdfFile" accept=".pdf" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
-                        <input type="url" name="pdfUrl" placeholder="Veya PDF Bağlantı Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                        <input type="text" name="pdfUrl" placeholder="Veya PDF Bağlantı Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
                       </div>
                     </div>
 
@@ -207,7 +207,7 @@ export default function AdminPage() {
                       <span className="block text-[10px] font-semibold text-on-surface-variant">Ses Kaydı (MP3)</span>
                       <div className="grid grid-cols-1 gap-1">
                         <input type="file" name="audioFile" accept="audio/*" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
-                        <input type="url" name="audioUrl" placeholder="Veya Ses Bağlantı Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                        <input type="text" name="audioUrl" placeholder="Veya Ses Bağlantı Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
                       </div>
                     </div>
 
@@ -215,7 +215,7 @@ export default function AdminPage() {
                       <span className="block text-[10px] font-semibold text-on-surface-variant">Video Anlatım (MP4/YouTube)</span>
                       <div className="grid grid-cols-1 gap-1">
                         <input type="file" name="videoFile" accept="video/*" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
-                        <input type="url" name="videoUrl" placeholder="Veya Video/YouTube Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                        <input type="text" name="videoUrl" placeholder="Veya Video/YouTube Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
                       </div>
                     </div>
                   </div>
@@ -309,7 +309,7 @@ export default function AdminPage() {
                                   className="w-full text-xs bg-white border border-outline-variant rounded p-1 mb-1" 
                                 />
                                 <input 
-                                  type="url" 
+                                  type="text" 
                                   name="pdfUrl" 
                                   value={editPdfUrl} 
                                   onChange={(e) => setEditPdfUrl(e.target.value)} 
@@ -327,7 +327,7 @@ export default function AdminPage() {
                                   className="w-full text-xs bg-white border border-outline-variant rounded p-1 mb-1" 
                                 />
                                 <input 
-                                  type="url" 
+                                  type="text" 
                                   name="audioUrl" 
                                   value={editAudioUrl} 
                                   onChange={(e) => setEditAudioUrl(e.target.value)} 
@@ -345,7 +345,7 @@ export default function AdminPage() {
                                   className="w-full text-xs bg-white border border-outline-variant rounded p-1 mb-1" 
                                 />
                                 <input 
-                                  type="url" 
+                                  type="text" 
                                   name="videoUrl" 
                                   value={editVideoUrl} 
                                   onChange={(e) => setEditVideoUrl(e.target.value)} 
