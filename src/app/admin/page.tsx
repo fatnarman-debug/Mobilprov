@@ -373,7 +373,7 @@ export default function AdminPage() {
                   <h3 className="font-title-md text-title-md text-on-surface">Toplu Soru Yükleme</h3>
                 </div>
                 
-                <form action={handleCsvUpload} className="space-y-base">
+                <form onSubmit={handleCsvUpload} className="space-y-base">
                   <input type="text" name="topicId" placeholder="Hedef Konu ID (Zorunlu)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
                   
                   <div className="flex items-center gap-xs px-xs">
@@ -473,7 +473,7 @@ export default function AdminPage() {
                     <span className="material-symbols-outlined text-tertiary">cloud_upload</span>
                     Toplu Flashcard Yükle (CSV)
                   </h4>
-                  <form action={handleFlashcardCsvUpload} className="flex flex-col md:flex-row gap-4 items-center">
+                  <form onSubmit={handleFlashcardCsvUpload} className="flex flex-col md:flex-row gap-4 items-center">
                     <input type="text" name="topicId" placeholder="Hedef Konu ID (Zorunlu)" className="flex-grow bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md w-full" required />
                     <label className="w-full md:w-auto flex-shrink-0 bg-surface-container-high hover:bg-tertiary hover:text-on-tertiary text-on-surface-variant transition-colors rounded-lg p-3 cursor-pointer text-center font-label-md flex items-center justify-center gap-2">
                       <span className="material-symbols-outlined">upload_file</span>
