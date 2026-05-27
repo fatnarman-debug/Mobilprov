@@ -74,7 +74,7 @@ export default async function AnalysisPage() {
       mockExams={mockExams}
       passingScore={settings?.passingScorePercentage ?? 60}
       isPaid={session.user.isPaid || false}
-      siteName={settings?.siteName || 'EduFlow'}
+      siteName={settings?.siteName || 'Medborgarskapsprov'}
     />
   );
 }

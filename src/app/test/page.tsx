@@ -83,7 +83,7 @@ export default async function TestPage() {
       testResults={testResults}
       passingScore={settings?.passingScorePercentage ?? 60}
       isPaid={session.user.isPaid || false}
-      siteName={settings?.siteName || 'EduFlow'}
+      siteName={settings?.siteName || 'Medborgarskapsprov'}
       userId={session.user.id}
       userLang={user?.nativeLanguage || 'TR'}
       wrongQuestionsCount={wrongQuestionsCount}

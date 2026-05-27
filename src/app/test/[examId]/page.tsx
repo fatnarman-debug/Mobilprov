@@ -57,7 +57,7 @@ export default async function ExamPage({ params }: { params: Promise<{ examId: s
     <ExamPlayerClient
       mockExam={mockExam}
       passingScore={settings?.passingScorePercentage ?? 60}
-      siteName={settings?.siteName || 'EduFlow'}
+      siteName={settings?.siteName || 'Medborgarskapsprov'}
       userId={session.user.id}
       userLang={user?.nativeLanguage || 'TR'}
     />

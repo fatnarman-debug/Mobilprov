@@ -41,7 +41,7 @@ export default async function ExamTemplatesPage() {
             <button className="p-2 -ml-2 rounded-full hover:bg-surface-container-low transition-colors duration-200 lg:hidden">
               <span className="material-symbols-outlined text-primary">menu</span>
             </button>
-            <h1 className="font-display-lg text-title-md text-primary dark:text-primary-fixed font-bold">EduFlow</h1>
+            <h1 className="font-display-lg text-title-md text-primary dark:text-primary-fixed font-bold">Medborgarskapsprov</h1>
           </div>
           <div className="flex items-center gap-base">
             <button className="p-2 rounded-full hover:bg-surface-container-low transition-colors duration-200">

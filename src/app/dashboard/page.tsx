@@ -77,7 +77,7 @@ export default async function DashboardPage() {
               {session.user.name ? session.user.name.charAt(0) : session.user.email?.charAt(0)}
             </div>
             <h1 className="font-display-lg text-title-md text-primary font-bold">
-              {settings?.siteName || 'EduFlow'}
+              {settings?.siteName || 'Medborgarskapsprov'}
             </h1>
           </div>
           

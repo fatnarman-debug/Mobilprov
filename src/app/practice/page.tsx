@@ -104,7 +104,7 @@ export default async function PracticePage({
       flashcards={mappedFlashcards}
       isPaid={session.user.isPaid || false}
       freeDailyQuestionLimit={settings?.freeDailyQuestionLimit ?? 20}
-      siteName={settings?.siteName || 'EduFlow'}
+      siteName={settings?.siteName || 'Medborgarskapsprov'}
       userId={session.user.id}
       userLang={user?.nativeLanguage || 'TR'}
     />
