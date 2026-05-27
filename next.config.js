@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  serverActions: {
+    bodySizeLimit: '200mb',
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '200mb',
+    },
+  },
   async headers() {
     return [
       {
