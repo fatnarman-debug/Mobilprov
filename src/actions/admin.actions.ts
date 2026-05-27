@@ -16,8 +16,8 @@ async function saveUploadedFile(file: unknown, subFolder = ''): Promise<string |
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     
-    // Define the upload directory
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', subFolder);
+    // Define the upload directory (outside of public so it's not cached/wiped by Next.js)
+    const uploadDir = path.join(process.cwd(), 'storage', 'uploads', subFolder);
     
     // Ensure directories exist
     if (!fs.existsSync(uploadDir)) {
@@ -40,8 +40,8 @@ async function saveUploadedFile(file: unknown, subFolder = ''): Promise<string |
     // Write file to filesystem
     await fs.promises.writeFile(filePath, buffer);
     
-    // Return relative URL for Next.js public access
-    return `/uploads/${subFolder ? subFolder + '/' : ''}${filename}`;
+    // Return custom API URL for accessing the persistent storage
+    return `/api/uploads/${subFolder ? subFolder + '/' : ''}${filename}`;
   } catch (error) {
     console.error('Error saving file:', error);
     return null;
