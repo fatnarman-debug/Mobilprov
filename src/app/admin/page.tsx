@@ -24,7 +24,9 @@ export default function AdminPage() {
     fetchTopics();
   }, []);
 
-  const handleCsvUpload = async (formData: FormData) => {
+  const handleCsvUpload = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const result = await uploadQuestionsCSV(formData);
     if (result.error) {
       alert(result.error);
@@ -33,7 +35,9 @@ export default function AdminPage() {
     }
   };
 
-  const handleFlashcardCsvUpload = async (formData: FormData) => {
+  const handleFlashcardCsvUpload = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const result = await uploadFlashcardsCSV(formData);
     if (result.error) {
       alert(result.error);
@@ -42,7 +46,9 @@ export default function AdminPage() {
     }
   };
 
-  const handleAddTopic = async (formData: FormData) => {
+  const handleAddTopic = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const result = await addTopic(formData);
     if (result.error) {
       alert(result.error);
@@ -66,7 +72,9 @@ export default function AdminPage() {
     }
   };
 
-  const handleAddQuestion = async (formData: FormData) => {
+  const handleAddQuestion = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const result = await addQuestion(formData);
     if (result.error) {
       alert(result.error);
@@ -76,7 +84,9 @@ export default function AdminPage() {
     }
   };
 
-  const handleAddFlashcard = async (formData: FormData) => {
+  const handleAddFlashcard = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const result = await addFlashcard(formData);
     if (result.error) {
       alert(result.error);
@@ -177,7 +187,7 @@ export default function AdminPage() {
                   <span className="material-symbols-outlined text-secondary">add_circle</span>
                   <h3 className="font-title-md text-title-md text-on-surface">Yeni Konu (Ünite) Ekle</h3>
                 </div>
-                <form action={handleAddTopic} ref={topicFormRef} className="space-y-sm">
+                <form onSubmit={handleAddTopic} ref={topicFormRef} className="space-y-sm">
                   <input type="text" name="title" placeholder="Konu Başlığı (Örn: İsveç Tarihi)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
                   <input type="text" name="category" placeholder="Kategori (Örn: Tarih & Kültür)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
                   <textarea name="description" placeholder="Açıklama (Opsiyonel)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" rows={2}></textarea>
@@ -395,7 +405,7 @@ export default function AdminPage() {
                   <h3 className="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Manuel Test/Çalışma Sorusu Ekle</h3>
                   <span className="material-symbols-outlined text-primary-fixed-dim">post_add</span>
                 </div>
-                <form action={handleAddQuestion} ref={questionFormRef} className="space-y-md">
+                <form onSubmit={handleAddQuestion} ref={questionFormRef} className="space-y-md">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
                     <div className="md:col-span-2 flex gap-4">
                        <input type="text" name="topicId" placeholder="Hedef Konu ID" className="flex-grow bg-surface-bright border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary font-body-md text-body-md" required />
@@ -478,7 +488,7 @@ export default function AdminPage() {
 
                 {/* Manual Flashcard Form */}
                 <h4 className="font-title-md text-title-md text-on-surface mb-4">Manuel Tekli Ekleme</h4>
-                <form action={handleAddFlashcard} ref={flashcardFormRef} className="space-y-md">
+                <form onSubmit={handleAddFlashcard} ref={flashcardFormRef} className="space-y-md">
                   <div>
                     <label className="block font-label-md text-label-md text-on-surface-variant mb-xs">Hedef Konu ID</label>
                     <input type="text" name="topicId" placeholder="Konu ID giriniz" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary font-body-md text-body-md" required />

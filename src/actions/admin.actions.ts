@@ -54,12 +54,13 @@ export async function getTopics() {
     return [];
   }
   try {
-    return await prisma.topic.findMany({
+    const topics = await prisma.topic.findMany({
       include: {
         materials: true
       },
       orderBy: { createdAt: 'desc' }
     });
+    return JSON.parse(JSON.stringify(topics));
   } catch (error) {
     console.error('Error fetching topics:', error);
     return [];
@@ -235,9 +236,8 @@ export async function addTopic(formData: FormData) {
         }
       });
     }
-    
     revalidatePath('/admin');
-    return { success: 'Konu ve çalışma materyalleri başarıyla eklendi.', topic: newTopic };
+    return { success: 'Konu ve çalışma materyalleri başarıyla eklendi.', topic: JSON.parse(JSON.stringify(newTopic)) };
   } catch (error) {
     console.error(error);
     return { error: 'Konu eklenirken hata oluştu.' };
