@@ -33,8 +33,7 @@ async function saveUploadedFile(file: unknown, subFolder = ''): Promise<string |
     const ext = path.extname(file.name).toLowerCase();
     const allowedExtensions = ['.pdf', '.mp3', '.mp4', '.mov', '.png', '.jpg', '.jpeg', '.gif', '.csv'];
     if (!allowedExtensions.includes(ext)) {
-      console.warn(`File upload rejected: invalid extension ${ext}`);
-      return null;
+      throw new Error(`Geçersiz dosya uzantısı: ${ext}`);
     }
     
     // Write file to filesystem
@@ -42,9 +41,9 @@ async function saveUploadedFile(file: unknown, subFolder = ''): Promise<string |
     
     // Return custom API URL for accessing the persistent storage
     return `/api/uploads/${subFolder ? subFolder + '/' : ''}${filename}`;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error saving file:', error);
-    return null;
+    throw new Error(`Dosya kaydedilemedi: ${error.message || 'Bilinmeyen hata'}`);
   }
 }
 
@@ -238,9 +237,9 @@ export async function addTopic(formData: FormData) {
     }
     revalidatePath('/admin');
     return { success: 'Konu ve çalışma materyalleri başarıyla eklendi.', topic: JSON.parse(JSON.stringify(newTopic)) };
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    return { error: 'Konu eklenirken hata oluştu.' };
+    return { error: error.message || 'Konu eklenirken hata oluştu.' };
   }
 }
 
@@ -317,9 +316,9 @@ export async function updateTopicMaterials(topicId: string, formData: FormData) 
     revalidatePath('/admin');
     revalidatePath(`/topic/${topicId}`);
     return { success: 'Çalışma materyalleri başarıyla güncellendi!' };
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    return { error: 'Materyaller güncellenirken bir hata oluştu.' };
+    return { error: error.message || 'Materyaller güncellenirken bir hata oluştu.' };
   }
 }
 
