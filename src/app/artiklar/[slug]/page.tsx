@@ -149,27 +149,44 @@ export default async function ArticlePage({ params }: Props) {
   const htmlContent = renderMarkdown(article!.content)
 
   // JSON-LD structured data
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.title,
-    description: article.metaDescription,
-    datePublished: article.publishedAt,
-    dateModified: article.updatedAt,
-    author: { '@type': 'Organization', name: 'Sverigemedborgarskapsprov.com' },
-    publisher: {
-      '@type': 'Organization',
-      name: siteName,
-      url: absoluteUrl('/'),
-    },
-    image: absoluteUrl(ogImage),
-    inLanguage: ['sv-SE', 'tr-TR'],
-    mainEntityOfPage: absoluteUrl(`/artiklar/${article.slug}`),
+  const schemas: any[] = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.title,
+      description: article.metaDescription,
+      datePublished: article.publishedAt,
+      dateModified: article.updatedAt,
+      author: { '@type': 'Organization', name: 'Sverigemedborgarskapsprov.com' },
+      publisher: {
+        '@type': 'Organization',
+        name: siteName,
+        url: absoluteUrl('/'),
+      },
+      image: absoluteUrl(ogImage),
+      inLanguage: ['sv-SE', 'tr-TR'],
+      mainEntityOfPage: absoluteUrl(`/artiklar/${article.slug}`),
+    }
+  ]
+
+  if (article.faqItems && article.faqItems.length > 0) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: article.faqItems.map(faq => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer
+        }
+      }))
+    })
   }
 
   return (
     <div style={{ background: 'linear-gradient(135deg, #002244 0%, #003566 40%, #006AA7 100%)', minHeight: '100vh' }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }} />
 
       {/* Header */}
       <header style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }} className="sticky top-0 z-50 backdrop-blur-md">

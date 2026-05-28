@@ -10,6 +10,7 @@ export interface Article {
   readingTime: number // dakika
   keywords: string[]
   content: string // Markdown formatında
+  faqItems?: { question: string; answer: string }[]
 }
 
 export const articles: Article[] = [
@@ -608,108 +609,113 @@ Detta är provets huvudfokus under 2026. Frågorna är baserade på studiemateri
 - Sverige i världen (EU, NATO, FN)
 - Att leva i Sverige (arbete, hälso- och sjukvård)
 
-### 2. Språktest (Svenska språket)
-Många undrar om man måste göra ett prov i svenska språket. Svaret är att **språkkravet inte ingår i det första provet 2026**. Ett separat test av språkkunskaper i svenska planeras att införas i ett senare skede. Det nuvarande provet testar enbart kunskaper om det svenska samhället, men provfrågorna är skrivna på svenska.
-
----
-
-## Viktiga regler i provsalen
-
-Eftersom provet är ett myndighetsprov gäller strikta regler vid provtillfället:
-
-- **Giltig legitimation:** Du måste kunna visa upp en giltig svensk legitimation (t.ex. ID-kort, pass eller körkort) för att få komma in i provsalen.
-- **Inga hjälpmedel:** Mobiltelefoner, smartklockor, böcker eller anteckningar är helt förbjudna under provet.
-- **Kallelse:** Du måste ha med dig ditt kallelsebrev eller bokningsbekräftelse.
-
----
-
-## Hur du förbereder dig bäst
-
-Eftersom du har 90 minuter på dig har du i genomsnitt 1,5 minuter per fråga. Det är gott om tid om du är väl förberedd, men det kan bli stressigt om du fastnar på svåra frågor.
-
-Vi rekommenderar att du förbereder dig genom att:
-1. Läsa igenom det officiella studiematerialet *Sverige i fokus* noggrant.
-2. Göra realistiska provsimuleringar på vår [övningssida](/ovning).
-3. Träna på begrepp och historia med våra gratis [flashcards](/ovning/flashcards).
-`.trim(),
-  },
-
-  {
+### 2. Språktest (Svenska   {
     slug: 'medborgarskapsprov-fragor-och-svar-faq',
-    title: 'Vanliga frågor och svar om medborgarskapsprovet (FAQ)',
+    title: 'Vanliga frågor och svar om medborgarskapsprovet (FAQ) 2026',
     metaDescription:
-      'Svar på alla vanliga frågor om det nya svenska medborgarskapsprovet 2026. Läs om avgifter, provplatser, undantag och studietips.',
+      'Svar på alla vanliga frågor om det nya svenska medborgarskapsprovet 2026. Läs om Migrationsverkets 8-årskrav, SFI-språktest, avgifter, provplatser och undantag.',
     publishedAt: '2026-05-22',
-    updatedAt: '2026-05-22',
-    readingTime: 6,
+    updatedAt: new Date().toISOString().split('T')[0],
+    readingTime: 8,
     keywords: [
       'medborgarskapsprov frågor och svar',
       'vanliga frågor medborgarskapsprov',
       'medborgarskapsprov faq',
-      'svar om medborgarskapsprovet',
+      'migrationsverket medborgarskapsprov',
+      'uhr medborgarskapstest'
     ],
-    content: `
-## Allt du behöver veta om medborgarskapsprovet
+    faqItems: [
+      {
+        question: 'Vem måste göra medborgarskapsprovet?',
+        answer: 'Alla personer över 15 år som ansöker om svenskt medborgarskap genom naturalisering efter den 6 juni 2026 måste i regel göra och klara provet. Undantag gäller för barn under 15 år och personer med allvarlig sjukdom eller funktionsnedsättning.'
+      },
+      {
+        question: 'Vad är det nya hemvistkravet för medborgarskap (8 år)?',
+        answer: 'Migrationsverket har förlängt kravet på hur länge du måste ha bott i Sverige (hemvist). Som huvudregel krävs nu 8 års sammanhängande bosättning i Sverige, i stället för det tidigare kravet på 5 år.'
+      },
+      {
+        question: 'Vilket språk skrivs provet på?',
+        answer: 'Själva provfrågorna skrivs uteslutande på svenska. Även om studiematerialet (Sverige i fokus) finns översatt till flera språk, testas din förståelse av frågorna på svenska under provet.'
+      },
+      {
+        question: 'Hur många frågor har provet och vad är godkändgränsen?',
+        answer: 'Medborgarskapsprovet består av 60 flervalsfrågor och du har 90 minuter på dig att svara. Du måste svara rätt på minst 40 av 60 frågor (ca 67%) för att få ett godkänt resultat.'
+      },
+      {
+        question: 'Kommer det finnas ett separat språktest i svenska?',
+        answer: 'Ja, förutom samhällskunskapstestet ställs det även krav på kunskaper i det svenska språket. Som huvudregel krävs godkänt betyg i Svenska för invandrare (SFI), kurs D. Har du inget intyg kan du komma att behöva genomföra ett särskilt språktest.'
+      },
+      {
+        question: 'Var och när kan jag göra provet?',
+        answer: 'Det allra första utprövningsprovet hålls den 15 augusti 2026 i Stockholm. För att delta måste du ha fått ett officiellt kallelsebrev från Migrationsverket. Fler provtillfällen och orter kommer att erbjudas löpande av UHR under hösten 2026.'
+      },
+      {
+        question: 'Kostar det något att skriva provet?',
+        answer: 'Det första utprövningsprovet (augusti 2026) är helt gratis för de som har fått ett kallelsebrev. För framtida ordinarie provtillfällen förväntas en provavgift att tas ut, men beloppet är ännu inte fastställt.'
+      },
+      {
+        question: 'Vad händer om jag misslyckas?',
+        answer: 'Om du inte blir godkänd kan du anmäla dig till ett nytt provtillfälle för att göra om provet. Det finns ingen gräns för hur många gånger du får försöka, men varje nytt ordinarie provtillfälle kan innebära en ny provavgift.'
+      }
+    ],
+    content: \`
+## Den ultimata FAQ:n för svenskt medborgarskap 2026
 
-Införandet av det nya obligatoriska medborgarskapsprovet den **6 juni 2026** väcker många frågor hos de som planerar att ansöka om svenskt medborgarskap. Här har vi samlat svar på de allra vanligaste frågorna baserat på information från UHR (Universitets- och högskolerådet) och Migrationsverket.
+Att ansöka om svenskt medborgarskap innebär stora förändringar från och med den **6 juni 2026**. För att göra processen så tydlig som möjligt har vi sammanställt de vanligaste frågorna baserat på officiell information från **Migrationsverket** och **Universitets- och högskolerådet (UHR)**.
 
----
-
-## Allmänna frågor
-
-### Vem måste göra medborgarskapsprovet?
-Alla personer över 15 år som ansöker om svenskt medborgarskap genom naturalisering efter den 6 juni 2026 måste i regel göra och klara provet.
-
-### Finns det några undantag från provkravet?
-Ja, följande grupper är undantagna:
-- Personer under 15 år.
-- Sökande som på grund av allvarlig sjukdom eller funktionsnedsättning inte kan genomföra provet.
-- Vissa andra specialfall (t.ex. statslösa födda i Sverige under vissa förutsättningar).
-- Nordiska medborgare som ansöker genom anmälan har andra regler.
-
----
-
-## Provets utformning och innehåll
-
-### Vilket språk är provet på?
-Provet skrivs på **svenska**. Även om studiematerialet finns översatt till andra språk för att hjälpa dig att förstå innehållet, är själva provfrågorna på svenska.
-
-### Hur långt är provet och hur många frågor har det?
-Du har **90 minuter** på dig å svara på **60 flervalsfrågor**. Varje fråga har fyra svarsalternativ varav endast ett är rätt.
-
-### Vad är godkändgränsen?
-Du måste ha minst **40 rätt av 60** för att bli godkänd (67%).
-
-### Kommer det att finnas ett språktest också?
-Kravet på kunskaper i det svenska språket (språktest) ingår **inte** i provet under 2026. Det kommer att införas vid ett senare tillfälle. Just nu testas enbart dina kunskaper om det svenska samhället (samhällskunskap).
-
----
-
-## Anmälan och praktiska detaljer
-
-### Var och när kan jag göra provet?
-Det allra första provtillfället är den **15 augusti 2026** i **Stockholm**. Under hösten 2026 och framåt kommer UHR to erbjuda fler provtillfällen på olika orter runt om i Sverige.
-
-### Hur mycket kostar provet?
-Utprövningsprovet den 15 augusti 2026 är helt **gratis** för de som har fått ett kallelsebrev och anmält sig. Provavgifter för framtida ordinarie provtillfällen kommer att meddelas av UHR senare.
-
-### Hur anmäler jag mig?
-När du har ansökt om medborgarskap hos Migrationsverket och uppfyller kraven skickar de ett kallelsebrev till dig. I brevet finns instruktioner för hur du gör din anmälan på UHR:s hemsida. Anmälan för det första provet öppnar i **början av juni 2026**.
+Läs vidare för att få svar på dina funderingar kring det nya **medborgarskapsprovet** (samhällskunskapstestet), de nya kraven på hemvisttid, och det kommande språktestet.
 
 ---
 
-## Resultat och studietips
+## 1. Nya krav från Migrationsverket (6 juni 2026)
 
-### Vad händer om jag misslyckas på provet?
-Om du blir underkänd påverkar det inte din rätt att ansöka igen, men din medborgarskapsansökan kan inte beviljas förrän du har ett godkänt provresultat. Du kan anmäla dig och göra om provet vid ett senare tillfälle.
+**Vad är det nya hemvistkravet för medborgarskap (8 år)?**
+En av de största förändringarna är att tiden du måste ha bott i Sverige förlängs. Migrationsverket kräver som huvudregel **8 års sammanhängande bosättning** (hemvist) för att bevilja medborgarskap. Tidigare var kravet 5 år. Längre tid i Sverige är tänkt att säkerställa en starkare integration.
 
-### Vilket material ska jag studera?
-Det officiella studiematerialet heter **Sverige i fokus**. Det är en bok utgiven av UHR som täcker alla 7 ämnesområdena. Den finns att ladda ner som gratis PDF och som MP3-ljudfiler på UHR:s webbplats.
+**Kommer det finnas ett separat språktest i svenska?**
+Ja. Utöver samhällskunskapstestet införs krav på tillräckliga språkkunskaper. Enligt de nya riktlinjerna krävs som huvudregel godkänt betyg i **Svenska för invandrare (SFI), kurs D**. Saknar du formella intyg på din svenska kommer du att erbjudas möjlighet att genomföra ett särskilt nationellt språktest.
 
-### Hur kan jag testa mina kunskaper innan provet?
-Du kan använda vår plattform **Sverigemedborgarskapsprov.com** för att förbereda dig helt gratis. Vi erbjuder:
-- [Interaktiva övningsprov](/ovning) med frågor som liknar det riktiga provet.
-- [Smarta flashcards](/ovning/flashcards) för att plugga in viktiga ord, lagar och årtal.
-`.trim(),
+---
+
+## 2. Allt om Medborgarskapsprovet (Samhällskunskapstestet)
+
+**Vem måste göra medborgarskapsprovet?**
+Alla personer över 15 år som ansöker om svenskt medborgarskap genom naturalisering efter den 6 juni 2026 måste i regel genomföra och klara provet. Det finns dock undantag för sökande med allvarliga sjukdomar eller funktionsnedsättningar som gör det omöjligt att skriva ett prov.
+
+**Vilket språk skrivs provet på?**
+Själva provfrågorna i medborgarskapsprovet är helt och hållet på **svenska**. Det betyder att även om UHR erbjuder studiematerialet (*Sverige i fokus*) översatt till andra språk, måste du kunna förstå och läsa tillräckligt bra svenska för att besvara frågorna på provdagen.
+
+**Hur många frågor har provet och vad är godkändgränsen?**
+- **Provtid:** 90 minuter.
+- **Antal frågor:** 60 stycken flervalsfrågor.
+- **Godkänt:** Du måste svara rätt på minst 40 frågor (ca 67%) för att bli godkänd.
+
+---
+
+## 3. Anmälan, plats och kostnad
+
+**Var och när kan jag göra provet?**
+UHR (Universitets- och högskolerådet) ansvarar för provets genomförande. Det allra första tillfället (ett s.k. utprövningsprov) går av stapeln den **15 augusti 2026 i Stockholm**. Fler orter och tider tillkommer senare. 
+
+**Viktigt:** För att delta i utprövningsprovet måste du ha fått ett formellt kallelsebrev från Migrationsverket med anmälningsinstruktioner.
+
+**Kostar det något att skriva provet?**
+Det första pilotprovet i augusti 2026 är helt **kostnadsfritt** för de inbjudna. För framtida ordinarie provtillfällen planerar staten att ta ut en avgift, men nivån är i skrivande stund inte fastställd.
+
+---
+
+## 4. Resultat och förberedelser
+
+**Vad händer om jag misslyckas?**
+Skulle du inte nå gränsen på 40 rätta svar blir du underkänd. Du har då full rätt att anmäla dig till ett nytt provtillfälle. Det finns inget tak för hur många gånger du får försöka, men tänk på att du framöver förmodligen behöver betala provavgiften varje gång.
+
+**Hur förbereder jag mig bäst?**
+Alla frågor i provet är hämtade från boken *Sverige i fokus*. Det bästa sättet att studera är att kombinera läsning av boken med att göra provsimuleringar. 
+
+På vår plattform **Sverigemedborgarskapsprov.com** hittar du:
+- [Interaktiva övningsprov](/ovning)
+- [Smarta flashcards för snabb inlärning](/ovning/flashcards)
+- Förklaringar på flera modersmål
+\`.trim(),
   },
 ]
