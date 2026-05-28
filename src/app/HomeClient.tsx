@@ -348,10 +348,10 @@ export default function HomeClient() {
               Vad är det svenska medborgarskapsprovet?
             </h2>
             <p className="text-white/80 leading-relaxed">
-              Från och med den <strong>6 juni 2026</strong> införs ett nytt obligatoriskt <strong>medborgarskapsprov</strong> (samhällskunskapstest) för alla som ansöker om svenskt medborgarskap. Syftet med testet är att säkerställa att nya medborgare har grundläggande kunskaper om hur det svenska samhället fungerar, dess lagar, historia och demokratiska värderingar.
+              Från och med den <strong>6 juni 2026</strong> införs ett nytt obligatoriskt <strong>svensk medborgarskapsprov</strong> (även kallat samhällskunskapstest) för alla som ansöker om svenskt medborgarskap. Ett svensk medborgarskapstest säkerställer att nya medborgare har grundläggande kunskaper om hur det svenska samhället fungerar, dess lagar, historia och demokratiska värderingar. Oavsett om du söker efter information om ett svensk medborgarskap test eller vill öva på specifika frågor, är det viktigt att börja i tid.
             </p>
             <p className="text-white/80 leading-relaxed">
-              Vår plattform är skräddarsydd för att hjälpa dig att klara detta prov på första försöket. We erbjuder gratis övningsfrågor, interaktiva flashcards och realistiska provsimuleringar baserade på det officiella studiematerialet <em>Sverige i fokus</em>.
+              Vår plattform är skräddarsydd för att hjälpa dig att klara detta medborgarskapsprov på första försöket. Vi erbjuder gratis övningsfrågor, interaktiva flashcards och realistiska provsimuleringar baserade på det officiella studiematerialet <em>Sverige i fokus</em>. Genom att regelbundet göra vårt svensk medborgarskapstest online, bygger du upp det självförtroende som krävs för att lyckas. Många upplever att kontinuerlig övning är nyckeln till framgång när man ska skriva ett svensk medborgarskap test.
             </p>
             <div className="p-5 rounded-2xl border border-white/10 space-y-3" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(10px)' }}>
               <h3 className="font-bold text-lg flex items-center gap-2" style={{ color: '#FECC02' }}>
@@ -359,7 +359,7 @@ export default function HomeClient() {
                 Förberedelse på svenska med flerspråkigt stöd
               </h3>
               <p className="text-xs text-white/70 leading-relaxed">
-                För att hjälpa dig att förstå frågorna på svenska finns översättningsstöd för alla frågor, svar och förklaringar till ditt valda modersmål (turkiska, engelska, arabiska, spanska, ukrainska, franska, persiska och dari). På så sätt utvecklar du ditt språk samtidigt som du lär dig allt inför provet.
+                För att hjälpa dig att förstå frågorna på svenska finns översättningsstöd för alla frågor, svar och förklaringar till ditt valda modersmål (turkiska, engelska, arabiska, spanska, ukrainska, franska, persiska och dari). På så sätt utvecklar du ditt språk samtidigt som du lär dig allt inför ditt svensk medborgarskapsprov.
               </p>
             </div>
           </div>
@@ -409,25 +409,25 @@ export default function HomeClient() {
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
               <h3 className="font-bold text-white">Vem måste göra medborgarskapstestet i Sverige?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Alla personer över 15 år som ansöker om svenskt medborgarskap efter den 6 juni 2026 måste klara provet. Undantag kan göras för personer med vissa funktionsnedsättningar eller allvarlig sjukdom.
+                Alla personer över 15 år som ansöker om svenskt medborgarskap efter den 6 juni 2026 måste klara ett svensk medborgarskapsprov. Vissa undantag kan dock göras. Undantag gäller ofta för personer med särskilda funktionsnedsättningar eller allvarlig sjukdom.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
-              <h3 className="font-bold text-white">Vad kostar provet att skriva?</h3>
+              <h3 className="font-bold text-white">Vad kostar ett svensk medborgarskap test?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Det allra första utprövningsprovet den 15 augusti 2026 är helt kostnadsfritt för de som får kallelse. Avgiften för framtida ordinarie provtillfällen kommer att fastställas av regeringen och UHR.
+                Det allra första utprövningsprovet den 15 augusti 2026 är helt kostnadsfritt. Detta gäller för de personer som får en kallelse. Avgiften för framtida ordinarie tillfällen för svensk medborgarskapstest kommer att fastställas av regeringen och UHR senare.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
               <h3 className="font-bold text-white">Kommer det finnas ett språktest i svenska också?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Kravet på svenska språkkunskaper (språktest) planeras att införas i ett senare skede. Under 2026 testas enbart dina kunskaper om det svenska samhället (samhällskunskap), men frågorna är skrivna på svenska.
+                Kravet på svenska språkkunskaper planeras att införas i ett senare skede. Under 2026 testas enbart dina kunskaper om det svenska samhället. Men tänk på att frågorna på ditt svensk medborgarskapsprov är skrivna helt på svenska.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
-              <h3 className="font-bold text-white">Hur kan jag förbereda mig på bästa sätt?</h3>
+              <h3 className="font-bold text-white">Hur kan jag förbereda mig för medborgarskapsprov?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Det mest effektiva sättet är att läsa boken <em>Sverige i fokus</em> kombinerat med att göra realistiska provsimuleringar och flashcards på vår sajt.
+                Det mest effektiva sättet är att studera boken <em>Sverige i fokus</em>. Du bör också kombinera läsningen med realistiska provsimuleringar. Vår plattform erbjuder hundratals flashcards och ett komplett svensk medborgarskapstest för bästa möjliga förberedelse.
               </p>
             </div>
           </div>
