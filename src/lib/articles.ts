@@ -609,7 +609,11 @@ Detta är provets huvudfokus under 2026. Frågorna är baserade på studiemateri
 - Sverige i världen (EU, NATO, FN)
 - Att leva i Sverige (arbete, hälso- och sjukvård)
 
-### 2. Språktest (Svenska   {
+### 2. Språktest (Svenska)
+Utöver samhällskunskapstestet kommer det också att ställas krav på svenska språket (som huvudregel SFI, kurs D). Observera att detta är ett separat krav och testas inte genom medborgarskapsprovet.
+\`.trim(),
+  },
+  {
     slug: 'medborgarskapsprov-fragor-och-svar-faq',
     title: 'Vanliga frågor och svar om medborgarskapsprovet (FAQ) 2026',
     metaDescription:
