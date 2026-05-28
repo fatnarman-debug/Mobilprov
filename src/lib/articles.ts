@@ -662,7 +662,7 @@ Utöver samhällskunskapstestet kommer det också att ställas krav på svenska 
         answer: 'Om du inte blir godkänd kan du anmäla dig till ett nytt provtillfälle för att göra om provet. Det finns ingen gräns för hur många gånger du får försöka, men varje nytt ordinarie provtillfälle kan innebära en ny provavgift.'
       }
     ],
-    content: \`
+    content: `
 ## Den ultimata FAQ:n för svenskt medborgarskap 2026
 
 Att ansöka om svenskt medborgarskap innebär stora förändringar från och med den **6 juni 2026**. För att göra processen så tydlig som möjligt har vi sammanställt de vanligaste frågorna baserat på officiell information från **Migrationsverket** och **Universitets- och högskolerådet (UHR)**.
