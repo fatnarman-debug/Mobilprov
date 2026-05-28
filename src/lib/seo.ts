@@ -98,7 +98,7 @@ export function seoMetadata({
 
 export const publicSeo = {
   home: seoMetadata({
-    title: 'Svenskt Medborgarskapsprov & Test 2026 | İsveç Vatandaşlık Sınavı',
+    title: 'Svenskt Medborgarskapsprov 2026 | İsveç Vatandaşlık Sınavı',
     description:
       'Öva inför det svenska medborgarskapsprovet 2026 med frågor, flashcards och provsimuleringar. İsveç vatandaşlık sınavına Türkçe destekli İsveççe hazırlanın.',
     path: '/',

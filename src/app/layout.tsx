@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin', 'latin-ext'], variable: '--font-inter' 
 export const metadata: Metadata = {
   ...publicSeo.home,
   title: {
-    default: 'Medborgarskapsprov 2026 – Öva på svenska | İsveç Vatandaşlık Sınavı',
+    default: 'Medborgarskapsprov 2026 | İsveç Vatandaşlık Sınavı',
     template: '%s | Sverigemedborgarskapsprov.com',
   },
   applicationName: siteName,
@@ -61,7 +61,9 @@ export default async function RootLayout({
                 logo: `${siteUrl}/favicon.ico`,
                 sameAs: [
                   'https://www.wikidata.org/wiki/Q110196236',
-                  'https://sv.wikipedia.org/wiki/Svenskt_medborgarskap'
+                  'https://sv.wikipedia.org/wiki/Svenskt_medborgarskap',
+                  'https://www.linkedin.com/company/sverigemedborgarskapsprov',
+                  'https://x.com/svemedborgarskap'
                 ]
               }
             ]),

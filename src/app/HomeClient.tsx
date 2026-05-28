@@ -348,10 +348,13 @@ export default function HomeClient() {
               Vad är det svenska medborgarskapsprovet?
             </h2>
             <p className="text-white/80 leading-relaxed">
-              Från och med den <strong>6 juni 2026</strong> införs ett nytt obligatoriskt <strong>svensk medborgarskapsprov</strong> (även kallat samhällskunskapstest) för alla som ansöker om svenskt medborgarskap. Ett svensk medborgarskapstest säkerställer att nya medborgare har grundläggande kunskaper om hur det svenska samhället fungerar, dess lagar, historia och demokratiska värderingar. Oavsett om du söker efter information om ett svensk medborgarskap test eller vill öva på specifika frågor, är det viktigt att börja i tid.
+              Från och med den <strong>6 juni 2026</strong> införs ett nytt krav i Sverige. Alla som vill bli svenska medborgare måste klara ett <strong>svenskt medborgarskapsprov</strong>. Detta kallas ofta för ett samhällskunskapstest. Provet säkerställer att du har grundläggande kunskaper om Sverige. Det handlar om hur samhället fungerar, våra lagar, vår historia och våra demokratiska värderingar. Oavsett om du söker information om ett svensk medborgarskap test eller vill öva på frågor, är det viktigt att börja i god tid.
             </p>
             <p className="text-white/80 leading-relaxed">
-              Vår plattform är skräddarsydd för att hjälpa dig att klara detta medborgarskapsprov på första försöket. Vi erbjuder gratis övningsfrågor, interaktiva flashcards och realistiska provsimuleringar baserade på det officiella studiematerialet <em>Sverige i fokus</em>. Genom att regelbundet göra vårt svensk medborgarskapstest online, bygger du upp det självförtroende som krävs för att lyckas. Många upplever att kontinuerlig övning är nyckeln till framgång när man ska skriva ett svensk medborgarskap test.
+              Vår plattform hjälper dig att klara detta medborgarskapsprov på första försöket. Vi erbjuder gratis övningsfrågor och interaktiva flashcards. Dessutom har vi realistiska provsimuleringar. Allt material är baserat på det officiella studiematerialet <em>Sverige i fokus</em>. Gör vårt svensk medborgarskapstest online regelbundet för bästa resultat. På så sätt bygger du upp ditt självförtroende. Kontinuerlig övning är nyckeln till framgång när man ska skriva ett svensk medborgarskap test.
+            </p>
+            <p className="text-white/80 leading-relaxed">
+              Utöver övningsfrågor kan du också läsa våra guider och artiklar. De ger dig en djupare förståelse för det svenska samhället. Det hjälper dig att svara rätt på de svårare frågorna. Att förstå Sveriges kultur och demokrati är lika viktigt som att memorera faktauppgifter.
             </p>
             <div className="p-5 rounded-2xl border border-white/10 space-y-3" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(10px)' }}>
               <h3 className="font-bold text-lg flex items-center gap-2" style={{ color: '#FECC02' }}>
@@ -379,14 +382,14 @@ export default function HomeClient() {
                 <span className="text-lg">⏱️</span>
                 <div>
                   <strong className="block text-white" style={{ color: '#FECC02' }}>90 minuters provtid</strong>
-                  <span className="text-sm text-white/75">Du har 90 minuter på dig att besvara alla frågor under provet.</span>
+                  <span className="text-sm text-white/75">Du har 90 minuter på dig att besvara alla frågor under provet. Tiden är väl tilltagen.</span>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-lg">🎯</span>
                 <div>
                   <strong className="block text-white" style={{ color: '#FECC02' }}>Godkändgräns på 67%</strong>
-                  <span className="text-sm text-white/75">Det krävs minst 40 rätta svar av 60 för att få godkänt resultat.</span>
+                  <span className="text-sm text-white/75">Det krävs minst 40 rätta svar av 60 för att få ett godkänt resultat på testet.</span>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -409,25 +412,25 @@ export default function HomeClient() {
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
               <h3 className="font-bold text-white">Vem måste göra medborgarskapstestet i Sverige?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Alla personer över 15 år som ansöker om svenskt medborgarskap efter den 6 juni 2026 måste klara ett svensk medborgarskapsprov. Vissa undantag kan dock göras. Undantag gäller ofta för personer med särskilda funktionsnedsättningar eller allvarlig sjukdom.
+                Alla personer över 15 år som ansöker om svenskt medborgarskap efter den 6 juni 2026 måste klara ett svensk medborgarskapsprov. Vissa undantag kan dock göras. Undantag gäller ofta för personer med särskilda funktionsnedsättningar eller vid en allvarlig sjukdom.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
               <h3 className="font-bold text-white">Vad kostar ett svensk medborgarskap test?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Det allra första utprövningsprovet den 15 augusti 2026 är helt kostnadsfritt. Detta gäller för de personer som får en kallelse. Avgiften för framtida ordinarie tillfällen för svensk medborgarskapstest kommer att fastställas av regeringen och UHR senare.
+                Det allra första utprövningsprovet den 15 augusti 2026 är helt kostnadsfritt. Detta gäller enbart för de personer som får en kallelse. Avgiften för framtida ordinarie tillfällen för svensk medborgarskapstest kommer att fastställas av regeringen och UHR vid ett senare tillfälle.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
               <h3 className="font-bold text-white">Kommer det finnas ett språktest i svenska också?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Kravet på svenska språkkunskaper planeras att införas i ett senare skede. Under 2026 testas enbart dina kunskaper om det svenska samhället. Men tänk på att frågorna på ditt svensk medborgarskapsprov är skrivna helt på svenska.
+                Kravet på svenska språkkunskaper planeras att införas i ett senare skede. Under 2026 testas enbart dina kunskaper om det svenska samhället. Men tänk på att frågorna på ditt svensk medborgarskapsprov är skrivna helt på svenska, vilket indirekt kräver språkkunskaper.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
               <h3 className="font-bold text-white">Hur kan jag förbereda mig för medborgarskapsprov?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Det mest effektiva sättet är att studera boken <em>Sverige i fokus</em>. Du bör också kombinera läsningen med realistiska provsimuleringar. Vår plattform erbjuder hundratals flashcards och ett komplett svensk medborgarskapstest för bästa möjliga förberedelse.
+                Det mest effektiva sättet är att studera boken <em>Sverige i fokus</em> noga. Du bör också kombinera läsningen med realistiska provsimuleringar. Vår plattform erbjuder hundratals flashcards och ett komplett svensk medborgarskapstest för den absolut bästa möjliga förberedelsen.
               </p>
             </div>
           </div>
@@ -437,10 +440,12 @@ export default function HomeClient() {
       {/* Footer */}
       <footer className="relative z-10 text-center pb-6 text-white/55 text-xs space-y-2">
         <p>🇸🇪 &nbsp;sverigemedborgarskapsprov.com</p>
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-4 flex-wrap">
           <Link href="/ovning" className="text-white/60 hover:text-white transition-colors">Gratis övning</Link>
           <span>·</span>
           <Link href="/ovning/flashcards" className="text-white/60 hover:text-white transition-colors">Flashcards</Link>
+          <span>·</span>
+          <Link href="/artiklar" className="text-white/60 hover:text-white transition-colors">Artiklar & Guider</Link>
           <span>·</span>
           <a href="#" className="text-white/60 hover:text-white transition-colors">Användarvillkor</a>
         </div>

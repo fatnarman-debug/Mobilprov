@@ -27,9 +27,13 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
       {
-        userAgent: ['GPTBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'PerplexityBot', 'Google-Extended', 'OAI-SearchBot'],
+        userAgent: ['GPTBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'PerplexityBot', 'Google-Extended', 'OAI-SearchBot', 'Applebot-Extended', 'anthropic-ai'],
         allow: ['/'],
         disallow: ['/admin/', '/dashboard/', '/profile/', '/api/', '/auth/', '/payment/', '/test/', '/analysis/'],
+      },
+      {
+        userAgent: ['Bytespider', 'CCBot', 'FacebookBot'],
+        disallow: ['/'],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
