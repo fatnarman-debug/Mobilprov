@@ -26,6 +26,11 @@ export default function robots(): MetadataRoute.Robots {
           '/analysis/',
         ],
       },
+      {
+        userAgent: ['GPTBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'PerplexityBot', 'Google-Extended', 'OAI-SearchBot'],
+        allow: ['/'],
+        disallow: ['/admin/', '/dashboard/', '/profile/', '/api/', '/auth/', '/payment/', '/test/', '/analysis/'],
+      },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
     host: siteUrl,

@@ -45,13 +45,26 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebSite',
-              name: 'Sverigemedborgarskapsprov.com',
-              url: siteUrl,
-              description: 'Förbered dig för det svenska medborgarskapstestet',
-            }),
+            __html: JSON.stringify([
+              {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                name: 'Sverigemedborgarskapsprov.com',
+                url: siteUrl,
+                description: 'Förbered dig för det svenska medborgarskapstestet',
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                name: 'Sverigemedborgarskapsprov.com',
+                url: siteUrl,
+                logo: `${siteUrl}/favicon.ico`,
+                sameAs: [
+                  'https://www.wikidata.org/wiki/Q110196236',
+                  'https://sv.wikipedia.org/wiki/Svenskt_medborgarskap'
+                ]
+              }
+            ]),
           }}
         />
       </head>
