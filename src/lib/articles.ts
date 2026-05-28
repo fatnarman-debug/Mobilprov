@@ -611,7 +611,7 @@ Detta är provets huvudfokus under 2026. Frågorna är baserade på studiemateri
 
 ### 2. Språktest (Svenska)
 Utöver samhällskunskapstestet kommer det också att ställas krav på svenska språket (som huvudregel SFI, kurs D). Observera att detta är ett separat krav och testas inte genom medborgarskapsprovet.
-\`.trim(),
+`.trim(),
   },
   {
     slug: 'medborgarskapsprov-fragor-och-svar-faq',
@@ -720,6 +720,6 @@ På vår plattform **Sverigemedborgarskapsprov.com** hittar du:
 - [Interaktiva övningsprov](/ovning)
 - [Smarta flashcards för snabb inlärning](/ovning/flashcards)
 - Förklaringar på flera modersmål
-\`.trim(),
+`.trim(),
   },
 ]
