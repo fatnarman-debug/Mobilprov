@@ -1,10 +1,15 @@
 import { MetadataRoute } from 'next'
-import { articles } from '@/lib/articles'
+import prisma from '@/lib/db'
 
 const siteUrl = (process.env.NEXT_PUBLIC_APP_URL || 'https://sverigemedborgarskapsprov.com').replace('http://', 'https://')
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const articlePages = articles.map(a => ({
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const dbArticles = await prisma.article.findMany({
+    where: { isPublished: true },
+    select: { slug: true, updatedAt: true }
+  })
+
+  const articlePages = dbArticles.map(a => ({
     url: `${siteUrl}/artiklar/${a.slug}`,
     lastModified: new Date(a.updatedAt),
     changeFrequency: 'monthly' as const,
