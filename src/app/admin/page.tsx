@@ -97,74 +97,7 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="bg-background text-on-surface min-h-screen">
-      {/* TopAppBar */}
-      <header className="fixed top-0 w-full z-50 bg-surface dark:bg-background border-b border-outline-variant h-16">
-        <div className="flex justify-between items-center px-gutter h-full w-full max-w-container-max mx-auto">
-          <div className="flex items-center gap-base">
-            <button className="p-2 -ml-2 rounded-full hover:bg-surface-container-low transition-colors duration-200 lg:hidden">
-              <span className="material-symbols-outlined text-primary">menu</span>
-            </button>
-            <h1 className="font-display-lg text-title-md text-primary dark:text-primary-fixed font-bold">Medborgarskapsprov</h1>
-          </div>
-          <div className="flex items-center gap-base">
-            <button className="p-2 rounded-full hover:bg-surface-container-low transition-colors duration-200">
-              <span className="material-symbols-outlined text-primary">query_stats</span>
-            </button>
-            <div className="w-8 h-8 rounded-full bg-secondary-container overflow-hidden">
-              <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJqqrK8lVGMcA-anSY34OOClViUK6Yw-I1ETYUw_L1rxmgxP84GKmuwBhT2Mt76k0IH3CkDmPigcslc-CYExtIPdi8D990ufN7WpPHhzy0DRGPirYW5-DFm9uzubk36UnNUMY3I32ucqVNhjocROcwrFitz3mLUw2PnG0-7Ja9KqLxiHQLQ-rFenPmH4mPBFhhcO2jW-JBvDNnDegwF-q7ruLgvdCX6ZYzec28BQQBAUpWARdLcUr7pdMEYMXxB0_W4LfCPImBWDo" alt="Admin Profile" />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Sidebar / NavigationDrawer (Desktop) */}
-      <aside className="fixed left-0 top-0 h-full w-72 bg-surface-container dark:bg-surface-container-low border-r border-outline-variant pt-20 hidden lg:flex flex-col py-md gap-base shadow-md">
-        <div className="px-md mb-md">
-          <div className="flex items-center gap-sm">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <span className="material-symbols-outlined text-on-primary">shield_person</span>
-            </div>
-            <div>
-              <h2 className="font-title-md text-title-md text-primary font-bold">Admin Portal</h2>
-              <p className="font-label-md text-label-md text-on-surface-variant">Content Management System</p>
-            </div>
-          </div>
-        </div>
-        <nav className="flex-1 space-y-1">
-          <Link href="/admin" className="bg-primary text-on-primary rounded-lg mx-2 flex items-center px-4 py-3 gap-md transition-all duration-200">
-            <span className="material-symbols-outlined">folder_open</span>
-            <span className="font-body-md text-body-md">Content Management</span>
-          </Link>
-          <Link href="/admin/questions" className="text-on-surface-variant hover:bg-surface-container-highest rounded-lg mx-2 flex items-center px-4 py-3 gap-md transition-all duration-200">
-            <span className="material-symbols-outlined">database</span>
-            <span className="font-body-md text-body-md">Question Bank</span>
-          </Link>
-          <Link href="/admin/flashcards" className="text-on-surface-variant hover:bg-surface-container-highest rounded-lg mx-2 flex items-center px-4 py-3 gap-md transition-all duration-200">
-            <span className="material-symbols-outlined">style</span>
-            <span className="font-body-md text-body-md">Flashcard Bank</span>
-          </Link>
-          <Link href="/admin/exams" className="text-on-surface-variant hover:bg-surface-container-highest rounded-lg mx-2 flex items-center px-4 py-3 gap-md transition-all duration-200">
-            <span className="material-symbols-outlined">quiz</span>
-            <span className="font-body-md text-body-md">Sınav Şablonları</span>
-          </Link>
-          <Link href="/admin/users" className="text-on-surface-variant hover:bg-surface-container-highest rounded-lg mx-2 flex items-center px-4 py-3 gap-md transition-all duration-200">
-            <span className="material-symbols-outlined">manage_accounts</span>
-            <span className="font-body-md text-body-md">Kullanıcı Yönetimi</span>
-          </Link>
-          <Link href="/admin/settings" className="text-on-surface-variant hover:bg-surface-container-highest rounded-lg mx-2 flex items-center px-4 py-3 gap-md transition-all duration-200">
-            <span className="material-symbols-outlined">settings</span>
-            <span className="font-body-md text-body-md">Platform Settings</span>
-          </Link>
-        </nav>
-        <div className="p-md border-t border-outline-variant">
-          <p className="font-label-md text-label-md text-on-surface-variant opacity-50">v1.0.4</p>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="pt-20 pb-24 lg:pl-80 px-gutter min-h-screen">
-        <div className="max-w-container-max mx-auto">
+    <main className="flex-1 p-6 lg:p-10 w-full max-w-[1600px] mx-auto pb-24">
           <header className="mb-lg">
             <h2 className="font-headline-lg-mobile lg:font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface mb-xs">Yönetici Paneli</h2>
             <p className="font-body-md text-body-md text-on-surface-variant">Eğitim içeriklerini ve soru bankasını buradan yönetebilirsiniz.</p>
@@ -182,15 +115,15 @@ export default function AdminPage() {
             <div className="lg:col-span-4 space-y-md">
               
               {/* Add New Topic */}
-              <div className="bg-white p-md rounded-xl border border-outline-variant shadow-sm">
+              <div className="bg-white/80 dark:bg-surface-container-low/50 backdrop-blur-md p-6 lg:p-8 rounded-3xl border border-outline-variant/30 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
                 <div className="flex items-center gap-base mb-md">
                   <span className="material-symbols-outlined text-secondary">add_circle</span>
                   <h3 className="font-title-md text-title-md text-on-surface">Yeni Konu (Ünite) Ekle</h3>
                 </div>
                 <form onSubmit={handleAddTopic} ref={topicFormRef} className="space-y-sm">
-                  <input type="text" name="title" placeholder="Konu Başlığı (Örn: İsveç Tarihi)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
-                  <input type="text" name="category" placeholder="Kategori (Örn: Tarih & Kültür)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
-                  <textarea name="description" placeholder="Açıklama (Opsiyonel)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" rows={2}></textarea>
+                  <input type="text" name="title" placeholder="Konu Başlığı (Örn: İsveç Tarihi)" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 font-body-md text-body-md" required />
+                  <input type="text" name="category" placeholder="Kategori (Örn: Tarih & Kültür)" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 font-body-md text-body-md" required />
+                  <textarea name="description" placeholder="Açıklama (Opsiyonel)" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 font-body-md text-body-md" rows={2}></textarea>
                   
                   <div className="border-t border-outline-variant pt-2 mt-2 space-y-3">
                     <label className="block text-[11px] font-bold text-primary uppercase">Çalışma Materyalleri</label>
@@ -199,7 +132,7 @@ export default function AdminPage() {
                       <span className="block text-[10px] font-semibold text-on-surface-variant">Okuma Dökümanı (PDF)</span>
                       <div className="grid grid-cols-1 gap-1">
                         <input type="file" name="pdfFile" accept=".pdf" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
-                        <input type="text" name="pdfUrl" placeholder="Veya PDF Bağlantı Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                        <input type="text" name="pdfUrl" placeholder="Veya PDF Bağlantı Linki (https://...)" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 font-body-sm text-body-sm text-xs" />
                       </div>
                     </div>
 
@@ -207,7 +140,7 @@ export default function AdminPage() {
                       <span className="block text-[10px] font-semibold text-on-surface-variant">Ses Kaydı (MP3)</span>
                       <div className="grid grid-cols-1 gap-1">
                         <input type="file" name="audioFile" accept="audio/*" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
-                        <input type="text" name="audioUrl" placeholder="Veya Ses Bağlantı Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                        <input type="text" name="audioUrl" placeholder="Veya Ses Bağlantı Linki (https://...)" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 font-body-sm text-body-sm text-xs" />
                       </div>
                     </div>
 
@@ -215,7 +148,7 @@ export default function AdminPage() {
                       <span className="block text-[10px] font-semibold text-on-surface-variant">Video Anlatım (MP4/YouTube)</span>
                       <div className="grid grid-cols-1 gap-1">
                         <input type="file" name="videoFile" accept="video/*" className="w-full text-xs bg-surface border border-outline-variant rounded-lg p-1" />
-                        <input type="text" name="videoUrl" placeholder="Veya Video/YouTube Linki (https://...)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-sm text-body-sm text-xs" />
+                        <input type="text" name="videoUrl" placeholder="Veya Video/YouTube Linki (https://...)" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 font-body-sm text-body-sm text-xs" />
                       </div>
                     </div>
                   </div>
@@ -367,14 +300,14 @@ export default function AdminPage() {
               </div>
 
               {/* Bulk Upload CSV */}
-              <div className="bg-white p-md rounded-xl border border-outline-variant shadow-sm">
+              <div className="bg-white/80 dark:bg-surface-container-low/50 backdrop-blur-md p-6 lg:p-8 rounded-3xl border border-outline-variant/30 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
                 <div className="flex items-center gap-base mb-md">
                   <span className="material-symbols-outlined text-secondary">cloud_upload</span>
                   <h3 className="font-title-md text-title-md text-on-surface">Toplu Soru Yükleme</h3>
                 </div>
                 
                 <form onSubmit={handleCsvUpload} className="space-y-base">
-                  <input type="text" name="topicId" placeholder="Hedef Konu ID (Zorunlu)" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md" required />
+                  <input type="text" name="topicId" placeholder="Hedef Konu ID (Zorunlu)" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 font-body-md text-body-md" required />
                   
                   <div className="flex items-center gap-xs px-xs">
                     <input type="checkbox" name="isTest" id="bulkIsTest" value="true" className="w-4 h-4 accent-primary cursor-pointer" />
@@ -408,7 +341,7 @@ export default function AdminPage() {
                 <form onSubmit={handleAddQuestion} ref={questionFormRef} className="space-y-md">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
                     <div className="md:col-span-2 flex gap-4">
-                       <input type="text" name="topicId" placeholder="Hedef Konu ID" className="flex-grow bg-surface-bright border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary font-body-md text-body-md" required />
+                       <input type="text" name="topicId" placeholder="Hedef Konu ID" className="flex-grow w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-4 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 focus:ring-2 focus:ring-primary font-body-md text-body-md" required />
                        <label className="flex items-center gap-2 font-label-md text-label-md text-on-surface cursor-pointer">
                           <input type="checkbox" name="isTest" value="true" className="w-5 h-5 accent-primary" />
                           Test Sorusu Mu?
@@ -416,7 +349,7 @@ export default function AdminPage() {
                     </div>
                     <div className="md:col-span-2">
                       <label className="block font-label-md text-label-md text-on-surface-variant mb-xs">Soru Kökü</label>
-                      <textarea name="text" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-primary font-body-md text-body-md" placeholder="Soruyu buraya yazın..." rows={3} required></textarea>
+                      <textarea name="text" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-4 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 focus:ring-2 focus:ring-primary focus:border-primary font-body-md text-body-md" placeholder="Soruyu buraya yazın..." rows={3} required></textarea>
                     </div>
                     <div>
                       <label className="block font-label-md text-label-md text-on-surface-variant mb-xs">Seçenek A</label>
@@ -452,7 +385,7 @@ export default function AdminPage() {
                     </div>
                   </div>
                   <div className="pt-md border-t border-outline-variant flex justify-end">
-                    <button type="submit" className="bg-primary text-on-primary px-lg py-3 rounded-full font-title-md flex items-center gap-base active:scale-95 transition-all">
+                    <button type="submit" className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-2xl font-bold flex items-center gap-2 hover:-translate-y-1 shadow-lg shadow-primary/30 active:scale-95 transition-all duration-300">
                       <span className="material-symbols-outlined">save</span>
                       Kaydet
                     </button>
@@ -474,7 +407,7 @@ export default function AdminPage() {
                     Toplu Flashcard Yükle (CSV)
                   </h4>
                   <form onSubmit={handleFlashcardCsvUpload} className="flex flex-col md:flex-row gap-4 items-center">
-                    <input type="text" name="topicId" placeholder="Hedef Konu ID (Zorunlu)" className="flex-grow bg-surface-bright border border-outline-variant rounded-lg p-xs font-body-md text-body-md w-full" required />
+                    <input type="text" name="topicId" placeholder="Hedef Konu ID (Zorunlu)" className="flex-grow w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 font-body-md text-body-md w-full" required />
                     <label className="w-full md:w-auto flex-shrink-0 bg-surface-container-high hover:bg-tertiary hover:text-on-tertiary text-on-surface-variant transition-colors rounded-lg p-3 cursor-pointer text-center font-label-md flex items-center justify-center gap-2">
                       <span className="material-symbols-outlined">upload_file</span>
                       CSV Seç ve Yükle
@@ -491,20 +424,20 @@ export default function AdminPage() {
                 <form onSubmit={handleAddFlashcard} ref={flashcardFormRef} className="space-y-md">
                   <div>
                     <label className="block font-label-md text-label-md text-on-surface-variant mb-xs">Hedef Konu ID</label>
-                    <input type="text" name="topicId" placeholder="Konu ID giriniz" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary font-body-md text-body-md" required />
+                    <input type="text" name="topicId" placeholder="Konu ID giriniz" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-4 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 focus:ring-2 focus:ring-primary font-body-md text-body-md" required />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
                     <div>
                       <label className="block font-label-md text-label-md text-on-surface-variant mb-xs">Ön Yüz (Soru)</label>
-                      <textarea name="frontText" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-primary font-body-md text-body-md" placeholder="Örn: 'Avrupa Birliği'ne kaç yılında girildi?'" rows={3} required></textarea>
+                      <textarea name="frontText" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-4 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 focus:ring-2 focus:ring-primary focus:border-primary font-body-md text-body-md" placeholder="Örn: 'Avrupa Birliği'ne kaç yılında girildi?'" rows={3} required></textarea>
                     </div>
                     <div>
                       <label className="block font-label-md text-label-md text-on-surface-variant mb-xs">Arka Yüz (Cevap)</label>
-                      <textarea name="backText" className="w-full bg-surface-bright border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-primary font-body-md text-body-md" placeholder="Örn: '1995'" rows={3} required></textarea>
+                      <textarea name="backText" className="w-full w-full bg-white dark:bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-4 shadow-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all duration-300 focus:ring-2 focus:ring-primary focus:border-primary font-body-md text-body-md" placeholder="Örn: '1995'" rows={3} required></textarea>
                     </div>
                   </div>
                   <div className="pt-md border-t border-outline-variant flex justify-end">
-                    <button type="submit" className="bg-tertiary text-on-tertiary px-lg py-3 rounded-full font-title-md flex items-center gap-base active:scale-95 transition-all">
+                    <button type="submit" className="bg-tertiary hover:bg-tertiary/90 text-on-tertiary px-8 py-3 rounded-2xl font-bold flex items-center gap-2 hover:-translate-y-1 shadow-lg shadow-tertiary/30 active:scale-95 transition-all duration-300">
                       <span className="material-symbols-outlined">save</span>
                       Flashcard Kaydet
                     </button>
@@ -514,28 +447,6 @@ export default function AdminPage() {
 
             </div>
           </div>
-        </div>
-      </main>
-
-      {/* BottomNavBar (Mobile Only) */}
-      <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-surface dark:bg-background border-t border-outline-variant shadow-sm z-50 md:hidden">
-        <button className="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 active:scale-95 transition-transform duration-150">
-          <span className="material-symbols-outlined">auto_stories</span>
-          <span className="font-label-md text-label-md">Topics</span>
-        </button>
-        <button className="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 active:scale-95 transition-transform duration-150">
-          <span className="material-symbols-outlined">quiz</span>
-          <span className="font-label-md text-label-md">Practice</span>
-        </button>
-        <button className="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 active:scale-95 transition-transform duration-150">
-          <span className="material-symbols-outlined">leaderboard</span>
-          <span className="font-label-md text-label-md">Analysis</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 active:scale-95 transition-transform duration-150">
-          <span className="material-symbols-outlined">person</span>
-          <span className="font-label-md text-label-md">Profile</span>
-        </button>
-      </nav>
-    </div>
+        </main>
   );
 }
