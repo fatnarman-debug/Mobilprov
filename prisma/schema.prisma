@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -212,6 +212,35 @@ model PlatformSetting {
   
   seoTitle              String   @default("SveaProv - İsveç Vatandaşlık Sınavı Hazırlık Platformu")
   seoDescription        String   @default("İsveç vatandaşlık sınavına (SveaProv) en güncel sorular, flashcardlar ve deneme sınavlarıyla hazırlanın.")
-  
   updatedAt             DateTime @updatedAt
+}
+
+// --- ARTICLE & BLOG (SEO CMS) ---
+
+model Article {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  metaDescription String
+  content         String   // Text content (Markdown)
+  readingTime     Int      @default(5) // in minutes
+  keywords        String   // Comma separated keywords (SQLite doesn't support arrays)
+  isPublished     Boolean  @default(false)
+  imageUrl        String?  // Optional cover image
+  
+  faqs            ArticleFaq[]
+
+  publishedAt     DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ArticleFaq {
+  id        String   @id @default(cuid())
+  articleId String
+  question  String
+  answer    String
+  order     Int      @default(0)
+
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
 }

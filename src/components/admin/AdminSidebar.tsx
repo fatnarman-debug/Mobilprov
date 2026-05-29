@@ -11,6 +11,7 @@ export default function AdminSidebar() {
     { name: 'Question Bank', icon: 'database', path: '/admin/questions' },
     { name: 'Flashcard Bank', icon: 'style', path: '/admin/flashcards' },
     { name: 'Sınav Şablonları', icon: 'quiz', path: '/admin/exams' },
+    { name: 'Makaleler (SEO)', icon: 'article', path: '/admin/articles' },
     { name: 'Kullanıcı Yönetimi', icon: 'manage_accounts', path: '/admin/users' },
     { name: 'Platform Settings', icon: 'settings', path: '/admin/settings' },
   ];

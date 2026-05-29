@@ -1,29 +1,35 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { articles } from '@/lib/articles'
+import prisma from '@/lib/db'
 import { absoluteUrl, ogImage, seoMetadata, siteName } from '@/lib/seo'
 
 interface Props {
   params: Promise<{ slug: string }>
 }
 
+export const revalidate = 3600; // Cache for 1 hour
+
 export async function generateStaticParams() {
+  const articles = await prisma.article.findMany({
+    where: { isPublished: true },
+    select: { slug: true }
+  })
   return articles.map(a => ({ slug: a.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const article = articles.find(a => a.slug === slug)
-  if (!article) return {}
+  const article = await prisma.article.findUnique({ where: { slug } })
+  if (!article || !article.isPublished) return {}
   return seoMetadata({
     title: `${article.title} | İsveç Vatandaşlık Sınavı Rehberi`,
     description: `${article.metaDescription} Türkçe destekli İsveççe hazırlık rehberiyle medborgarskapsprovet için çalışın.`,
     path: `/artiklar/${article.slug}`,
     type: 'article',
-    keywords: article.keywords,
-    publishedTime: article.publishedAt,
-    modifiedTime: article.updatedAt,
+    keywords: article.keywords ? article.keywords.split(',').map(k => k.trim()) : [],
+    publishedTime: article.publishedAt.toISOString(),
+    modifiedTime: article.updatedAt.toISOString(),
   })
 }
 
@@ -143,10 +149,20 @@ function renderMarkdown(md: string): string {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params
-  const article = articles.find(a => a.slug === slug)
-  if (!article) notFound()
+  const article = await prisma.article.findUnique({ 
+    where: { slug },
+    include: { faqs: { orderBy: { order: 'asc' } } }
+  })
 
-  const htmlContent = renderMarkdown(article!.content)
+  if (!article || !article.isPublished) {
+    notFound()
+  }
+  
+  const htmlContent = renderMarkdown(article.content)
+  const otherArticles = await prisma.article.findMany({
+    where: { isPublished: true, slug: { not: slug } },
+    take: 3
+  })
 
   // JSON-LD structured data
   const schemas: any[] = [
@@ -155,8 +171,8 @@ export default async function ArticlePage({ params }: Props) {
       '@type': 'Article',
       headline: article.title,
       description: article.metaDescription,
-      datePublished: article.publishedAt,
-      dateModified: article.updatedAt,
+      datePublished: article.publishedAt.toISOString(),
+      dateModified: article.updatedAt.toISOString(),
       author: { '@type': 'Organization', name: 'Sverigemedborgarskapsprov.com' },
       publisher: {
         '@type': 'Organization',
@@ -169,11 +185,11 @@ export default async function ArticlePage({ params }: Props) {
     }
   ]
 
-  if (article.faqItems && article.faqItems.length > 0) {
+  if (article.faqs && article.faqs.length > 0) {
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: article.faqItems.map(faq => ({
+      mainEntity: article.faqs.map(faq => ({
         '@type': 'Question',
         name: faq.question,
         acceptedAnswer: {
@@ -219,7 +235,7 @@ export default async function ArticlePage({ params }: Props) {
               📖 Guide
             </span>
             <span className="text-white/75 text-sm">⏱ {article.readingTime} min läsning</span>
-            <span className="text-white/75 text-sm">· Uppdaterad {article.updatedAt}</span>
+            <span className="text-white/75 text-sm">· Uppdaterad {new Date(article.updatedAt).toLocaleDateString('sv-SE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
             {article.title}
@@ -253,6 +269,20 @@ export default async function ArticlePage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
 
+        {article.faqs && article.faqs.length > 0 && (
+          <section className="mt-16 pt-10" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <h2 className="text-3xl font-bold text-white mb-8">Sıkça Sorulan Sorular (FAQ)</h2>
+            <div className="space-y-4">
+              {article.faqs.map((faq, i) => (
+                <div key={i} className="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <h3 className="text-xl font-bold text-white mb-2">{faq.question}</h3>
+                  <p className="text-white/80">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Bottom CTA */}
         <div
           className="mt-14 rounded-3xl p-8 text-center"
@@ -279,7 +309,7 @@ export default async function ArticlePage({ params }: Props) {
         <div className="mt-12">
           <h2 className="text-white font-bold text-xl md:text-2xl mb-5">Fler artiklar</h2>
           <div className="grid gap-4">
-            {articles.filter(a => a.slug !== article.slug).slice(0, 3).map(a => (
+            {otherArticles.map(a => (
               <Link
                 key={a.slug}
                 href={`/artiklar/${a.slug}`}

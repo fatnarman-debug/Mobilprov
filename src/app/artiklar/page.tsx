@@ -1,10 +1,16 @@
 import Link from 'next/link'
-import { articles } from '@/lib/articles'
+import prisma from '@/lib/db'
 import { publicSeo } from '@/lib/seo'
 
 export const metadata = publicSeo.articles
 
-export default function ArtiklarPage() {
+export const revalidate = 3600; // Cache for 1 hour
+
+export default async function ArtiklarPage() {
+  const articles = await prisma.article.findMany({
+    where: { isPublished: true },
+    orderBy: { publishedAt: 'desc' }
+  });
   return (
     <div style={{ background: 'linear-gradient(135deg, #002244 0%, #003566 40%, #006AA7 100%)', minHeight: '100vh' }}>
       <header style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }} className="sticky top-0 z-50 backdrop-blur-md">
@@ -43,7 +49,7 @@ export default function ArtiklarPage() {
                   📖 Guide
                 </span>
                 <span className="text-white/75 text-sm">{article.readingTime} min läsning</span>
-                <span className="text-white/75 text-sm">· {article.publishedAt}</span>
+                <span className="text-white/75 text-sm">· {new Date(article.publishedAt).toLocaleDateString('sv-SE', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
               </div>
               <h2 className="text-white font-bold text-xl md:text-2xl mb-2 group-hover:text-yellow-300 transition-colors leading-snug">
                 {article.title}
