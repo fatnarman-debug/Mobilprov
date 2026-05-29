@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://sverigemedborgarskapsprov.com'
+export const siteUrl = (process.env.NEXT_PUBLIC_APP_URL || 'https://sverigemedborgarskapsprov.com').replace('http://', 'https://')
 export const siteName = 'Sverigemedborgarskapsprov.com'
 export const ogImage = '/og-image.svg'
 
