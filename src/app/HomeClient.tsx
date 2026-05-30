@@ -67,14 +67,19 @@ export default function HomeClient() {
       <header className="relative z-10 flex justify-between items-center px-6 py-4">
         <div className="flex items-center gap-3">
           <SwedenFlag size={40} />
-          <div>
+          <Link href="/" className="flex items-center gap-1">
             <span className="text-white font-bold text-lg tracking-tight">SVERIGEMEDBORGARSKAPSPROV</span>
             <span style={{ color: '#FECC02' }} className="font-bold text-lg">.com</span>
-          </div>
+          </Link>
         </div>
-        <div className="flex items-center gap-2 text-white/60 text-sm">
-          <span>🇸🇪</span>
-          <span>Sverige</span>
+        <div className="flex items-center gap-6">
+          <Link href="/artiklar" className="hidden md:block text-white/80 hover:text-white font-semibold transition-colors">
+            Blogg & Guider
+          </Link>
+          <div className="flex items-center gap-2 text-white/60 text-sm">
+            <span>🇸🇪</span>
+            <span>Sverige</span>
+          </div>
         </div>
       </header>
 
@@ -90,9 +95,14 @@ export default function HomeClient() {
             Svenskt Medborgarskapsprov & Test<br />
             <span style={{ color: '#FECC02' }}>Bestå på första försöket</span>
           </h1>
-          <p className="text-xl text-white/80 mb-8 leading-relaxed">
-            Flashcards, övningsfrågor och provsimuleringar – allt på ett ställe
+          <p className="text-xl text-white/80 mb-6 leading-relaxed">
+            Flashcards, övningsfrågor och provsimuleringar – allt på ett ställe. 
           </p>
+          <div className="mb-8">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-bold" style={{ background: 'rgba(254,204,2,0.15)', color: '#FECC02', border: '1px solid rgba(254,204,2,0.3)' }}>
+              ⭐️ Bli VIP-medlem för endast 199 kr (Engångsavgift)
+            </span>
+          </div>
 
           {/* Feature chips */}
           <div className="flex flex-wrap gap-3">
