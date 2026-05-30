@@ -25,7 +25,8 @@ export default async function OvningPage() {
   const questions = await getFreeQuestions()
 
 
-  return ( <>
+  return ( 
+    <div className="min-h-screen bg-[#002244] selection:bg-[#FECC02]/30">
       <header style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }} className="sticky top-0 z-50 backdrop-blur-md">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg">
@@ -128,6 +129,6 @@ export default async function OvningPage() {
       <footer className="text-center py-8 text-white/55 text-xs">
         <p>© 2025 Sverigemedborgarskapsprov.com · Alla rättigheter förbehållna</p>
       </footer>
-    </>
+      </div>
   )
 }
