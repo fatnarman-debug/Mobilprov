@@ -261,7 +261,7 @@ export default function TestClient({
             </div>
 
             <p className="text-[10px] text-on-surface-variant opacity-70">
-              Betala 299 kr for full tillgång i 1 år.
+              Betala 199 kr for full tillgång i 1 år.
             </p>
           </div>
         </div>

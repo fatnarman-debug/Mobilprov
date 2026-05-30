@@ -77,7 +77,7 @@ export default async function DashboardPage() {
                 className="w-full md:w-auto py-2.5 px-5 bg-primary text-on-primary font-bold text-xs rounded-full hover:bg-primary-dark active:scale-95 transition-all inline-flex justify-center items-center gap-xs shadow-sm"
               >
                 <span className="material-symbols-outlined text-xs">workspace_premium</span>
-                Bli Premium VIP (299 kr / 1 år)
+                Bli Premium VIP (199 kr / 1 år)
               </Link>
             </div>
           )}

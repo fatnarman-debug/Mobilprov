@@ -30,7 +30,7 @@ export async function createCheckoutSession(userId: string) {
               name: 'Medborgarskapsprov Premium',
               description: 'Full tillgång till medborgarskapsprovet i 1 år (İsveç Vatandaşlık Sınavı Hazırlığı - 1 Yıl)',
             },
-            unit_amount: 29900, // 299.00 SEK
+            unit_amount: 19900, // 199.00 SEK
           },
           quantity: 1,
         },

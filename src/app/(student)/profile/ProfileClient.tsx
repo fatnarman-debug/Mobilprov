@@ -178,7 +178,7 @@ export default function ProfileClient({
                   className="inline-flex items-center gap-xs bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-sm transition-all"
                 >
                   <span className="material-symbols-outlined text-[18px]">workspace_premium</span>
-                  Bli VIP Premium (299 kr)
+                  Bli VIP Premium (199 kr)
                 </Link>
                 <span className="text-[10px] text-on-surface-variant font-label-md">
                   1 års tillgång

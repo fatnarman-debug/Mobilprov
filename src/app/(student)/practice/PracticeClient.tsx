@@ -454,7 +454,7 @@ export default function PracticeClient({
             </div>
 
             <p className="text-[10px] text-on-surface-variant opacity-70">
-              Betala 299 kr för full tillgång i 1 år.
+              Betala 199 kr för full tillgång i 1 år.
             </p>
           </div>
         </div>
