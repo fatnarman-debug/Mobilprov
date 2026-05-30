@@ -447,6 +447,56 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section className="relative z-10 w-full px-6 pb-24 pt-12 flex justify-center items-center">
+        <div className="bg-white rounded-[2rem] overflow-hidden w-full max-w-md shadow-2xl transition-transform hover:scale-[1.02] duration-300">
+          {/* Card Header (Light Theme) */}
+          <div className="bg-[#E5F0F6] pt-8 pb-10 flex justify-center">
+            <span className="bg-white text-[#006AA7] px-6 py-2 rounded-full text-sm font-extrabold shadow-sm">
+              Samhällskunskap
+            </span>
+          </div>
+          
+          {/* Price */}
+          <div className="text-center pt-8 pb-6 px-8 bg-white">
+            <h2 className="text-[#002244] text-6xl font-extrabold mb-3 tracking-tight">199 kr</h2>
+            <p className="text-gray-600 font-semibold">Engångsbetalning — livstidstillgång</p>
+          </div>
+
+          <div className="px-10 bg-white">
+            <div className="h-px bg-gray-200 w-full" />
+          </div>
+
+          {/* Features */}
+          <div className="px-10 py-8 space-y-5 bg-white">
+            {[
+              <>Över <strong>500+ frågor</strong> från <em>Sverige i fokus</em></>,
+              <>Översättning på <strong>8 olika språk</strong> (TR/EN/AR/ES...)</>,
+              <><strong>Realistiska simuleringar</strong> av testet</>,
+              <>Detaljerade <strong>förklaringar</strong> till varje fråga</>,
+              <>Interaktivt <strong>Flashcard-läge</strong></>,
+              <>Detaljerad <strong>statistik</strong> och historik</>,
+              <>Tillgång på <strong>dator, surfplatta och mobil</strong></>,
+              <><strong>Omedelbar aktivering</strong> efter betalning</>
+            ].map((feature, idx) => (
+              <div key={idx} className="flex items-start gap-3">
+                <span className="text-[#006AA7] text-[18px] font-black mt-0.5">✓</span>
+                <p className="text-gray-800 font-semibold text-sm leading-relaxed">{feature}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <button 
+            onClick={() => { setIsLogin(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            className="w-full py-5 text-lg font-black transition-all hover:brightness-110 flex justify-center items-center gap-2"
+            style={{ background: '#006AA7', color: 'white' }}
+          >
+            Börja nu — 199 kr
+          </button>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="relative z-10 text-center pb-6 text-white/55 text-xs space-y-2">
         <p>🇸🇪 &nbsp;sverigemedborgarskapsprov.com</p>
