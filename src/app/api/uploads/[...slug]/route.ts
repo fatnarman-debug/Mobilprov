@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { Readable } from 'stream';
 
 // Define content types for common file extensions
 const getContentType = (ext: string): string => {
@@ -45,9 +46,6 @@ export async function GET(
       return new NextResponse('File not found', { status: 404 });
     }
 
-    // Create a read stream
-    const fileBuffer = await fs.promises.readFile(filePath);
-    
     const ext = path.extname(filePath);
     const contentType = getContentType(ext);
 
@@ -60,8 +58,9 @@ export async function GET(
       const chunksize = (end - start) + 1;
       
       const stream = fs.createReadStream(filePath, { start, end });
+      const webStream = Readable.toWeb(stream);
       
-      return new NextResponse(stream as any, {
+      return new NextResponse(webStream as any, {
         status: 206,
         headers: {
           'Content-Range': `bytes ${start}-${end}/${stat.size}`,
@@ -73,13 +72,21 @@ export async function GET(
     }
 
     // Standard file response
-    return new NextResponse(fileBuffer, {
+    const stream = fs.createReadStream(filePath);
+    const webStream = Readable.toWeb(stream);
+    const headers: Record<string, string> = {
+      'Content-Type': contentType,
+      'Content-Length': stat.size.toString(),
+      'Cache-Control': 'public, max-age=86400, immutable'
+    };
+
+    if (contentType.startsWith('video/') || contentType.startsWith('audio/')) {
+      headers['Accept-Ranges'] = 'bytes';
+    }
+
+    return new NextResponse(webStream as any, {
       status: 200,
-      headers: {
-        'Content-Type': contentType,
-        'Content-Length': stat.size.toString(),
-        'Cache-Control': 'public, max-age=86400, immutable'
-      },
+      headers: headers,
     });
   } catch (error) {
     console.error('Error serving file:', error);

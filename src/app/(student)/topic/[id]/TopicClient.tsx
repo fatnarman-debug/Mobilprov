@@ -8,6 +8,35 @@ type TopicWithRelations = Topic & {
   materials: Material[];
 };
 
+// Robust video URL embed parser
+const getEmbedUrl = (url: string): { type: 'youtube' | 'vimeo' | 'direct'; embedUrl: string } => {
+  if (!url) return { type: 'direct', embedUrl: '' };
+  
+  const cleanUrl = url.trim();
+  
+  // YouTube Detection & Parsing
+  const isYouTube = cleanUrl.includes('youtube.com') || cleanUrl.includes('youtu.be');
+  if (isYouTube) {
+    const regExp = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+    const match = cleanUrl.match(regExp);
+    if (match && match[1] && match[1].length === 11) {
+      return { type: 'youtube', embedUrl: `https://www.youtube.com/embed/${match[1]}` };
+    }
+  }
+  
+  // Vimeo Detection & Parsing
+  const isVimeo = cleanUrl.includes('vimeo.com');
+  if (isVimeo) {
+    const regExp = /(?:vimeo\.com\/|player\.vimeo\.com\/video\/)(\d+)/;
+    const match = cleanUrl.match(regExp);
+    if (match && match[1]) {
+      return { type: 'vimeo', embedUrl: `https://player.vimeo.com/video/${match[1]}` };
+    }
+  }
+  
+  return { type: 'direct', embedUrl: cleanUrl };
+};
+
 export default function TopicClient({ topic }: { topic: TopicWithRelations | null }) {
   const [activeTab, setActiveTab] = useState<'oku' | 'dinle' | 'izle'>('oku');
 
@@ -114,20 +143,44 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
                     href={readMaterial.url} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="flex items-center gap-1.5 text-sm bg-surface-container-high text-on-surface hover:bg-surface-container-highest px-4 py-2 rounded-xl font-medium transition-colors duration-200"
+                    className="flex items-center gap-1.5 text-sm bg-surface-container-high text-on-surface hover:bg-surface-container-highest px-3 py-1.5 md:px-4 md:py-2 rounded-xl font-medium transition-colors duration-200"
                   >
                     <span className="material-symbols-outlined text-[18px]">open_in_new</span>
-                    <span className="hidden sm:inline">Öppna externt</span>
+                    <span>Öppna</span>
                   </a>
                 )}
               </div>
               <div className="flex-1 bg-surface-container-lowest relative">
                 {readMaterial ? (
-                  <iframe 
-                    src={readMaterial.url} 
-                    className="w-full h-full border-0 absolute inset-0"
-                    title={readMaterial.title}
-                  />
+                  <>
+                    {/* Desktop PDF Iframe */}
+                    <iframe 
+                      src={readMaterial.url} 
+                      className="hidden md:block w-full h-full border-0 absolute inset-0"
+                      title={readMaterial.title}
+                    />
+                    {/* Mobile PDF Preview & Action Card */}
+                    <div className="md:hidden flex flex-col items-center justify-center h-full p-6 text-center bg-surface/30">
+                      <div className="w-20 h-20 bg-red-50 dark:bg-red-950/30 rounded-3xl flex items-center justify-center mb-4 text-red-600 dark:text-red-400 shadow-sm border border-red-100 dark:border-red-900/20">
+                        <span className="material-symbols-outlined text-[44px]" style={{fontVariationSettings: "'FILL' 1"}}>picture_as_pdf</span>
+                      </div>
+                      <h4 className="text-base font-bold text-on-surface mb-2 px-4 leading-snug">
+                        {readMaterial.title || 'Läsmaterial (PDF)'}
+                      </h4>
+                      <p className="text-on-surface-variant text-xs max-w-xs mb-6 leading-relaxed">
+                        På mobila enheter visas PDF-dokument bäst i din webbläsare eller PDF-läsare.
+                      </p>
+                      <a 
+                        href={readMaterial.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:scale-95 text-white px-5 py-3 rounded-2xl font-semibold shadow-md shadow-red-600/20 transition-all duration-200 text-sm"
+                      >
+                        <span className="material-symbols-outlined text-[20px]">open_in_new</span>
+                        <span>Öppna dokument</span>
+                      </a>
+                    </div>
+                  </>
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-surface/30">
                     <div className="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mb-4">
@@ -185,29 +238,24 @@ export default function TopicClient({ topic }: { topic: TopicWithRelations | nul
                 {watchMaterial ? (
                   <div className="w-full aspect-video bg-black flex items-center justify-center">
                     {(() => {
-                      const isYouTube = watchMaterial.url.includes('youtube.com') || watchMaterial.url.includes('youtu.be');
-                      if (isYouTube) {
-                        let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-                        let match = watchMaterial.url.match(regExp);
-                        const embedId = (match && match[2].length === 11) ? match[2] : null;
-                        
-                        if (embedId) {
-                          return (
-                            <iframe 
-                              src={`https://www.youtube.com/embed/${embedId}`} 
-                              className="w-full h-full border-0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                              title={watchMaterial.title}
-                            />
-                          );
-                        }
+                      const embedData = getEmbedUrl(watchMaterial.url);
+                      if (embedData.type === 'youtube' || embedData.type === 'vimeo') {
+                        return (
+                          <iframe 
+                            src={embedData.embedUrl} 
+                            className="w-full h-full border-0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title={watchMaterial.title}
+                          />
+                        );
                       }
                       
                       return (
                         <video 
                           src={watchMaterial.url} 
                           controls 
+                          playsInline
                           className="w-full h-full object-cover"
                         />
                       );
