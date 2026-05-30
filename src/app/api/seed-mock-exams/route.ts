@@ -107,7 +107,7 @@ export async function GET(request: Request) {
     }
 
     // 5. Generate 20 MockExams
-    const mockExamsCreated = [];
+    const mockExamsCreated: string[] = [];
     for (let examIndex = 1; examIndex <= 20; examIndex++) {
       const mockExam = await prisma.mockExam.create({
         data: {
