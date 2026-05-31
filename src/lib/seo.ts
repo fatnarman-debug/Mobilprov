@@ -20,6 +20,12 @@ const defaultKeywords = [
   'svensk medborgarskapstest',
   'svenskt medborgarskapsprov 2026',
   'svenskt medborgarskapstest 2026',
+  'medborgarskapsprov test',
+  'medborgarskapsprov exempel',
+  'medborgarskapsprov frågor',
+  'medborgarskap Sverige',
+  'uhr medborgarskapsprov',
+  'migrationsverket nya regler medborgarskap',
 ]
 
 type SeoInput = {
@@ -98,9 +104,9 @@ export function seoMetadata({
 
 export const publicSeo = {
   home: seoMetadata({
-    title: 'Svenskt Medborgarskapsprov 2026 | İsveç Vatandaşlık Sınavı',
+    title: 'Svenskt Medborgarskapsprov Test 2026 | Öva Gratis online',
     description:
-      'Öva inför det svenska medborgarskapsprovet 2026 med frågor, flashcards och provsimuleringar. İsveç vatandaşlık sınavına Türkçe destekli İsveççe hazırlanın.',
+      'Öva inför det svenska medborgarskapsprovet 2026 med gratis test, frågor, flashcards och provsimuleringar. İsveç vatandaşlık sınavına Türkçe destekli hazırlanın.',
     path: '/',
   }),
   ovning: seoMetadata({
@@ -118,9 +124,9 @@ export const publicSeo = {
     keywords: ['medborgarskapsprov flashcards', 'sverige flashcards', 'İsveççe flashcard'],
   }),
   articles: seoMetadata({
-    title: 'Svenskt Medborgarskapsprov & Test: Artiklar & Guider 2026',
+    title: 'Artiklar & Guider: Migrationsverket & Medborgarskapsprov 2026',
     description:
-      'Läs guider och artiklar om det svenska medborgarskapsprovet och medborgarskapstestet 2026. İsveç vatandaşlık sınavı için Türkçe destekli rehberler.',
+      'Läs guider om Migrationsverkets nya regler för medborgarskap, Sverige i fokus, och UHR medborgarskapsprov. Gör medborgarskapstest online.',
     path: '/artiklar',
     keywords: [
       'medborgarskapsprov guide',
@@ -128,6 +134,8 @@ export const publicSeo = {
       'İsveç vatandaşlık rehberi',
       'svenskt medborgarskapsprov artiklar',
       'medborgarskapstest guider',
+      'migrationsverket nya regler medborgarskap',
+      'uhr medborgarskapsprov',
     ],
   }),
 }
