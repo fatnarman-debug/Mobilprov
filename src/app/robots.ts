@@ -32,7 +32,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin/', '/dashboard/', '/profile/', '/api/', '/auth/', '/payment/', '/test/', '/analysis/'],
       },
       {
-        userAgent: ['Bytespider', 'CCBot', 'FacebookBot'],
+        userAgent: ['Bytespider', 'CCBot', 'FacebookBot', 'Amazonbot'],
         disallow: ['/'],
       },
     ],
