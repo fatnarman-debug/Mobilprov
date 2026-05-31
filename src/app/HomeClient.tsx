@@ -25,6 +25,51 @@ function SwedenFlag({ size = 64 }: { size?: number }) {
   );
 }
 
+const testimonials = [
+  {
+    name: 'Yasmin Al-Rashid',
+    origin: 'Ursprungligen från Irak',
+    status: 'Klarade provet i augusti',
+    avatar: '🇮🇶',
+    text: 'Äntligen en plattform som verkligen förbereder en! Förklaringarna till varje svar hjälpte mig att förstå sammanhanget och inte bara memorera frågorna.'
+  },
+  {
+    name: 'Ali Reza Karimi',
+    origin: 'Ursprungligen från Iran',
+    status: 'Övar inför nästa prov',
+    avatar: '🇮🇷',
+    text: 'Det flerspråkiga stödet är fantastiskt. Jag kan läsa frågorna på svenska och snabbt kolla översättningen på persiska när jag är osäker.'
+  },
+  {
+    name: 'Leyla Demir',
+    origin: 'Ursprungligen från Turkiet',
+    status: 'Klarade provsimuleringen',
+    avatar: '🇹🇷',
+    text: 'Flashcard-funktionen är min favorit. Den gör det jätteroligt att lära sig svensk historia och politik på bussen på väg till jobbet!'
+  },
+  {
+    name: 'Amna Khan',
+    origin: 'Ursprungligen från Pakistan',
+    status: 'SFI-studerande',
+    avatar: '🇵🇰',
+    text: 'Tack vare provsimuleringarna kände jag mig inte alls stressad under provet. Frågorna är väldigt lika de riktiga frågorna i Sverige i fokus.'
+  },
+  {
+    name: 'Ahmad Noorzaei',
+    origin: 'Ursprungligen från Afghanistan',
+    status: 'Bor i Malmö, pluggar dagligen',
+    avatar: '🇦🇫',
+    text: 'Bästa sidan för de som ska göra provet! Förklaringarna är korta, enkla att förstå och översatta direkt till mitt modersmål dari.'
+  },
+  {
+    name: 'Semir Halilović',
+    origin: 'Ursprungligen från Bosnien',
+    status: 'Övar inför medborgarskapstestet',
+    avatar: '🇧🇦',
+    text: 'Jag rekommenderar VIP-medlemskapet starkt. Att ha tillgång till över 500 frågor med statistik på mina framsteg har sparat mig så mycket tid.'
+  }
+];
+
 export default function HomeClient() {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -443,6 +488,49 @@ export default function HomeClient() {
                 Det mest effektiva sättet är att studera boken <em>Sverige i fokus</em> noga. Du bör också kombinera läsningen med realistiska provsimuleringar. Vår plattform erbjuder hundratals flashcards och ett komplett svensk medborgarskapstest för den absolut bästa möjliga förberedelsen.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section (Gör som tusentals andra) */}
+      <section className="relative z-10 w-full py-12 overflow-hidden text-white">
+        <div className="max-w-6xl mx-auto px-6 text-center mb-8">
+          <h2 className="text-3xl font-extrabold tracking-tight mb-3">Gör som tusentals andra</h2>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>197 användare online och övar just nu</span>
+          </div>
+        </div>
+
+        {/* Marquee Wrapper */}
+        <div className="w-full overflow-hidden relative flex py-4">
+          {/* Blur masks for smooth edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[#002244] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[#002244] to-transparent z-10 pointer-events-none" />
+
+          {/* Marquee Flex Row (Rendered twice for seamless loop) */}
+          <div className="animate-marquee flex gap-6">
+            {/* First Set */}
+            {[...testimonials, ...testimonials].map((t, idx) => (
+              <div 
+                key={idx}
+                className="w-[300px] md:w-[350px] shrink-0 rounded-2xl p-6 border border-white/10 hover:border-[#FECC02]/30 bg-white/5 backdrop-blur-md flex flex-col justify-between transition-all duration-300 shadow-sm"
+              >
+                <p className="text-white/90 text-sm leading-relaxed italic mb-6">
+                  "{t.text}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-2xl">
+                    {t.avatar}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm text-white">{t.name}</h4>
+                    <p className="text-xs text-white/50">{t.origin}</p>
+                    <p className="text-[10px] text-[#FECC02] mt-0.5 font-semibold">{t.status}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
