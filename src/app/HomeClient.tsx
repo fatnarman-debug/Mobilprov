@@ -70,7 +70,15 @@ const testimonials = [
   }
 ];
 
-export default function HomeClient() {
+type HomeArticle = {
+  title: string
+  slug: string
+  metaDescription: string
+  publishedAt: string
+  readingTime: number
+}
+
+export default function HomeClient({ articles = [] }: { articles?: HomeArticle[] }) {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -491,6 +499,60 @@ export default function HomeClient() {
           </div>
         </div>
       </section>
+
+      {/* Featured Articles Section */}
+      {articles && articles.length > 0 && (
+        <section className="relative z-10 max-w-6xl mx-auto w-full px-6 py-12 text-white">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12" />
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-extrabold tracking-tight mb-3">
+              Utvalda <span style={{ color: '#FECC02' }}>guider & artiklar</span>
+            </h2>
+            <p className="text-white/80 text-base max-w-2xl mx-auto">
+              Lär dig mer om det svenska medborgarskapsprovet, reglerna och hur du förbereder dig på bästa sätt.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {articles.map((article) => (
+              <Link
+                key={article.slug}
+                href={`/artiklar/${article.slug}`}
+                className="block rounded-2xl p-6 transition-all hover:scale-[1.02] hover:border-[#FECC02]/30 group flex flex-col justify-between"
+                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+              >
+                <div>
+                  <div className="flex items-center gap-2 mb-3 text-xs text-white/60">
+                    <span className="px-2.5 py-0.5 rounded-full font-bold text-[10px]" style={{ background: 'rgba(254,204,2,0.15)', color: '#FECC02', border: '1px solid rgba(254,204,2,0.2)' }}>
+                      Guide
+                    </span>
+                    <span>·</span>
+                    <span>{article.readingTime} min läsning</span>
+                  </div>
+                  <h3 className="text-white font-bold text-lg mb-2 group-hover:text-yellow-300 transition-colors line-clamp-2 leading-snug">
+                    {article.title}
+                  </h3>
+                  <p className="text-white/70 text-sm line-clamp-3 mb-4 leading-relaxed">
+                    {article.metaDescription}
+                  </p>
+                </div>
+                <div className="flex items-center gap-1 text-sm font-semibold mt-4" style={{ color: '#FECC02' }}>
+                  Läs mer <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link
+              href="/artiklar"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105"
+              style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)', color: 'white' }}
+            >
+              Visa alla artiklar & guider
+              <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* Testimonials Section (Gör som tusentals andra) */}
       <section className="relative z-10 w-full py-12 overflow-hidden text-white">

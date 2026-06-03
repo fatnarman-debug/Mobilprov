@@ -1,9 +1,28 @@
 import HomeClient from './HomeClient';
 import { publicSeo } from '@/lib/seo';
+import prisma from '@/lib/db';
 
 export const metadata = publicSeo.home;
 
-export default function HomePage() {
+export default async function HomePage() {
+  const articles = await prisma.article.findMany({
+    where: { isPublished: true },
+    orderBy: { publishedAt: 'desc' },
+    take: 3,
+    select: {
+      title: true,
+      slug: true,
+      metaDescription: true,
+      publishedAt: true,
+      readingTime: true,
+    }
+  });
+
+  const serializedArticles = articles.map(a => ({
+    ...a,
+    publishedAt: a.publishedAt.toISOString(),
+  }));
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -49,7 +68,8 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <HomeClient />
+      <HomeClient articles={serializedArticles} />
     </>
   );
 }
+
