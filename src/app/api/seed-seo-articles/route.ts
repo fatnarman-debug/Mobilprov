@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     // 1. Clear old articles if we are re-seeding (only for development/seeding ease)
     // Note: We might not want to delete ALL articles, but for now we will delete specifically the ones we generate.
     const slugsToDelete = [
+      'nya-regler-medborgarskap-6-juni-2026',
       'vad-ar-medborgarskapsprovet-2026',
       'vem-maste-skriva-medborgarskapsprovet',
       'anmalan-till-medborgarskapsprovet',
@@ -29,6 +30,83 @@ export async function GET(request: Request) {
     });
 
     const articlesToSeed = [
+      {
+        slug: 'nya-regler-medborgarskap-6-juni-2026',
+        title: 'Nya regler för svenskt medborgarskap 2026: Detta gäller från 6 juni',
+        metaDescription: 'Riksdagen har beslutat om nya regler för svenskt medborgarskap från 6 juni 2026. Läs om hemvisttid (8 år), försörjningskrav och medborgarskapsprov.',
+        readingTime: 7,
+        keywords: 'nya regler svenskt medborgarskap 2026, migrationsverket medborgarskap 2026, försörjningskrav medborgarskap, hemvisttid 8 år, medborgarskapsprov 2026, svenskt medborgarskap krav',
+        content: `
+Riksdagen har beslutat om historiska förändringar i den svenska medborgarskapslagen. Från och med den **6 juni 2026** börjar nya, skärpta regler att gälla för alla som vill bli svenska medborgare. Kraven på hur länge du ska ha bott i landet (hemvisttid) höjs, och det införs helt nya villkor för egen försörjning, skötsamt levnadssätt samt kunskaper i det svenska språket och samhället.
+
+Här är en komplett guide till de nya reglerna för svenskt medborgarskap 2026 och vad de innebär för din ansökan.
+
+## Inga övergångsregler – Pågående ansökningar drabbas
+Den mest kritiska informationen för dig som redan har ansökt är att de nya reglerna **införs utan övergångsbestämmelser**. 
+
+Detta innebär att Migrationsverket kommer att pröva alla ärenden som inte är färdigbehandlade före den 6 juni 2026 enligt det nya regelverket. Om du skickade in din ansökan under 2024 eller 2025, men inte har fått ett beslut innan den 6 juni 2026, måste du uppfylla de nya skärpta kraven (inklusive 8 års hemvist och försörjningskrav) för att bli godkänd.
+
+## 1. Skärpt hemvisttid: Från 5 till 8 år i Sverige
+Tidigare har huvudregeln varit att du ska ha bott i Sverige i fem sammanhängande år för att kunna ansöka om medborgarskap. 
+
+* **Ny huvudregel**: Kravet höjs till **åtta (8) år** av sammanhängande hemvist i Sverige.
+* **Skötsamt levnadssätt**: Kraven på ett fläckfritt register skärps. Om du har begått brott, har obetalda skulder hos Kronofogden eller andra anmärkningar om ditt levnadssätt, kommer din karenstid (tiden du måste vänta efter ett brott) att förlängas avsevärt.
+
+## 2. Nytt försörjningskrav för medborgarskap
+För första gången införs ett krav på att du måste kunna försörja dig själv för att få svenskt medborgarskap. Kravet gäller alla vuxna sökande (barn är undantagna).
+
+För att uppfylla det nya försörjningskravet måste du:
+1. **Ha en stabil inkomst**: Din inkomst måste komma från arbete eller egen näringsverksamhet och ha en viss varaktighet.
+2. **Krav på inkomstnivå**: Du måste tjäna minst **tre inkomstbasbelopp** per år. Detta motsvarar för närvarande cirka **20 000 kronor i månaden före skatt**.
+3. **Ingen långvarig välfärd**: Du får inte ha tagit emot ekonomiskt bistånd (försörjningsstöd) i mer än totalt **sex månader** under de senaste tre åren.
+
+### Vilka undantas från försörjningskravet?
+Det finns vissa specifika grupper som kan få dispens från försörjningskravet:
+* Ålderspensionärer
+* Personer med varaktig funktionsnedsättning eller sjukdom som hindrar arbete
+* Studenter som läser på heltid vid svenskt universitet eller högskola och kan visa godkända studieresultat i en utbildning som leder till examen.
+
+## 3. Obligatoriskt kunskapskrav och medborgarskapsprov
+Från och med den 6 juni 2026 blir det obligatoriskt för sökande mellan **16 och 66 år** att visa kunskaper i det svenska språket samt grundläggande kunskaper om det svenska samhället.
+
+### Hur bevisar man sina kunskaper?
+Du kan styrka dina kunskaper på följande sätt:
+* Godkända betyg från svensk skola (grundskola/gymnasium)
+* Godkänt betyg från **SFI kurs D**
+* Godkända kurser från Komvux eller folkhögskola
+* **Medborgarskapsprov**: Om du inte har betyg som uppfyller kraven måste du skriva ett godkänt medborgarskapsprov.
+
+### Hur fungerar medborgarskapsprovet?
+Provet kommer att införas stegvis under 2026:
+* **Augusti 2026**: Den första delen av provet lanseras. Detta testar dina kunskaper om det svenska samhället (samhällskunskapstest).
+* **Senare skede**: Ett specifikt prov i det svenska språket kommer att läggas till vid ett senare tillfälle.
+
+Universitets- och högskolerådet (UHR) ansvarar för att ta fram provet, genomföra det och registrera resultaten, medan Migrationsverket ansvarar för att utreda om du behöver skriva provet och anvisa dig till en provplats.
+
+## Hur förbereder jag mig bäst inför de nya kraven?
+Eftersom provet baseras på det officiella studiematerialet *"Sverige i fokus"* är det viktigt att börja studera i god tid. De nya reglerna ställer höga krav på din förståelse av hur det svenska samhället är uppbyggt.
+
+Hos oss på **Sverigemedborgarskapsprov.com** kan du redan nu öva med hundratals övningsfrågor, ta del av provsimuleringar och plugga med flashcards på svenska med översättningsstöd till ditt modersmål. Börja öva gratis idag för att säkerställa att du klarar provet på första försöket!
+        `,
+        faqs: [
+          {
+            question: 'Måste jag uppfylla de nya kraven om jag ansökte innan 6 juni 2026?',
+            answer: 'Ja. Eftersom det inte finns några övergångsbestämmelser kommer alla ansökningar som inte är färdigbehandlade den 6 juni 2026 att prövas enligt de nya, hårdare reglerna. Detta gäller även om du skickade in din ansökan för flera år sedan.'
+          },
+          {
+            question: 'Hur mycket måste jag tjäna för att klara försörjningskravet för medborgarskap?',
+            answer: 'Du måste ha en årlig inkomst på minst tre inkomstbasbelopp. Det innebär en månadslön på cirka 20 000 kronor före skatt från arbete eller eget företag. Dessutom får du inte ha haft försörjningsstöd i mer än sex månader totalt under de senaste tre åren.'
+          },
+          {
+            question: 'Vad händer om jag inte har godkänt betyg i SFI kurs D?',
+            answer: 'Om du inte kan bevisa dina språkkunskaper via betyg från SFI kurs D eller motsvarande skolutbildning, måste du skriva och få godkänt på det officiella medborgarskapsprovet (samhälls- och språktestet) för att kunna bli medborgare.'
+          },
+          {
+            question: 'När kan jag skriva det nya medborgarskapsprovet?',
+            answer: 'Den första delen av medborgarskapsprovet (samhällskunskapstestet) planeras att hållas i augusti 2026. Du kan endast anmäla dig till provet efter att du har fått en anvisning från Migrationsverket.'
+          }
+        ]
+      },
       {
         slug: 'vad-ar-medborgarskapsprovet-2026',
         title: 'Vad är medborgarskapsprovet 2026? Allt du behöver veta',
