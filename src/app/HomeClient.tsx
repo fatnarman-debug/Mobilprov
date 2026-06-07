@@ -146,7 +146,7 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
           </div>
           <h1 className="text-5xl font-extrabold leading-tight mb-4 text-pretty">
             Svenskt Medborgarskapsprov & Test<br />
-            <span style={{ color: '#FECC02' }}>Bestå på första försöket</span>
+            <span style={{ color: '#FECC02' }}>Klara ditt medborgarskap prov på första försöket</span>
           </h1>
           <p className="text-xl text-white/80 mb-6 leading-relaxed">
             Flashcards, övningsfrågor och provsimuleringar – allt på ett ställe. 
@@ -408,24 +408,24 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
           {/* Detailed Info */}
           <div className="space-y-6">
             <h2 className="text-3xl font-extrabold tracking-tight" style={{ color: '#FECC02' }}>
-              Vad är det svenska medborgarskapsprovet?
+              Vad är ett svenskt medborgarskap prov?
             </h2>
             <p className="text-white/80 leading-relaxed text-base">
-              Den <strong>6 juni 2026</strong> införs ett nytt krav i Sverige. Du måste klara ett <strong>medborgarskapsprov</strong> för att bli svensk medborgare. Provet kallas ibland för ett samhällskunskapstest. Det visar att du kan grundläggande saker om Sverige. Det handlar om hur vårt samhälle fungerar, våra lagar, vår historia och våra värderingar. Det är viktigt att börja plugga i god tid.
+              Den <strong>6 juni 2026</strong> införs ett nytt krav. Du måste klara ett <strong>medborgarskap prov</strong> (även kallat medborgarskapstest) för att bli svensk medborgare. Det visar att du förstår hur det svenska samhället fungerar. Vi rekommenderar att du börjar plugga i god tid.
             </p>
             <p className="text-white/80 leading-relaxed text-base">
-              Vi hjälper dig att klara provet på första försöket. Hos oss hittar du gratis övningsfrågor, flashcards och provsimuleringar. Allt material bygger på den officiella boken <em>Sverige i fokus</em>. Gör våra medborgarskapstest online varje dag för att träna. Genom att öva bygger du upp ditt självförtroende inför det riktiga provet.
+              Vi hjälper dig att förbereda dig för ditt medborgarskap test. Hos oss hittar du gratis övningsfrågor, flashcards och provsimuleringar. Allt material är granskat av pedagoger och bygger helt på den officiella boken <em>Sverige i fokus</em>. Gör vårt medborgarskap test online varje dag för att träna och bygga upp ditt självförtroende.
             </p>
             <p className="text-white/80 leading-relaxed text-base">
-              Du kan också läsa våra enkla guider. De hjälper dig att verifiera din förståelse och lära dig hur Sverige fungerar. Det blir då lättare att svara rätt på frågorna. Att förstå hur demokrati fungerar är lika viktigt som att minnas fakta.
+              Våra enkla guider hjälper dig att verifiera din förståelse. Att förstå hur demokratin fungerar är lika viktigt som att minnas fakta. Detta ökar dina chanser att lyckas på ditt medborgarskap prov.
             </p>
             <div className="p-5 rounded-2xl border border-white/10 space-y-3" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(10px)' }}>
               <h3 className="font-bold text-base flex items-center gap-2" style={{ color: '#FECC02' }}>
-                <span className="material-symbols-outlined text-[20px]">translate</span>
-                Förberedelse på svenska med flerspråkigt stöd
+                <span className="material-symbols-outlined text-[20px]">verified</span>
+                Expertgranskat material för ditt medborgarskap test
               </h3>
               <p className="text-xs text-white/70 leading-relaxed">
-                Du kan läsa alla frågor, svar och förklaringar på svenska. Om det är svårt finns det översättning till ditt modersmål (som turkiska, engelska, arabiska, dari eller persiska). Du lär dig svenska samtidigt som du tränar inför provet.
+                Alla våra frågor, svar och förklaringar är framtagna och kvalitetssäkrade av utbildningsexperter inom SFI och samhällskunskap. Dessutom finns översättningar till flera modersmål så du snabbt förstår svåra begrepp inför ditt medborgarskap prov.
               </p>
             </div>
           </div>
@@ -491,9 +491,9 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-white/10 space-y-2 bg-white/5">
-              <h3 className="font-bold text-white">Hur kan jag förbereda mig för medborgarskapsprov?</h3>
+              <h3 className="font-bold text-white">Hur kan jag förbereda mig för mitt medborgarskap prov?</h3>
               <p className="text-sm text-white/70 leading-relaxed">
-                Det bästa sättet är att läsa boken <em>Sverige i fokus</em>. Öva också med våra frågor, flashcards och provsimuleringar här på hemsidan.
+                Det bästa sättet är att läsa boken <em>Sverige i fokus</em>. Öva sedan på ett riktigt medborgarskap test med våra expertgranskade frågor och provsimuleringar här på hemsidan.
               </p>
             </div>
           </div>

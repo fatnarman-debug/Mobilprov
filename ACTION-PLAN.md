@@ -1,7 +1,7 @@
 # Action Plan
 
 - URL: `https://sverigemedborgarskapsprov.com`
-- Overall score: `83/100`
+- Overall score: `84/100`
 
 ## Priority Fixes
 
