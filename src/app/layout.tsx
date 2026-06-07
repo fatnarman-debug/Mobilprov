@@ -63,7 +63,8 @@ export default async function RootLayout({
                   'https://www.wikidata.org/wiki/Q110196236',
                   'https://sv.wikipedia.org/wiki/Svenskt_medborgarskap',
                   'https://www.linkedin.com/company/sverigemedborgarskapsprov',
-                  'https://x.com/svemedborgarskap'
+                  'https://x.com/svemedborgarskap',
+                  'https://www.youtube.com/@SvenskMedborgarskapsprovet'
                 ]
               }
             ]),

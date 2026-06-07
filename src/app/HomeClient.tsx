@@ -657,6 +657,8 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
           <span>·</span>
           <Link href="/artiklar" className="text-white/60 hover:text-white transition-colors">Artiklar & Guider</Link>
           <span>·</span>
+          <a href="https://www.youtube.com/@SvenskMedborgarskapsprovet" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">YouTube</a>
+          <span>·</span>
           <a href="#" className="text-white/60 hover:text-white transition-colors">Användarvillkor</a>
         </div>
       </footer>
