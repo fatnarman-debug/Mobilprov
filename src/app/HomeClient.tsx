@@ -651,6 +651,8 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
       <footer className="relative z-10 text-center pb-6 text-white/55 text-xs space-y-2">
         <p>🇸🇪 &nbsp;sverigemedborgarskapsprov.com</p>
         <div className="flex justify-center gap-4 flex-wrap">
+          <Link href="/om-oss" className="text-white/60 hover:text-white transition-colors">Om Oss</Link>
+          <span>·</span>
           <Link href="/ovning" className="text-white/60 hover:text-white transition-colors">Gratis övning</Link>
           <span>·</span>
           <Link href="/ovning/flashcards" className="text-white/60 hover:text-white transition-colors">Flashcards</Link>

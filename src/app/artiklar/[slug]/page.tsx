@@ -173,7 +173,11 @@ export default async function ArticlePage({ params }: Props) {
       description: article.metaDescription,
       datePublished: article.publishedAt.toISOString(),
       dateModified: article.updatedAt.toISOString(),
-      author: { '@type': 'Organization', name: 'Sverigemedborgarskapsprov.com' },
+      author: { 
+        '@type': 'Person', 
+        name: 'Medborgarskapsprov Utbildningsteam',
+        url: absoluteUrl('/om-oss')
+      },
       publisher: {
         '@type': 'Organization',
         name: siteName,
