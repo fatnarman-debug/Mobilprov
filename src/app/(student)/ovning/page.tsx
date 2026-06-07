@@ -24,9 +24,46 @@ export default async function OvningPage() {
   const userLang = session?.user?.nativeLanguage || 'TR'
   const questions = await getFreeQuestions()
 
+  const schemas = {
+    '@context': 'https://schema.org',
+    '@type': 'Quiz',
+    name: 'Svenskt Medborgarskapsprov Test 2026',
+    description: 'Öva gratis på riktiga frågor för det svenska medborgarskapstestet.',
+    hasPart: questions.map((q, index) => {
+      const options = [
+        { key: 'A', text: q.optionA },
+        { key: 'B', text: q.optionB },
+        { key: 'C', text: q.optionC },
+        { key: 'D', text: q.optionD }
+      ];
+      const correctOption = options.find(o => o.key === q.correctAnswer);
+      const wrongOptions = options.filter(o => o.key !== q.correctAnswer);
+
+      return {
+        '@type': 'Question',
+        eduQuestionType: 'Multiple choice',
+        learningResourceType: 'Practice problem',
+        name: `Fråga ${index + 1}`,
+        text: q.text,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: correctOption?.text || '',
+          answerExplanation: {
+            '@type': 'Comment',
+            text: q.explanation || ''
+          }
+        },
+        suggestedAnswer: wrongOptions.map(w => ({
+          '@type': 'Answer',
+          text: w.text
+        }))
+      }
+    })
+  };
 
   return ( 
     <div className="min-h-screen bg-[#002244] selection:bg-[#FECC02]/30">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }} />
       <header style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }} className="sticky top-0 z-50 backdrop-blur-md">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg">

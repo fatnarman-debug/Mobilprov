@@ -102,6 +102,16 @@ function renderMarkdown(md: string): string {
       continue;
     }
 
+    // YouTube Embed (e.g. just a URL on its own line)
+    const ytMatch = line.match(/^https:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (ytMatch) {
+      closeParagraph();
+      closeList();
+      const videoId = ytMatch[3];
+      html += `<div class="my-8 relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10"><iframe src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe></div>\n`;
+      continue;
+    }
+
     // Unordered list item
     if (line.startsWith('- ')) {
       closeParagraph();
