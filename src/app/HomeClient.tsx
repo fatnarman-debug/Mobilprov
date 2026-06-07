@@ -401,7 +401,7 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
       </main>
 
       {/* Rich SEO Content Section */}
-      <section className="relative z-10 max-w-6xl mx-auto w-full px-6 py-16 space-y-12 text-white">
+      <section className="relative z-10 max-w-6xl mx-auto w-full px-6 py-16 space-y-12 text-white content-visibility-auto">
         <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -502,7 +502,7 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
 
       {/* Featured Articles Section */}
       {articles && articles.length > 0 && (
-        <section className="relative z-10 max-w-6xl mx-auto w-full px-6 py-12 text-white">
+        <section className="relative z-10 max-w-6xl mx-auto w-full px-6 py-12 text-white content-visibility-auto">
           <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12" />
           <div className="text-center mb-10">
             <h2 className="text-3xl font-extrabold tracking-tight mb-3">
@@ -555,7 +555,7 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
       )}
 
       {/* Testimonials Section (Gör som tusentals andra) */}
-      <section className="relative z-10 w-full py-12 overflow-hidden text-white">
+      <section className="relative z-10 w-full py-12 overflow-hidden text-white content-visibility-auto">
         <div className="max-w-6xl mx-auto px-6 text-center mb-8">
           <h2 className="text-3xl font-extrabold tracking-tight mb-3">Gör som tusentals andra</h2>
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
@@ -598,7 +598,7 @@ export default function HomeClient({ articles = [] }: { articles?: HomeArticle[]
       </section>
 
       {/* Pricing Section */}
-      <section className="relative z-10 w-full px-6 pb-24 pt-12 flex justify-center items-center">
+      <section className="relative z-10 w-full px-6 pb-24 pt-12 flex justify-center items-center content-visibility-auto">
         <div className="bg-white rounded-[2rem] overflow-hidden w-full max-w-md shadow-2xl transition-transform hover:scale-[1.02] duration-300">
           {/* Card Header (Light Theme) */}
           <div className="bg-[#E5F0F6] pt-8 pb-10 flex justify-center">
